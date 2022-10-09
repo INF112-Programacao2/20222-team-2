@@ -1,0 +1,8 @@
+# ignorar arquivos de IDEs
+.vscode
+.ccls-cache
+.clangd*
+
+# ignorar binarios
+bin/*
+!bin/.gitkeep
