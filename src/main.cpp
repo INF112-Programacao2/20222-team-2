@@ -1,6 +1,13 @@
 #include <iostream>
 
+#include "Game.h"
+
+#include <allegro5/allegro.h>
+
 int main() {
-  std::cout << "Hello world" << std::endl;
+  Game g;
+
+  g.mainLoop();
+
   return 0;
 }
