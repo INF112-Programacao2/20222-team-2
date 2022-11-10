@@ -2,9 +2,7 @@
 
 #include <iostream>
 
-ALLEGRO_FONT* Game::get_font() const {
-  return _font;
-}
+extern ALLEGRO_FONT* _font;
 
 Game::Game() {
   if (!al_init()) {
@@ -58,7 +56,8 @@ void Game::mainLoop() {
   bool redraw = true;
   ALLEGRO_EVENT event;
 
-  Text t({ 64, 64 }, { 255, 255, 255 }, "Hello World");
+  Text text({ 64, 64 }, { 255, 0, 0 }, "Hello World");
+  Tabuleiro t;
 
   al_start_timer(_timer);
   while (1) {
@@ -70,7 +69,7 @@ void Game::mainLoop() {
       redraw = true;
       break;
 
-    case ALLEGRO_EVENT_KEY_DOWN:
+    // case ALLEGRO_EVENT_KEY_DOWN:
     case ALLEGRO_EVENT_DISPLAY_CLOSE:
       done = true;
       break;
@@ -83,7 +82,8 @@ void Game::mainLoop() {
     if (redraw && al_is_event_queue_empty(_queue)) {
       al_clear_to_color(al_map_rgb(0, 0, 0)); 
 
-      t.onRender(_font);
+      t.onRender();
+      text.onRender();
 
       al_flip_display(); 
 

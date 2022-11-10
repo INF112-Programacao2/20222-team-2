@@ -2,6 +2,7 @@
 
 #include <allegro5/allegro_font.h>
 
+#include "GameObject.h"
 #include "Position.h"
 
 #include <string>
@@ -12,7 +13,7 @@ struct RGBColor {
   unsigned char blue;
 };
 
-class Text {
+class Text : public GameObject {
 private:
   Position _pos;
   RGBColor _color;
@@ -26,5 +27,5 @@ public:
   std::string get_text() const;
   RGBColor get_color() const;
 
-  void onRender(ALLEGRO_FONT* font);
+  virtual void onRender();
 };

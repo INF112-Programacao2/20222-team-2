@@ -1,13 +1,14 @@
 #pragma once
 
-#include "Renderer.h"
-
 #include <allegro5/allegro.h>
+#include <allegro5/allegro_font.h>
+
+#include "Text.h"
+#include "Tabuleiro.h"
 
 class Game {
 private:
   ALLEGRO_DISPLAY* _display;
-  ALLEGRO_FONT* _font;
   ALLEGRO_TIMER* _timer;
   ALLEGRO_EVENT_QUEUE* _queue;
 

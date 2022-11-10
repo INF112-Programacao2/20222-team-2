@@ -21,7 +21,7 @@ memory-check-run:
 	valgrind --track-origins=yes --leak-check=full $(BUILD_DIR)/$(TARGET_EXE)
 
 # Definir flags do linker
-LDFLAGS := -lallegro -lallegro_main -lallegro_font
+LDFLAGS := -lallegro -lallegro_main -lallegro_font -lallegro_primitives
 
 # Definir variáveis do projeto
 TARGET_EXE := xadrez
@@ -48,7 +48,7 @@ all: $(OBJS)
 
 # Compilar arquivos .cpp
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp
-	mkdir -p $(dir $@)
+	@if [ ! -d $(dir $@) ]; then mkdir -p $(dir $@); fi
 	$(CXX) $(CXXFLAGS) -c $< -o $@ $(INC_FLAGS)
 
 run:
