@@ -21,7 +21,7 @@ memory-check-run:
 	valgrind --track-origins=yes --leak-check=full $(BUILD_DIR)/$(TARGET_EXE)
 
 # Definir flags do linker
-LDFLAGS := -lallegro -lallegro_main -lallegro_font -lallegro_primitives
+LDFLAGS := -lallegro -lallegro_main -lallegro_font -lallegro_primitives -lallegro_image
 
 # Definir variáveis do projeto
 TARGET_EXE := xadrez
@@ -45,6 +45,7 @@ OBJS := $(SRCS:$(SRC_DIR)/%.cpp=$(BUILD_DIR)/%.o)
 # Linkar o executável final
 all: $(OBJS)
 	$(CXX) $(OBJS) -o $(BUILD_DIR)/$(TARGET_EXE) $(LDFLAGS)
+	cp -r assets bin/
 
 # Compilar arquivos .cpp
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp
@@ -56,3 +57,17 @@ run:
 
 clean:
 	rm -r bin/*
+
+
+# Converter imagens para um formato legível pelo jogo
+SVG_DIR := svg
+SVGS := $(shell find $(SVG_DIR) -name '*.svg')
+
+ASSET_DIR := assets
+
+SPRITES := $(SVGS:$(SVG_DIR)/%.svg=$(ASSET_DIR)/%.png)
+
+convert: $(SPRITES)
+
+$(ASSET_DIR)/%.png: $(SVG_DIR)/%.svg
+	inkscape -w 80 -h 80 $< -o $@
