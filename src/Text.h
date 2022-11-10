@@ -1,5 +1,7 @@
 #pragma once
 
+#include <allegro5/allegro_font.h>
+
 #include "Position.h"
 
 #include <string>
@@ -23,4 +25,6 @@ public:
   Position get_pos() const;
   std::string get_text() const;
   RGBColor get_color() const;
+
+  void onRender(ALLEGRO_FONT* font);
 };

@@ -2,6 +2,10 @@
 
 #include <iostream>
 
+ALLEGRO_FONT* Game::get_font() const {
+  return _font;
+}
+
 Game::Game() {
   if (!al_init()) {
     std::cerr << "couldn't initialize allegro" << std::endl;
@@ -13,7 +17,17 @@ Game::Game() {
     exit(1);
   }
 
-  _renderer = new Renderer();
+  _display = al_create_display(640, 640);
+  if (!_display) {
+    std::cerr << "couldn't initialize display" << std::endl;
+    exit(1);
+  }
+
+  _font = al_create_builtin_font();
+  if (!_font) {
+    printf("couldn't initialize font\n");
+    exit(1);
+  }
 
   _timer = al_create_timer(1.0 / 30.0);
   if (!_timer) {
@@ -28,20 +42,23 @@ Game::Game() {
   }
 
   al_register_event_source(_queue, al_get_keyboard_event_source());
-  al_register_event_source(_queue, al_get_display_event_source(_renderer->get_display()));
+  al_register_event_source(_queue, al_get_display_event_source(_display));
   al_register_event_source(_queue, al_get_timer_event_source(_timer));
 }
 
 Game::~Game() {
-  delete _renderer;
   al_destroy_timer(_timer);
   al_destroy_event_queue(_queue);
+  al_destroy_font(_font);
+  al_destroy_display(_display);
 }
 
 void Game::mainLoop() {
   bool done = false;
   bool redraw = true;
   ALLEGRO_EVENT event;
+
+  Text t({ 64, 64 }, { 255, 255, 255 }, "Hello World");
 
   al_start_timer(_timer);
   while (1) {
@@ -64,12 +81,11 @@ void Game::mainLoop() {
     }
 
     if (redraw && al_is_event_queue_empty(_queue)) {
-      _renderer->clear();
+      al_clear_to_color(al_map_rgb(0, 0, 0)); 
 
-      _renderer->draw({ {0, 0}, {255, 255, 255}, "Hello World!" });
-      _renderer->draw({ {64, 64}, {255, 255, 255}, "EAE PARÇAS" });
+      t.onRender(_font);
 
-      _renderer->commit();
+      al_flip_display(); 
 
       redraw = false;
     }
