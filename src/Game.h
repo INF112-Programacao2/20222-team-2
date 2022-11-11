@@ -2,9 +2,6 @@
 
 #include <allegro5/allegro.h>
 
-#include "Text.h"
-#include "Tabuleiro.h"
-
 class Game {
 private:
   ALLEGRO_DISPLAY* _display;
@@ -14,8 +11,6 @@ private:
 public:
   Game();
   ~Game();
-
-  ALLEGRO_FONT *get_font() const;
 
   void mainLoop();
 };

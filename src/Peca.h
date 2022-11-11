@@ -3,17 +3,21 @@
 #include "GameObject.h"
 #include "Position.h"
 
-enum class PieceColor {
+#include <allegro5/allegro.h>
+
+enum class Cor {
   PRETO,
   BRANCO
 };
 
 class Peca : public GameObject {
 protected:
-  PieceColor _cor;
+  Cor _cor;
   Position _pos;
+  ALLEGRO_BITMAP* _sprite;
 
-  Peca(PieceColor cor, Position pos);
+  Peca(Cor cor, Position pos, ALLEGRO_BITMAP* _sprite);
+  ~Peca() {}
 
 public:
   virtual void onRender();

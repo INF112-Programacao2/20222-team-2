@@ -38,9 +38,9 @@ OBJS := $(SRCS:$(SRC_DIR)/%.cpp=$(BUILD_DIR)/%.o)
 
 # Adicionar subdiretórios ao caminho de include para o compilador encontrar todos os
 # header files
-# INC_DIRS := $(shell find $(SRC_DIR) -type d)
+INC_DIRS := $(shell find $(SRC_DIR) -type d)
 # Gera as flags de inclusão. Ex: src/gui vira -Isrc/gui
-# INC_FLAGS := $(addprefix -I,$(INC_DIRS))
+INC_FLAGS := $(addprefix -I,$(INC_DIRS))
 
 # Linkar o executável final
 all: $(OBJS)
