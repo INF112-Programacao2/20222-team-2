@@ -20,6 +20,7 @@ Game::Game() {
   EC_CALL(_display = al_create_display(SCREEN_W, SCREEN_H));
   EC_CALL(_font = al_create_builtin_font());
   EC_CALL(al_init_image_addon());
+  EC_CALL(al_init_primitives_addon());
 
   // carregar imagens das pecas
   // pretas
