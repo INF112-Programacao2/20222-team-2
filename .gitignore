@@ -3,7 +3,7 @@
 .ccls-cache
 .clangd*
 compile_commands.json
-
+.vs
 # ignorar binarios
 bin/*
 !bin/.gitkeep
