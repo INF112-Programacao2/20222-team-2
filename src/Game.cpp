@@ -2,6 +2,9 @@
 
 #include <allegro5/allegro_image.h>
 
+#include <imgui.h>
+#include <imgui_impl_allegro5.h>
+
 #include <iostream>
 
 #include "Text.h"
@@ -17,6 +20,7 @@ Game::Game() {
   // inicializa allegro e seus sistemas
   EC_CALL(al_init());
   EC_CALL(al_install_keyboard());
+  EC_CALL(al_install_mouse());
   EC_CALL(_display = al_create_display(SCREEN_W, SCREEN_H));
   EC_CALL(_font = al_create_builtin_font());
   EC_CALL(al_init_image_addon());
@@ -44,14 +48,26 @@ Game::Game() {
   // cria fila de eventos para usar com a API da allegro
   EC_CALL(_queue = al_create_event_queue());
   al_register_event_source(_queue, al_get_keyboard_event_source());
+  al_register_event_source(_queue , al_get_mouse_event_source());
   al_register_event_source(_queue, al_get_display_event_source(_display));
   al_register_event_source(_queue, al_get_timer_event_source(_timer));
 
   // define o alvo padrão para renderizar na tela
   al_set_target_bitmap(al_get_backbuffer(_display));
+
+  // Inicializar contexto da Dear ImGui
+  IMGUI_CHECKVERSION();
+  ImGui::CreateContext();
+  ImGuiIO& io = ImGui::GetIO(); (void)io;
+  ImGui::StyleColorsLight();
+  ImGui_ImplAllegro5_Init(_display);
 }
 
 Game::~Game() {
+  // Limpa o contexto da Dear ImGui
+    ImGui_ImplAllegro5_Shutdown();
+    ImGui::DestroyContext();
+
   // desaloca todas as imagens das peças
   // pretas
   al_destroy_bitmap(_kingBlackBmp);
@@ -76,11 +92,16 @@ Game::~Game() {
   al_destroy_event_queue(_queue);
   al_destroy_font(_font);
   al_destroy_display(_display);
+  al_uninstall_mouse();
   al_uninstall_system();
 }
 
 void Game::mainLoop() {
-  bool done = false;
+  // Variáveis para ImGui
+  bool show_demo_window = true;
+  bool show_another_window = false;
+
+  bool running = true;
   bool redraw = true;
   ALLEGRO_EVENT event;
 
@@ -90,8 +111,10 @@ void Game::mainLoop() {
   t.inicializarJogo();
 
   al_start_timer(_timer);
-  while (true) {
+  while (running) {
     al_wait_for_event(_queue, &event);
+
+    ImGui_ImplAllegro5_ProcessEvent(&event);
 
     switch (event.type) {
     case ALLEGRO_EVENT_TIMER:
@@ -99,37 +122,70 @@ void Game::mainLoop() {
       redraw = true;
       break;
 
-    // case ALLEGRO_EVENT_KEY_DOWN:
-    case ALLEGRO_EVENT_DISPLAY_CLOSE:
-      done = true;
+    case ALLEGRO_EVENT_KEY_DOWN:
+      if (event.keyboard.keycode == ALLEGRO_KEY_ESCAPE) {
+        running = false;
+      }
       break;
-    }
+      
+    case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN:
+    case ALLEGRO_EVENT_MOUSE_BUTTON_UP:
+      std::cout << "Mouse button " << event.mouse.button << " at (" << event.mouse.x << ", " << event.mouse.y << ")" << std::endl;
+      break;
 
-    if (done) {
+    case ALLEGRO_EVENT_DISPLAY_CLOSE:
+      running = false;
       break;
     }
 
     if (redraw && al_is_event_queue_empty(_queue)) {
       al_clear_to_color(al_map_rgb(0, 0, 0)); 
 
+      // Start the Dear ImGui frame
+      ImGui_ImplAllegro5_NewFrame();
+      ImGui::NewFrame();
+
+      // 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
+      if (show_demo_window)
+          ImGui::ShowDemoWindow(&show_demo_window);
+
+      // 2. Show a simple window that we create ourselves. We use a Begin/End pair to create a named window.
+      {
+          static float f = 0.0f;
+          static int counter = 0;
+
+          ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
+
+          ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
+          ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
+          ImGui::Checkbox("Another Window", &show_another_window);
+
+          ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
+
+          if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
+              counter++;
+          ImGui::SameLine();
+          ImGui::Text("counter = %d", counter);
+
+          ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+          ImGui::End();
+      }
+
+      // 3. Show another simple window.
+      if (show_another_window)
+      {
+          ImGui::Begin("Another Window", &show_another_window);   // Pass a pointer to our bool variable (the window will have a closing button that will clear the bool when clicked)
+          ImGui::Text("Hello from another window!");
+          if (ImGui::Button("Close Me"))
+              show_another_window = false;
+          ImGui::End();
+      }
+
       t.onRender();
-      // text.onRender();
-      // r.onRender();
 
-      // al_draw_bitmap(_kingBlackBmp, 0.0, 0.0, 0);
-      // al_draw_bitmap(_queenBlackBmp, 80.0, 0.0, 0);
-      // al_draw_bitmap(_bishopBlackBmp, 160.0, 0.0, 0);
-      // al_draw_bitmap(_knightBlackBmp, 240.0, 0.0, 0);
-      // al_draw_bitmap(_rookBlackBmp, 320.0, 0.0, 0);
-      // al_draw_bitmap(_pawnBlackBmp, 400.0, 0.0, 0);
-      //
-      // al_draw_bitmap(_kingWhiteBmp, 0.0, 560.0, 0);
-      // al_draw_bitmap(_queenWhiteBmp, 80.0, 560.0, 0);
-      // al_draw_bitmap(_bishopWhiteBmp, 160.0, 560.0, 0);
-      // al_draw_bitmap(_knightWhiteBmp, 240.0, 560.0, 0);
-      // al_draw_bitmap(_rookWhiteBmp, 320.0, 560.0, 0);
-      // al_draw_bitmap(_pawnWhiteBmp, 400.0, 560.0, 0);
-
+      // Atualiza tela (render)
+      ImGui::Render();
+      ImGui_ImplAllegro5_RenderDrawData(ImGui::GetDrawData());
       al_flip_display(); 
 
       redraw = false;
