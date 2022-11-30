@@ -72,3 +72,4 @@ void Tabuleiro::inicializarJogo() {
     _tabuleiro[x][6] = new Peao(Cor::BRANCO, { (float)x, 6 }, _pawnWhiteBmp);
   }
 }
+
