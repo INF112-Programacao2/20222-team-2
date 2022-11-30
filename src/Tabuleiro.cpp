@@ -67,7 +67,7 @@ void Tabuleiro::inicializarJogo() {
   _tabuleiro[5][7] = new Bispo(Cor::BRANCO,  { 5, 7 }, _bishopWhiteBmp);
   _tabuleiro[6][7] = new Cavalo(Cor::BRANCO, { 6, 7 }, _knightWhiteBmp);
   _tabuleiro[7][7] = new Torre(Cor::BRANCO,  { 7, 7 }, _rookWhiteBmp);
-  // pretas, peões
+  // brancas, peões
   for (int x = 0; x < 8; ++x) {
     _tabuleiro[x][6] = new Peao(Cor::BRANCO, { (float)x, 6 }, _pawnWhiteBmp);
   }
