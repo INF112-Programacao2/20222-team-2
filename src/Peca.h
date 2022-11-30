@@ -21,4 +21,5 @@ protected:
 
 public:
   virtual void onRender();
+  Position movepeca(); //New
 };
