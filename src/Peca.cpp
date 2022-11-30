@@ -10,3 +10,6 @@ void Peca::onRender() {
                  (float)_pos.get_x() * BOARD_STEP,
                  (float)_pos.get_y() * BOARD_STEP, 0);
 }
+Position Peca::movepeca(){
+  return _pos;
+}
