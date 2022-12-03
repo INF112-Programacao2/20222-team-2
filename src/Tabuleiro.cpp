@@ -90,7 +90,7 @@ void Tabuleiro::moverPeca(int x, int y, int x2, int y2) {
   else if(_tabuleiro[x2][y2]->getCor() != _tabuleiro[x][y]->getCor()){ //Se a posição estiver com uma peça de cor diferente, o programa
   _tabuleiro[x2][y2] = _tabuleiro[x][y];
   _tabuleiro[x2][y2]->setpos({x3, y3});
-  _tabuleiro[x][y] = nullptr; //Programa está fechando se isso aqui acontecer - PRECISA ARRUMAR
+  //_tabuleiro[x][y] = nullptr; //Programa está fechando se isso aqui acontecer - PRECISA ARRUMAR
   }
   }
 }
