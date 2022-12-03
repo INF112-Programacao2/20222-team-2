@@ -11,4 +11,9 @@ public:
 
   float get_x();
   float get_y();
+  float set_x(float pos_x);
+  float set_y(float pos_y);
+  //Função para mover a peça
+  void movepeca(float x, float y);
+
 };
