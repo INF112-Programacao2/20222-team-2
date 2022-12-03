@@ -21,7 +21,6 @@ Game::Game() {
   EC_CALL(al_init());
   EC_CALL(al_install_keyboard());
   EC_CALL(al_install_mouse()); //Instalação do mouse
-  //EC_CALL(al_set_system_mouse_cursor(_display, ALLEGRO_SYSTEM_MOUSE_CURSOR_DEFAULT));
   EC_CALL(_display = al_create_display(SCREEN_W, SCREEN_H));
   EC_CALL(_font = al_create_builtin_font());
   EC_CALL(al_init_image_addon());
@@ -106,10 +105,16 @@ void Game::mainLoop() {
   bool running = true;
   bool redraw = true;
   ALLEGRO_EVENT event;
+  int posmouse_x; //Posição inicial x do mouse com botão esquerdo pressionado
+  int posmouse_y; //Posição inicial y do mouse com botão esquerdo pressionado
+  int posmouse_x2; //Posição inicial x do mouse com botão direito pressionado
+  int posmouse_y2; //Posição inicial y do mouse com botão direito pressionado
 
   // Text text({ 64, 64 }, { 255, 0, 0 }, "Hello World");
   // Rei r(Cor::BRANCO, { 1, 1 }, _kingWhiteBmp);
   Tabuleiro t;
+  
+  
   t.inicializarJogo();
 
   al_start_timer(_timer);
@@ -208,13 +213,27 @@ void Game::mainLoop() {
     
     case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN:
     case ALLEGRO_EVENT_MOUSE_BUTTON_UP:
+
+    if(event.mouse.button & 1){
+      posmouse_x = event.mouse.x/80;
+      posmouse_y = event.mouse.y/80;
+      std::cout << "Posição X: " << posmouse_x << " Posição Y: " << posmouse_y << std::endl;
+    }
+    else if(event.mouse.button & 2){
+      posmouse_x2 = event.mouse.x/80;
+      posmouse_y2 = event.mouse.y/80;
+      std::cout << "Posição X: " << posmouse_x2 << " Posição Y: " << posmouse_y2 << std::endl;
+    }
+    t.moverPeca(posmouse_x, posmouse_y, posmouse_x2, posmouse_y2);
+     
       std::cout << "Mouse button " << event.mouse.button << " at (" << event.mouse.x/80 << ", " << event.mouse.y/80 << ")" << std::endl;
       break;
-          
+         
     case ALLEGRO_EVENT_DISPLAY_CLOSE:
-      
       break;
     }
+    }
   }
+  
 
-}
+
