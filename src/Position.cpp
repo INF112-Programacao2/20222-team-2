@@ -9,3 +9,8 @@ float Position::get_x() {
 float Position::get_y() {
   return _pos_y;
 }
+
+void Position::movepeca(float x, float y){
+  _pos_x = x;
+  _pos_y = y;
+}
