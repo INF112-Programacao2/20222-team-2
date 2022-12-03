@@ -20,7 +20,12 @@ public:
   Tabuleiro();
   ~Tabuleiro() {}
 
-  // void posicionarPeca();
+  void moverPeca(int x, int y, int x2, int y2);
+  void retornaposicao_x();
+  void retornaposicao_y();
+  Peca* retornarPeca(int x, int y);
+  void selecionarPeca(int x, int y);
+  int identificarPeca(int x, int y);
   // void removerPeca();
   void inicializarJogo();
 
