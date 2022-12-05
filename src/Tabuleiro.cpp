@@ -1,5 +1,5 @@
 #include "Tabuleiro.h"
-
+#include <iostream>
 #include "constants.h"
 #include "globals.h"
 
@@ -69,7 +69,8 @@ void Tabuleiro::inicializarJogo() {
   _tabuleiro[7][7] = new Torre(Cor::BRANCO,  { 7, 7 }, _rookWhiteBmp);
   // brancas, peões
   for (int x = 0; x < 8; ++x) {
-    _tabuleiro[x][6] = new Peao(Cor::BRANCO, { (float)x, 6 }, _pawnWhiteBmp);
+    _tabuleiro[x][6] = new Peao(Cor::BRANCO, { (float)x, 6 }, _pawnWhiteBmp); 
   }
+  
 }
 

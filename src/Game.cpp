@@ -20,7 +20,8 @@ Game::Game() {
   // inicializa allegro e seus sistemas
   EC_CALL(al_init());
   EC_CALL(al_install_keyboard());
-  EC_CALL(al_install_mouse());
+  EC_CALL(al_install_mouse()); //Instalação do mouse
+  //EC_CALL(al_set_system_mouse_cursor(_display, ALLEGRO_SYSTEM_MOUSE_CURSOR_DEFAULT));
   EC_CALL(_display = al_create_display(SCREEN_W, SCREEN_H));
   EC_CALL(_font = al_create_builtin_font());
   EC_CALL(al_init_image_addon());
@@ -50,6 +51,7 @@ Game::Game() {
   al_register_event_source(_queue, al_get_keyboard_event_source());
   al_register_event_source(_queue , al_get_mouse_event_source());
   al_register_event_source(_queue, al_get_display_event_source(_display));
+  al_register_event_source(_queue , al_get_mouse_event_source()); //New evento para o mouse
   al_register_event_source(_queue, al_get_timer_event_source(_timer));
 
   // define o alvo padrão para renderizar na tela
@@ -189,6 +191,29 @@ void Game::mainLoop() {
       al_flip_display(); 
 
       redraw = false;
+    }
+
+//Função para adicionar a funcionalidade do mouse dentro do display e descobrir sua posição
+  switch (event.type) {
+    case ALLEGRO_EVENT_TIMER:
+      // game logic goes here.
+      redraw = true;
+      break;
+
+    case ALLEGRO_EVENT_KEY_DOWN:
+      if (event.keyboard.keycode == ALLEGRO_KEY_ESCAPE) {
+        
+      }
+      break;
+    
+    case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN:
+    case ALLEGRO_EVENT_MOUSE_BUTTON_UP:
+      std::cout << "Mouse button " << event.mouse.button << " at (" << event.mouse.x/80 << ", " << event.mouse.y/80 << ")" << std::endl;
+      break;
+          
+    case ALLEGRO_EVENT_DISPLAY_CLOSE:
+      
+      break;
     }
   }
 
