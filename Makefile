@@ -11,7 +11,7 @@ CXX := g++
 ADDITIONAL_FLAGS := -DIMGUI_USER_CONFIG=\"/home/zig/personal/INF112/20222-team-2/lib/imgui-master/examples/example_allegro5/imconfig_allegro5.h\"
 
 # Definir flags de compilação
-CXXFLAGS := -O2 $(ADDITIONAL_FLAGS)
+CXXFLAGS := -O2 -std=c++17 $(ADDITIONAL_FLAGS)
 
 # Define alvo de debug
 debug: CXXFLAGS := $(filter-out -O2,$(CXXFLAGS))

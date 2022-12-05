@@ -7,8 +7,8 @@ Peca::Peca(Cor cor, Position pos, ALLEGRO_BITMAP *sprite, std::string tipo)
 
 void Peca::onRender() {
   al_draw_bitmap(_sprite,
-                 (float)_pos.get_x() * BOARD_STEP,
-                 (float)_pos.get_y() * BOARD_STEP, 0);
+                 (float)_pos.get_x() * BOARD_STEP + OFFSET_X,
+                 (float)_pos.get_y() * BOARD_STEP + OFFSET_Y, 0);
 }
 
 std::string Peca::getTipo() {
