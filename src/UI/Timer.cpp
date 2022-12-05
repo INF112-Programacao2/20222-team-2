@@ -30,6 +30,7 @@ void Timer::onRender()
     ImGui::SetNextWindowPos(ImVec2(main_viewport->WorkPos.x, main_viewport->WorkPos.y));
     ImGui::SetNextWindowSize(ImVec2(SCREEN_W, OFFSET_Y));
 
+    // TODO: create global window flags for static windows, and maybe other window types
     ImGuiWindowFlags window_flags = 0;
     window_flags |= ImGuiWindowFlags_NoTitleBar;
     window_flags |= ImGuiWindowFlags_NoScrollbar;
