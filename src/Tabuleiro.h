@@ -11,6 +11,7 @@
 #include "Cavalo.h"
 #include "Torre.h"
 #include "Peao.h"
+//#include "Turno.h"
 
 class Tabuleiro : public GameObject {
 private:

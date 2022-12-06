@@ -3,7 +3,9 @@
 #include "constants.h"
 #include "globals.h"
 #include "Game.h"
-#include "Turno.h"
+//#include "Turno.h"
+
+
 
 Tabuleiro::Tabuleiro()
 {
@@ -100,12 +102,16 @@ void Tabuleiro::moverPeca(int x, int y, int x2, int y2)
   int turno = 1; // Variável para verificar o turno do jogador troca o valor toda vez que o jogador faz um movimento
   
   int qtmovimentospreto; // Variável para verificar quantos movimentos o preto fez
-  int qtmovimentosbranco; // Variável para verificar quantos movimentos o branco fez
+  int qtmovimentosbranco=0; // Variável para verificar quantos movimentos o branco fez
 
+ std::cout << "Movimentos do preto 1: "<< qtmovimentospreto << std::endl;
 
-  if (turno == 1)
+  while (turno == 1 && qtmovimentospreto == 0)
   {
-    if (turno == 1 && _tabuleiro[x][y] != nullptr && _tabuleiro[x][y]->getCor() == Cor::PRETO )
+  
+    qtmovimentospreto=0;
+
+    if (_tabuleiro[x][y] != nullptr && _tabuleiro[x][y]->getCor() == Cor::PRETO)
     {
       
       if (_tabuleiro[x2][y2] == nullptr)
@@ -113,37 +119,51 @@ void Tabuleiro::moverPeca(int x, int y, int x2, int y2)
         _tabuleiro[x2][y2] = _tabuleiro[x][y];
         _tabuleiro[x][y] = nullptr;
         _tabuleiro[x2][y2]->setpos({x1, y1});
+        continue;
       }
-      else if (turno == 1 && _tabuleiro[x2][y2]->getCor() == Cor::BRANCO && turno == 1) //Se quise
+      else if (_tabuleiro[x2][y2]->getCor() == Cor::BRANCO) //Se quise
       {
         _tabuleiro[x2][y2] = _tabuleiro[x][y];
         _tabuleiro[x][y] = nullptr;
         _tabuleiro[x2][y2]->setpos({x1, y1});
+        continue;
       }
     }
+    turno = 2;
+    qtmovimentospreto++;
+    qtmovimentosbranco--;
+    continue;
+    
   }
- 
+
+ std::cout << turno << std::endl;
+ std::cout << "Movimentos do preto 2: " << qtmovimentospreto << std::endl;
   //Se o turno for igual a 2 somente as peças brancas se movem
- else if (turno == 2)
+ while (turno == 2 && qtmovimentospreto == 1)
   {
-    if (turno == 2 &&_tabuleiro[x][y] != nullptr && _tabuleiro[x][y]->getCor() == Cor::BRANCO) 
+    if (_tabuleiro[x][y] != nullptr && _tabuleiro[x][y]->getCor() == Cor::BRANCO) 
     {
       if (_tabuleiro[x2][y2] == nullptr)
       {
         _tabuleiro[x2][y2] = _tabuleiro[x][y]; //Troca a peça de posição
         _tabuleiro[x][y] = nullptr; //A posição antiga fica vazia
         _tabuleiro[x2][y2]->setpos({x1, y1}); //A posição nova recebe a peça
-        qtmovimentosbranco++;
+        continue;
       }
-      else if (turno == 2 && _tabuleiro[x2][y2]->getCor() == Cor::PRETO) //Se quiser mover para uma posição onde tenha peça de outra cor 
+      else if (_tabuleiro[x2][y2]->getCor() == Cor::PRETO) //Se quiser mover para uma posição onde tenha peça de outra cor 
       {
         _tabuleiro[x2][y2] = _tabuleiro[x][y]; //Troca a peça de posição
         _tabuleiro[x][y] = nullptr; //A posição antiga fica vazia
         _tabuleiro[x2][y2]->setpos({x1, y1}); //A posição nova recebe a peça
-        qtmovimentosbranco++;
+        continue;
       }
     }
+    turno = 1;
+    qtmovimentospreto--;
+    qtmovimentosbranco++;
   }
+ std::cout << turno << std::endl;
+ std::cout << "Movimentos do preto 3: " << qtmovimentospreto << std::endl;
  }
 
 
