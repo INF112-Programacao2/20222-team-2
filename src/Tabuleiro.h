@@ -15,6 +15,7 @@
 class Tabuleiro : public GameObject {
 private:
   Peca* _tabuleiro[8][8];
+  
 
 public:
   Tabuleiro();
@@ -28,6 +29,5 @@ public:
   int identificarPeca(int x, int y);
   // void removerPeca();
   void inicializarJogo();
-
   virtual void onRender();
 };

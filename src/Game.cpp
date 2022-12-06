@@ -141,21 +141,20 @@ void Game::mainLoop() {
       break;
     
     case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN:
-    case ALLEGRO_EVENT_MOUSE_BUTTON_UP:
-
-    if(event.mouse.button & 1){
-      posmouse_x = event.mouse.x/80;
-      posmouse_y = event.mouse.y/80;
-      std::cout << "Posição X: " << posmouse_x << " Posição Y: " << posmouse_y << std::endl;
+    
+    if(event.mouse.button & 1){ //Se o botão esquerdo do mouse for pressionado
+      posmouse_x = event.mouse.x/80; //Posição x do mouse nesse momento
+      posmouse_y = event.mouse.y/80; //Posição y do mouse nesse momento
+      //std::cout << "Posição X: " << posmouse_x << " Posição Y: " << posmouse_y << std::endl;
     }
-    else if(event.mouse.button & 2){
-      posmouse_x2 = event.mouse.x/80;
-      posmouse_y2 = event.mouse.y/80;
-      std::cout << "Posição X: " << posmouse_x2 << " Posição Y: " << posmouse_y2 << std::endl;
+    else if(event.mouse.button & 2){ //Se o botão direito do mouse for pressionado
+      posmouse_x2 = event.mouse.x/80; //Salva a posição x do mouse nesse momento 
+      posmouse_y2 = event.mouse.y/80; //Salva a posição y do mouse nesse momento
+      //std::cout << "Posição X2: " << posmouse_x2 << " Posição Y2: " << posmouse_y2 << std::endl;
     }
     t.moverPeca(posmouse_x, posmouse_y, posmouse_x2, posmouse_y2);
      
-      std::cout << "Mouse button " << event.mouse.button << " at (" << event.mouse.x/80 << ", " << event.mouse.y/80 << ")" << std::endl;
+      //std::cout << "Mouse button " << event.mouse.button << " at (" << event.mouse.x/80 << ", " << event.mouse.y/80 << ")" << std::endl;
       break;
          
     case ALLEGRO_EVENT_DISPLAY_CLOSE:

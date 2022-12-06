@@ -23,3 +23,19 @@ Position Peca::setpos(Position pos) {
   _pos = pos;
   return _pos;
 }
+
+int Peca::getTurno() {
+  return turno;
+}
+
+void Peca::setTurno(int turno) {
+  this->turno = turno;
+}
+
+void Peca::trocarTurno() {
+  if (turno == 1) {
+    turno = 2;
+  } else {
+    turno = 1;
+  }
+}

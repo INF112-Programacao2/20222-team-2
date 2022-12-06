@@ -16,6 +16,7 @@ protected:
   Position _pos;
   ALLEGRO_BITMAP* _sprite;
   std::string _tipo;
+  int turno = 1;
 
   Peca(Cor cor, Position pos, ALLEGRO_BITMAP* _sprite, std::string tipo);
   ~Peca() {}
@@ -26,4 +27,7 @@ public:
   std::string getTipo();
   Cor getCor();
   Position setpos(Position pos);
+  int getTurno();
+  void setTurno(int turno);
+  void trocarTurno();
 };
