@@ -101,8 +101,8 @@ void Tabuleiro::moverPeca(int x, int y, int x2, int y2)
   float y3 = y;  // Conversão de int para float 
   int turno = 1; // Variável para verificar o turno do jogador troca o valor toda vez que o jogador faz um movimento
   
-  int qtmovimentospreto; // Variável para verificar quantos movimentos o preto fez
-  int qtmovimentosbranco=0; // Variável para verificar quantos movimentos o branco fez
+  int qtmovimentospreto = 0; // Variável para verificar quantos movimentos o preto fez
+  int qtmovimentosbranco = 0; // Variável para verificar quantos movimentos o branco fez
 
  std::cout << "Movimentos do preto 1: "<< qtmovimentospreto << std::endl;
 

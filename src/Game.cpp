@@ -141,8 +141,6 @@ void Game::mainLoop() {
       break;
     
     case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN:
-    case ALLEGRO_EVENT_MOUSE_BUTTON_UP:
-
     if(event.mouse.button & 1){ //Se o botão esquerdo do mouse for pressionado
       posmouse_x = event.mouse.x/80; //Posição x do mouse nesse momento
       posmouse_y = event.mouse.y/80; //Posição y do mouse nesse momento
