@@ -4,7 +4,7 @@
 #include "Game.h"
 #include "Peca.h"
 
-class Turno {
+class Turno : public GameObject{
 
 private:
 int _turno;
