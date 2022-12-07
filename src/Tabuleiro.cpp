@@ -111,10 +111,10 @@ void Tabuleiro::moverPeca(int x, int y, int x2, int y2)
   
     qtmovimentospreto=0;
 
-    if (_tabuleiro[x][y] != nullptr && _tabuleiro[x][y]->getCor() == Cor::PRETO)
+    if (_tabuleiro[x][y] != nullptr && _tabuleiro[x][y]->getCor() == Cor::PRETO && _tabuleiro[x][y]->getTipo() == "Peao")
     {
       
-      if (_tabuleiro[x2][y2] == nullptr)
+      if (_tabuleiro[x2][y2] == nullptr &&  _tabuleiro[x][y] -> validarMovimento({x1, y1}))
       {
         _tabuleiro[x2][y2] = _tabuleiro[x][y];
         _tabuleiro[x][y] = nullptr;
@@ -140,9 +140,9 @@ void Tabuleiro::moverPeca(int x, int y, int x2, int y2)
   //Se o turno for igual a 2 somente as peças brancas se movem
  while (turno == 2 && qtmovimentospreto == 1)
   {
-    if (_tabuleiro[x][y] != nullptr && _tabuleiro[x][y]->getCor() == Cor::BRANCO) 
+    if (_tabuleiro[x][y] != nullptr && _tabuleiro[x][y]->getCor() == Cor::BRANCO && _tabuleiro[x][y]->getTipo() == "Peao") 
     {
-      if (_tabuleiro[x2][y2] == nullptr)
+      if (_tabuleiro[x2][y2] == nullptr && _tabuleiro[x][y] -> validarMovimento({x1, y1}))
       {
         _tabuleiro[x2][y2] = _tabuleiro[x][y]; //Troca a peça de posição
         _tabuleiro[x][y] = nullptr; //A posição antiga fica vazia

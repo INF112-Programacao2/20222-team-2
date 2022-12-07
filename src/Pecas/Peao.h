@@ -8,5 +8,5 @@ public:
   ~Peao() {}
   Position movepeca();
   
-  void validarMovimento(Position pos);
+  bool validarMovimento(Position pos);
 };

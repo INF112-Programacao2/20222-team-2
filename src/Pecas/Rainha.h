@@ -7,5 +7,5 @@ public:
   Rainha(Cor cor, Position pos, ALLEGRO_BITMAP* sprite, std::string tipo);
   ~Rainha() {}
 
-  void validarMovimento(Position pos);
+  bool validarMovimento(Position pos);
 };

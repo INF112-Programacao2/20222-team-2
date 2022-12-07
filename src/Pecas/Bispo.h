@@ -7,6 +7,6 @@ public:
   Bispo(Cor cor, Position pos, ALLEGRO_BITMAP* sprite, std::string tipo);
   ~Bispo() {}
 
-  void validarMovimento(Position pos);
+ bool validarMovimento(Position pos);
 };
 
