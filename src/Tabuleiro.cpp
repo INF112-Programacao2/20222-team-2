@@ -84,7 +84,7 @@ void Tabuleiro::inicializarJogo()
   _tabuleiro[4][7] = new Rei(Cor::BRANCO, {4, 7}, _kingWhiteBmp, "Rei");
   _tabuleiro[5][7] = new Bispo(Cor::BRANCO, {5, 7}, _bishopWhiteBmp, "Bispo");
   _tabuleiro[6][7] = new Cavalo(Cor::BRANCO, {6, 7}, _knightWhiteBmp, "Cavalo");
-  _tabuleiro[7][7] = new Torre(Cor::BRANCO, {7, 7}, _rookWhiteBmp, "Torre");
+  _tabuleiro[7][7] = new Torre(Cor::BRANCO, {7, 5}, _rookWhiteBmp, "Torre");
   // brancas, peões
   for (int x = 0; x < 8; ++x)
   {
@@ -99,7 +99,7 @@ void Tabuleiro::moverPeca(int x, int y, int x2, int y2)
   float y1 = y2; // Conversão de int para float
   float x3 = x;  // Conversão de int para float
   float y3 = y;  // Conversão de int para float 
-  int turno = 1; // Variável para verificar o turno do jogador troca o valor toda vez que o jogador faz um movimento
+ static int turno = 2; // Variável para verificar o turno do jogador troca o valor toda vez que o jogador faz um movimento
   
  static int qtmovimentospreto = 0; // Variável para verificar quantos movimentos o preto fez
  static int qtmovimentosbranco = 0; // Variável para verificar quantos movimentos o branco fez
@@ -111,7 +111,7 @@ void Tabuleiro::moverPeca(int x, int y, int x2, int y2)
   
     qtmovimentospreto=0;
 
-    if (_tabuleiro[x][y] != nullptr && _tabuleiro[x][y]->getCor() == Cor::PRETO && _tabuleiro[x][y]->getTipo() == "Cavalo") //Caso queiram testar mais alguma peça basta mudar o tipo em parenteses
+    if (_tabuleiro[x][y] != nullptr && _tabuleiro[x][y]->getCor() == Cor::PRETO && _tabuleiro[x][y]->getTipo() == "Torre") //Caso queiram testar mais alguma peça basta mudar o tipo em parenteses
     {
       
       if (_tabuleiro[x2][y2] == nullptr &&  _tabuleiro[x][y] -> validarMovimento({x1, y1}))
@@ -140,7 +140,7 @@ void Tabuleiro::moverPeca(int x, int y, int x2, int y2)
   //Se o turno for igual a 2 somente as peças brancas se movem
  while (turno == 2 && qtmovimentospreto == 1)
   {
-    if (_tabuleiro[x][y] != nullptr && _tabuleiro[x][y]->getCor() == Cor::BRANCO && _tabuleiro[x][y]->getTipo() == "Cavalo") //Caso queiram testar mais alguma peça basta mudar o tipo em parenteses
+    if (_tabuleiro[x][y] != nullptr && _tabuleiro[x][y]->getCor() == Cor::BRANCO && _tabuleiro[x][y]->getTipo() == "Torre") //Caso queiram testar mais alguma peça basta mudar o tipo em parenteses
     {
       if (_tabuleiro[x2][y2] == nullptr && _tabuleiro[x][y] -> validarMovimento({x1, y1}))
       {
