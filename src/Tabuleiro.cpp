@@ -111,7 +111,7 @@ void Tabuleiro::moverPeca(int x, int y, int x2, int y2)
   
     qtmovimentospreto=0;
 
-    if (_tabuleiro[x][y] != nullptr && _tabuleiro[x][y]->getCor() == Cor::PRETO && _tabuleiro[x][y]->getTipo() == "Peao")
+    if (_tabuleiro[x][y] != nullptr && _tabuleiro[x][y]->getCor() == Cor::PRETO && _tabuleiro[x][y]->getTipo() == "Cavalo") //Caso queiram testar mais alguma peça basta mudar o tipo em parenteses
     {
       
       if (_tabuleiro[x2][y2] == nullptr &&  _tabuleiro[x][y] -> validarMovimento({x1, y1}))
@@ -121,7 +121,7 @@ void Tabuleiro::moverPeca(int x, int y, int x2, int y2)
         _tabuleiro[x2][y2]->setpos({x1, y1});
         
       }
-      else if (_tabuleiro[x2][y2]->getCor() == Cor::BRANCO) //Se quise
+      else if (_tabuleiro[x2][y2]->getCor() == Cor::BRANCO &&  _tabuleiro[x][y] -> validarMovimento({x1, y1}) ) //Se quise
       {
         _tabuleiro[x2][y2] = _tabuleiro[x][y];
         _tabuleiro[x][y] = nullptr;
@@ -140,7 +140,7 @@ void Tabuleiro::moverPeca(int x, int y, int x2, int y2)
   //Se o turno for igual a 2 somente as peças brancas se movem
  while (turno == 2 && qtmovimentospreto == 1)
   {
-    if (_tabuleiro[x][y] != nullptr && _tabuleiro[x][y]->getCor() == Cor::BRANCO && _tabuleiro[x][y]->getTipo() == "Peao") 
+    if (_tabuleiro[x][y] != nullptr && _tabuleiro[x][y]->getCor() == Cor::BRANCO && _tabuleiro[x][y]->getTipo() == "Cavalo") //Caso queiram testar mais alguma peça basta mudar o tipo em parenteses
     {
       if (_tabuleiro[x2][y2] == nullptr && _tabuleiro[x][y] -> validarMovimento({x1, y1}))
       {
@@ -149,7 +149,7 @@ void Tabuleiro::moverPeca(int x, int y, int x2, int y2)
         _tabuleiro[x2][y2]->setpos({x1, y1}); //A posição nova recebe a peça
         
       }
-      else if (_tabuleiro[x2][y2]->getCor() == Cor::PRETO) //Se quiser mover para uma posição onde tenha peça de outra cor 
+      else if (_tabuleiro[x2][y2]->getCor() == Cor::PRETO &&  _tabuleiro[x][y] -> validarMovimento({x1, y1})) //Se quiser mover para uma posição onde tenha peça de outra cor 
       {
         _tabuleiro[x2][y2] = _tabuleiro[x][y]; //Troca a peça de posição
         _tabuleiro[x][y] = nullptr; //A posição antiga fica vazia
