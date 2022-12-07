@@ -30,4 +30,5 @@ public:
   int getTurno();
   void setTurno(int turno);
   void trocarTurno();
+  virtual void validarMovimento(Position pos);
 };

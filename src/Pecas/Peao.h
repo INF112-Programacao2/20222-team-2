@@ -7,4 +7,6 @@ public:
   Peao(Cor cor, Position pos, ALLEGRO_BITMAP* sprite, std::string tipo);
   ~Peao() {}
   Position movepeca();
+  
+  void validarMovimento(Position pos);
 };

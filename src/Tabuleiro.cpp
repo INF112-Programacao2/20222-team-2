@@ -101,8 +101,8 @@ void Tabuleiro::moverPeca(int x, int y, int x2, int y2)
   float y3 = y;  // Conversão de int para float 
   int turno = 1; // Variável para verificar o turno do jogador troca o valor toda vez que o jogador faz um movimento
   
-  int qtmovimentospreto = 0; // Variável para verificar quantos movimentos o preto fez
-  int qtmovimentosbranco = 0; // Variável para verificar quantos movimentos o branco fez
+ static int qtmovimentospreto = 0; // Variável para verificar quantos movimentos o preto fez
+ static int qtmovimentosbranco = 0; // Variável para verificar quantos movimentos o branco fez
 
  std::cout << "Movimentos do preto 1: "<< qtmovimentospreto << std::endl;
 
@@ -119,21 +119,20 @@ void Tabuleiro::moverPeca(int x, int y, int x2, int y2)
         _tabuleiro[x2][y2] = _tabuleiro[x][y];
         _tabuleiro[x][y] = nullptr;
         _tabuleiro[x2][y2]->setpos({x1, y1});
-        continue;
+        
       }
       else if (_tabuleiro[x2][y2]->getCor() == Cor::BRANCO) //Se quise
       {
         _tabuleiro[x2][y2] = _tabuleiro[x][y];
         _tabuleiro[x][y] = nullptr;
         _tabuleiro[x2][y2]->setpos({x1, y1});
-        continue;
+        
       }
     }
     turno = 2;
     qtmovimentospreto++;
     qtmovimentosbranco--;
-    continue;
-    
+       
   }
 
  std::cout << turno << std::endl;
@@ -148,14 +147,14 @@ void Tabuleiro::moverPeca(int x, int y, int x2, int y2)
         _tabuleiro[x2][y2] = _tabuleiro[x][y]; //Troca a peça de posição
         _tabuleiro[x][y] = nullptr; //A posição antiga fica vazia
         _tabuleiro[x2][y2]->setpos({x1, y1}); //A posição nova recebe a peça
-        continue;
+        
       }
       else if (_tabuleiro[x2][y2]->getCor() == Cor::PRETO) //Se quiser mover para uma posição onde tenha peça de outra cor 
       {
         _tabuleiro[x2][y2] = _tabuleiro[x][y]; //Troca a peça de posição
         _tabuleiro[x][y] = nullptr; //A posição antiga fica vazia
         _tabuleiro[x2][y2]->setpos({x1, y1}); //A posição nova recebe a peça
-        continue;
+        
       }
     }
     turno = 1;
