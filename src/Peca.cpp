@@ -43,7 +43,9 @@ void Peca::trocarTurno() {
 bool Peca::validarMovimento(Position pos) {
   if(pos.get_x() < 0 || pos.get_x() > 7 || pos.get_y() < 0 || pos.get_y() > 7) {
     throw "Movimento inválido";
+    return false;
   }
   else 
     _pos = pos;
+    return true;
 }

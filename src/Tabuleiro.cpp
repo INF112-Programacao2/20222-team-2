@@ -84,7 +84,7 @@ void Tabuleiro::inicializarJogo()
   _tabuleiro[4][7] = new Rei(Cor::BRANCO, {4, 7}, _kingWhiteBmp, "Rei");
   _tabuleiro[5][7] = new Bispo(Cor::BRANCO, {5, 7}, _bishopWhiteBmp, "Bispo");
   _tabuleiro[6][7] = new Cavalo(Cor::BRANCO, {6, 7}, _knightWhiteBmp, "Cavalo");
-  _tabuleiro[7][7] = new Torre(Cor::BRANCO, {7, 5}, _rookWhiteBmp, "Torre");
+  _tabuleiro[7][7] = new Torre(Cor::BRANCO, {7, 7}, _rookWhiteBmp, "Torre");
   // brancas, peões
   for (int x = 0; x < 8; ++x)
   {
@@ -99,19 +99,20 @@ void Tabuleiro::moverPeca(int x, int y, int x2, int y2)
   float y1 = y2; // Conversão de int para float
   float x3 = x;  // Conversão de int para float
   float y3 = y;  // Conversão de int para float 
- static int turno = 2; // Variável para verificar o turno do jogador troca o valor toda vez que o jogador faz um movimento
+  //int turno = 1; // Variável para verificar o turno do jogador troca o valor toda vez que o jogador faz um movimento
   
- static int qtmovimentospreto = 0; // Variável para verificar quantos movimentos o preto fez
- static int qtmovimentosbranco = 0; // Variável para verificar quantos movimentos o branco fez
+  int qtmovimentospreto = 0; // Variável para verificar quantos movimentos o preto fez
+  int qtmovimentosbranco = 0; // Variável para verificar quantos movimentos o branco fez
+  int contplacarbrancas = 0; // Variável para verificar quantos movimentos o preto fez
+  int contplacarpretas = 0; // Variável para verificar quantos movimentos o branco fez
 
- std::cout << "Movimentos do preto 1: "<< qtmovimentospreto << std::endl;
 
-  while (turno == 1 && qtmovimentospreto == 0)
-  {
+
+
   
-    qtmovimentospreto=0;
+   
 
-    if (_tabuleiro[x][y] != nullptr && _tabuleiro[x][y]->getCor() == Cor::PRETO && _tabuleiro[x][y]->getTipo() == "Torre") //Caso queiram testar mais alguma peça basta mudar o tipo em parenteses
+    if (_tabuleiro[x][y] != nullptr && _tabuleiro[x][y]->getCor() == Cor::PRETO) //Caso queiram testar mais alguma peça basta mudar o tipo em parenteses
     {
       
       if (_tabuleiro[x2][y2] == nullptr &&  _tabuleiro[x][y] -> validarMovimento({x1, y1}))
@@ -126,21 +127,15 @@ void Tabuleiro::moverPeca(int x, int y, int x2, int y2)
         _tabuleiro[x2][y2] = _tabuleiro[x][y];
         _tabuleiro[x][y] = nullptr;
         _tabuleiro[x2][y2]->setpos({x1, y1});
-        
+        contplacarpretas++;
       }
     }
-    turno = 2;
-    qtmovimentospreto++;
-    qtmovimentosbranco--;
-       
-  }
 
- std::cout << turno << std::endl;
- std::cout << "Movimentos do preto 2: " << qtmovimentospreto << std::endl;
-  //Se o turno for igual a 2 somente as peças brancas se movem
- while (turno == 2 && qtmovimentospreto == 1)
-  {
-    if (_tabuleiro[x][y] != nullptr && _tabuleiro[x][y]->getCor() == Cor::BRANCO && _tabuleiro[x][y]->getTipo() == "Torre") //Caso queiram testar mais alguma peça basta mudar o tipo em parenteses
+       
+     std::cout << "Pontos do time preto: " << contplacarpretas << std::endl;
+ 
+ 
+    if (_tabuleiro[x][y] != nullptr && _tabuleiro[x][y]->getCor() == Cor::BRANCO) //Caso queiram testar mais alguma peça basta mudar o tipo em parenteses
     {
       if (_tabuleiro[x2][y2] == nullptr && _tabuleiro[x][y] -> validarMovimento({x1, y1}))
       {
@@ -154,15 +149,12 @@ void Tabuleiro::moverPeca(int x, int y, int x2, int y2)
         _tabuleiro[x2][y2] = _tabuleiro[x][y]; //Troca a peça de posição
         _tabuleiro[x][y] = nullptr; //A posição antiga fica vazia
         _tabuleiro[x2][y2]->setpos({x1, y1}); //A posição nova recebe a peça
-        
+        contplacarbrancas++;
       }
     }
-    turno = 1;
-    qtmovimentospreto--;
-    qtmovimentosbranco++;
-  }
- std::cout << turno << std::endl;
- std::cout << "Movimentos do preto 3: " << qtmovimentospreto << std::endl;
+    
+  
+ std::cout << "Pontos do time branco: " << contplacarbrancas << std::endl;
  }
 
 
