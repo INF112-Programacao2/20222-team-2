@@ -105,12 +105,10 @@ Game::mainLoop()
   bool redraw = true;
   ALLEGRO_EVENT event;
 
-  int posmouse_x;  // Posição inicial x do mouse com botão esquerdo pressionado
-  int posmouse_y;  // Posição inicial y do mouse com botão esquerdo pressionado
-  int posmouse_x2; // Posição inicial x do mouse com botão direito pressionado
-  int posmouse_y2; // Posição inicial y do mouse com botão direito pressionado
-  std::cout << posmouse_x2 << std::endl;
-  std::cout << posmouse_y2 << std::endl;
+  int posmouse_x = 0;  // Posição inicial x do mouse com botão esquerdo pressionado
+  int posmouse_y = 0;  // Posição inicial y do mouse com botão esquerdo pressionado
+  int posmouse_x2 = 0; // Posição inicial x do mouse com botão direito pressionado
+  int posmouse_y2 = 0; // Posição inicial y do mouse com botão direito pressionado
 
   Tabuleiro t;
   Timer timer;
@@ -118,7 +116,7 @@ Game::mainLoop()
   t.inicializarJogo();
 
   al_start_timer(_timer);
-  while (true)
+  while (running)
   {
     al_wait_for_event(_queue, &event);
 
@@ -131,7 +129,6 @@ Game::mainLoop()
         redraw = true;
         break;
 
-      // case ALLEGRO_EVENT_KEY_DOWN:
       case ALLEGRO_EVENT_DISPLAY_CLOSE:
       {
         running = false;
@@ -154,27 +151,26 @@ Game::mainLoop()
           std::cout << "Posição X2: " << posmouse_x2 << " Posição Y2: " << posmouse_y2 << std::endl;
         }
         t.moverPeca(posmouse_x, posmouse_y, posmouse_x2, posmouse_y2);
-
-        // std::cout << "Mouse button " << event.mouse.button << " at (" <<
-        // event.mouse.x/80 << ", " << event.mouse.y/80 << ")" << std::endl;
         break;
       }
+    }
 
-        if (redraw && al_is_event_queue_empty(_queue))
-        {
-          al_clear_to_color(al_map_rgb(0, 0, 0));
+    if (redraw && al_is_event_queue_empty(_queue))
+    {
+      al_clear_to_color(al_map_rgb(0, 0, 0));
 
-          // Começar o fram do Dear ImGui
-          ImGui_ImplAllegro5_NewFrame();
-          ImGui::NewFrame();
+      // Começar o fram do Dear ImGui
+      ImGui_ImplAllegro5_NewFrame();
+      ImGui::NewFrame();
 
-          timer.onRender();
-          t.onRender();
+      timer.onRender();
+      t.onRender();
 
-          al_flip_display();
+      ImGui::Render();
+      ImGui_ImplAllegro5_RenderDrawData(ImGui::GetDrawData());
+      al_flip_display();
 
-          redraw = false;
-        }
+      redraw = false;
     }
   }
 }

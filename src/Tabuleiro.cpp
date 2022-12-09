@@ -14,7 +14,7 @@ Tabuleiro::onRender()
   bool isWhiteSquare = false;
 
   // desenha o quadriculado do tabuleiro
-  for (int i = 0; i <= BOARD_SIZE - BOARD_STEP; i += BOARD_STEP)
+  for (int i = OFFSET_Y; i <= BOARD_SIZE - BOARD_STEP + OFFSET_Y; i += BOARD_STEP)
   {
     isWhiteSquare = !isWhiteSquare;
     for (int j = 0; j <= BOARD_SIZE - BOARD_STEP; j += BOARD_STEP)
