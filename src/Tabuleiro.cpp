@@ -1,9 +1,10 @@
 #include "Tabuleiro.h"
-#include "constants.h"
-#include "Game.h"
-#include "globals.h"
+
 #include <iostream>
-// #include "Turno.h"
+
+#include "Game.h"
+#include "constants.h"
+#include "globals.h"
 
 Tabuleiro::Tabuleiro()
   : _pecaSelecionada(nullptr)
@@ -91,6 +92,23 @@ Tabuleiro::inicializarJogo()
   for (int x = 0; x < 8; ++x)
   {
     _tabuleiro[x][6] = new Peao(Cor::BRANCO, { (float)x, 6 }, _pawnWhiteBmp);
+  }
+}
+
+void
+Tabuleiro::onClick(const ALLEGRO_EVENT& e)
+{
+  if (_pecaSelecionada != nullptr)
+  {
+    // TODO: mover peca
+  }
+  else
+  {
+    Position pos = { e.mouse.x, e.mouse.y };
+    if (_tabuleiro[0, 0] != nullptr)
+    {
+      _pecaSelecionada = _tabuleiro[0][0];
+    }
   }
 }
 

@@ -26,5 +26,5 @@ public:
   void moverPeca(int x, int y, int x2, int y2);
   void inicializarJogo();
   virtual void onRender() const override;
-  void onClick();
+  void onClick(const ALLEGRO_EVENT& e);
 };

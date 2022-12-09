@@ -1,6 +1,6 @@
 # ignorar arquivos de IDEs
-.vscode
-.ccls-cache
+.vscode/
+.ccls-cache/
 .clangd*
 compile_commands.json
 .vs
