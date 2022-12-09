@@ -52,7 +52,7 @@ Timer::onRender() const
 
   ImGui::Text("Tempo: ");
   ImGui::SameLine();
-  ImGui::Text("%02lld:%02lld:%02lld", get_hours(), get_minutes(), get_seconds());
+  ImGui::Text("%02lld:%02lld:%02lld", get_hours(), get_minutes(), (get_seconds() % 60));
 
   ImGui::End();
 }
