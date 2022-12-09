@@ -7,6 +7,7 @@
 
 #include <iostream>
 
+#include "Partida.h"
 #include "Rei.h"
 #include "Tabuleiro.h"
 #include "Text.h"
@@ -105,10 +106,7 @@ Game::mainLoop()
   bool redraw = true;
   ALLEGRO_EVENT event;
 
-  Tabuleiro t;
-  Timer timer;
-
-  t.inicializarJogo();
+  Partida partida;
 
   al_start_timer(_timer);
   while (running)
@@ -132,7 +130,7 @@ Game::mainLoop()
 
       case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN:
       {
-        t.onClick(event);
+        partida.onClick(event);
         break;
       }
     }
@@ -145,8 +143,7 @@ Game::mainLoop()
       ImGui_ImplAllegro5_NewFrame();
       ImGui::NewFrame();
 
-      timer.onRender();
-      t.onRender();
+      partida.onRender();
 
       ImGui::Render();
       ImGui_ImplAllegro5_RenderDrawData(ImGui::GetDrawData());
