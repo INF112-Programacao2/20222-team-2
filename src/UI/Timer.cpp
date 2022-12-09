@@ -30,7 +30,7 @@ Timer::get_seconds() const
 {
   return std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now() -
                                                           _startTime)
-    .count();
+.count();
 }
 
 void
