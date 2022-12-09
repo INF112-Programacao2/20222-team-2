@@ -7,7 +7,6 @@
 
 #include <iostream>
 
-#include "Rei.h"
 #include "Tabuleiro.h"
 #include "Text.h"
 #include "Timer.h"

@@ -119,47 +119,70 @@ Tabuleiro::_screenToBoard(const ALLEGRO_EVENT& e) const
   return { ((int)e.mouse.x) / BOARD_STEP, ((int)e.mouse.y) / BOARD_STEP };
 }
 
-// Função para mover peças no tabuleiro utilizando as coordenadas x e y
+// x e y são as coordenadas de origem da peça e x2 e y2 são as coordenadas de destino
 void
-Tabuleiro::moverPeca(int x, int y, int x2, int y2)
+Tabuleiro::moverPeca(int origem_X, int origem_Y, int destino_X, int destino_Y)
 {
-  int x1 = x2;
-  int y1 = y2;
+  // x1 e y1 são as coordenadas de destino da peça
+  int auxiliar_X = destino_X;
+  int auxiliar_Y = destino_Y;
 
-  if (_tabuleiro[x][y] != nullptr && _tabuleiro[x][y]->getCor() == Cor::PRETO &&
-      _tabuleiro[x][y]->validarMovimento({ x1, y1 }) == true)
+  //Se a origem for nula
+  if (_tabuleiro[origem_X][origem_Y] == nullptr) {
+    return;
+  }
+
+  //Se a peça for preta e o movimento for válido conforme a peça
+  if (_tabuleiro[origem_X][origem_Y]->getCor() == Cor::PRETO && 
+      _tabuleiro[origem_X][origem_Y]->validarMovimento({ auxiliar_X, auxiliar_Y }))
   {
-    if (_tabuleiro[x2][y2] == nullptr)
+    //Se o destino for nulo apenas move
+    if (_tabuleiro[destino_X][destino_Y] == nullptr)
     {
-      _tabuleiro[x2][y2] = _tabuleiro[x][y];
-      _tabuleiro[x][y] = nullptr;
-      _tabuleiro[x2][y2]->setpos({ x1, y1 });
+      _tabuleiro[destino_X][destino_Y] = _tabuleiro[origem_X][origem_Y];
+      _tabuleiro[origem_X][origem_Y] = nullptr;
+      _tabuleiro[destino_X][destino_Y]->setpos({ auxiliar_X, auxiliar_Y });
     }
-    else if (_tabuleiro[x2][y2] != nullptr &&
-             _tabuleiro[x2][y2]->getCor() == Cor::BRANCO) // Se quise
+    //Se o destino for diferente de nulo e a cor for branca, são peças de times diferentes então pode mover e comer
+    else if (_tabuleiro[destino_X][destino_Y] != nullptr && 
+             _tabuleiro[destino_X][destino_Y]->getCor() == Cor::BRANCO)
     {
-      _tabuleiro[x2][y2] = _tabuleiro[x][y];
-      _tabuleiro[x][y] = nullptr;
-      _tabuleiro[x2][y2]->setpos({ x1, y1 });
+      _tabuleiro[destino_X][destino_Y] = _tabuleiro[origem_X][origem_Y];
+      _tabuleiro[origem_X][origem_Y] = nullptr;
+      _tabuleiro[destino_X][destino_Y]->setpos({ auxiliar_X, auxiliar_Y });
+    }
+    //Se o destino for diferente de nulo e a cor for preta, são peças da mesma cor então não pode mover
+    else if (_tabuleiro[destino_X][destino_Y] != nullptr &&
+             _tabuleiro[destino_X][destino_Y]->getCor() == Cor::PRETO)
+    {
+      return;
     }
   }
 
-  else if (_tabuleiro[x][y] != nullptr && _tabuleiro[x][y]->getCor() == Cor::BRANCO &&
-           _tabuleiro[x][y]->validarMovimento({ x1, y1 }) == true)
+  //Se a peça for branca
+  else if (_tabuleiro[origem_X][origem_Y]->getCor() == Cor::BRANCO && 
+           _tabuleiro[origem_X][origem_Y]->validarMovimento({ auxiliar_X, auxiliar_Y }))
   {
-    if (_tabuleiro[x2][y2] == nullptr)
+    //Se o destino for nulo
+    if (_tabuleiro[destino_X][destino_Y] == nullptr)
     {
-      _tabuleiro[x2][y2] = _tabuleiro[x][y];
-      _tabuleiro[x][y] = nullptr;
-      _tabuleiro[x2][y2]->setpos({ x1, y1 });
+      _tabuleiro[destino_X][destino_Y] = _tabuleiro[origem_X][origem_Y];
+      _tabuleiro[origem_X][origem_Y] = nullptr;
+      _tabuleiro[destino_X][destino_Y]->setpos({ auxiliar_X, auxiliar_Y });
     }
-    else if (_tabuleiro[x2][y2] != nullptr &&
-             _tabuleiro[x2][y2]->getCor() == Cor::PRETO) // Se quise
+    //Se o destino for diferente de nulo e a cor for preta, são peças de times diferentes então pode mover e comer
+    else if (_tabuleiro[destino_X][destino_Y] != nullptr &&
+             _tabuleiro[destino_X][destino_Y]->getCor() == Cor::PRETO)
     {
-      _tabuleiro[x2][y2] = _tabuleiro[x][y];
-      _tabuleiro[x][y] = nullptr;
-      _tabuleiro[x2][y2]->setpos({ x1, y1 });
-      // std::cout << "Pontos do time preto: " << contplacarpretas << std::endl;
+      _tabuleiro[destino_X][destino_Y] = _tabuleiro[origem_X][origem_Y];
+      _tabuleiro[origem_X][origem_Y] = nullptr;
+      _tabuleiro[destino_X][destino_Y]->setpos({ auxiliar_X, auxiliar_Y });
     }
+    //Se o destino for diferente de nulo e a cor for branca, são peças da mesma cor então não pode mover
+    else if (_tabuleiro[destino_X][destino_Y] != nullptr &&
+             _tabuleiro[destino_X][destino_Y]->getCor() == Cor::BRANCO)
+    {
+      return;
+    }   
   }
 }

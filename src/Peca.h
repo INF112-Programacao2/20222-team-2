@@ -7,7 +7,6 @@
 #include <allegro5/allegro.h>
 #include <string>
 
-
 class Peca : public GameObject
 {
 protected:
