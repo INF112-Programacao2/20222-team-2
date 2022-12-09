@@ -19,6 +19,8 @@ private:
   Peca* _tabuleiro[8][8];
   Peca* _pecaSelecionada;
 
+  Position _screenToBoard(const ALLEGRO_EVENT& e) const;
+
 public:
   Tabuleiro();
   ~Tabuleiro() {}

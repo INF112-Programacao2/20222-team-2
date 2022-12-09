@@ -76,7 +76,7 @@ Tabuleiro::inicializarJogo()
   // pretas, peões
   for (int x = 0; x < 8; ++x)
   {
-    _tabuleiro[x][1] = new Peao(Cor::PRETO, { (float)x, 1 }, _pawnBlackBmp);
+    _tabuleiro[x][1] = new Peao(Cor::PRETO, { x, 1 }, _pawnBlackBmp);
   }
 
   // brancas, fileira de trás
@@ -91,7 +91,7 @@ Tabuleiro::inicializarJogo()
   // brancas, peões
   for (int x = 0; x < 8; ++x)
   {
-    _tabuleiro[x][6] = new Peao(Cor::BRANCO, { (float)x, 6 }, _pawnWhiteBmp);
+    _tabuleiro[x][6] = new Peao(Cor::BRANCO, { x, 6 }, _pawnWhiteBmp);
   }
 }
 
@@ -104,22 +104,27 @@ Tabuleiro::onClick(const ALLEGRO_EVENT& e)
   }
   else
   {
-    Position pos = { e.mouse.x, e.mouse.y };
-    if (_tabuleiro[0, 0] != nullptr)
+    Position pos = _screenToBoard(e);
+    if (_tabuleiro[pos.get_x()][pos.get_y()] != nullptr)
     {
-      _pecaSelecionada = _tabuleiro[0][0];
+      _pecaSelecionada = _tabuleiro[pos.get_x()][pos.get_y()];
+      std::cout << (_pecaSelecionada->getCor() == Cor::BRANCO ? "BRANCO" : "PRETO") << std::endl;
     }
   }
+}
+
+Position
+Tabuleiro::_screenToBoard(const ALLEGRO_EVENT& e) const
+{
+  return { ((int)e.mouse.x) / BOARD_STEP, ((int)e.mouse.y) / BOARD_STEP };
 }
 
 // Função para mover peças no tabuleiro utilizando as coordenadas x e y
 void
 Tabuleiro::moverPeca(int x, int y, int x2, int y2)
 {
-  float x1 = x2; // Conversão de int para float
-  float y1 = y2; // Conversão de int para float
-  // int turno = 1; // Variável para verificar o turno do jogador troca o valor
-  // toda vez que o jogador faz um movimento
+  int x1 = x2;
+  int y1 = y2;
 
   if (_tabuleiro[x][y] != nullptr && _tabuleiro[x][y]->getCor() == Cor::PRETO &&
       _tabuleiro[x][y]->validarMovimento({ x1, y1 }) == true)

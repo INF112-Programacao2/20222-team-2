@@ -3,17 +3,17 @@
 class Position
 {
 private:
-  float _pos_x;
-  float _pos_y;
+  int _pos_x;
+  int _pos_y;
 
 public:
-  Position(float pos_x, float pos_y);
+  Position(int pos_x, int pos_y);
   ~Position() {}
 
-  float get_x() const;
-  float get_y() const;
-  float set_x(float pos_x);
-  float set_y(float pos_y);
+  int get_x() const;
+  int get_y() const;
+  int set_x(int pos_x);
+  int set_y(int pos_y);
   // Função para mover a peça
-  void movepeca(float x, float y);
+  void movepeca(int x, int y);
 };

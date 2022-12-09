@@ -1,25 +1,25 @@
 #include "Position.h"
 
-Position::Position(float pos_x, float pos_y)
+Position::Position(int pos_x, int pos_y)
   : _pos_x(pos_x)
   , _pos_y(pos_y)
 {
 }
 
-float
+int
 Position::get_x() const
 {
   return _pos_x;
 }
 
-float
+int
 Position::get_y() const
 {
   return _pos_y;
 }
 
 void
-Position::movepeca(float x, float y)
+Position::movepeca(int x, int y)
 {
   _pos_x = x;
   _pos_y = y;
