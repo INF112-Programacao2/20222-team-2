@@ -2,11 +2,15 @@
 
 #include <allegro5/allegro_image.h>
 
+#include <imgui.h>
+#include <imgui_impl_allegro5.h>
+
 #include <iostream>
 
 #include "Rei.h"
 #include "Tabuleiro.h"
 #include "Text.h"
+#include "Timer.h"
 
 #include "constants.h"
 #include "errorHandling.h"
@@ -46,16 +50,27 @@ Game::Game()
   EC_CALL(_queue = al_create_event_queue());
   al_register_event_source(_queue, al_get_keyboard_event_source());
   al_register_event_source(_queue, al_get_display_event_source(_display));
-  al_register_event_source(
-    _queue, al_get_mouse_event_source()); // New evento para o mouse
+  al_register_event_source(_queue, al_get_mouse_event_source()); // New evento para o mouse
   al_register_event_source(_queue, al_get_timer_event_source(_timer));
 
   // define o alvo padrão para renderizar na tela
   al_set_target_bitmap(al_get_backbuffer(_display));
+
+  // Inicializar contexto da Dear ImGui
+  IMGUI_CHECKVERSION();
+  ImGui::CreateContext();
+  ImGuiIO& io = ImGui::GetIO();
+  io.Fonts->AddFontFromFileTTF("assets/Inter-Regular.ttf", 24);
+  ImGui::StyleColorsLight();
+  ImGui_ImplAllegro5_Init(_display);
 }
 
 Game::~Game()
 {
+  // Limpa o contexto da Dear ImGui
+  ImGui_ImplAllegro5_Shutdown();
+  ImGui::DestroyContext();
+
   // desaloca todas as imagens das peças
   // pretas
   al_destroy_bitmap(_kingBlackBmp);
@@ -86,18 +101,19 @@ Game::~Game()
 void
 Game::mainLoop()
 {
-  bool done = false;
+  bool running = true;
   bool redraw = true;
   ALLEGRO_EVENT event;
-  int posmouse_x; // Posição inicial x do mouse com botão esquerdo pressionado
-  int posmouse_y; // Posição inicial y do mouse com botão esquerdo pressionado
+
+  int posmouse_x;  // Posição inicial x do mouse com botão esquerdo pressionado
+  int posmouse_y;  // Posição inicial y do mouse com botão esquerdo pressionado
   int posmouse_x2; // Posição inicial x do mouse com botão direito pressionado
   int posmouse_y2; // Posição inicial y do mouse com botão direito pressionado
   std::cout << posmouse_x2 << std::endl;
   std::cout << posmouse_y2 << std::endl;
-  // Text text({ 64, 64 }, { 255, 0, 0 }, "Hello World");
-  // Rei r(Cor::BRANCO, { 1, 1 }, _kingWhiteBmp);
+
   Tabuleiro t;
+  Timer timer;
 
   t.inicializarJogo();
 
@@ -105,6 +121,8 @@ Game::mainLoop()
   while (true)
   {
     al_wait_for_event(_queue, &event);
+
+    ImGui_ImplAllegro5_ProcessEvent(&event);
 
     switch (event.type)
     {
@@ -115,67 +133,48 @@ Game::mainLoop()
 
       // case ALLEGRO_EVENT_KEY_DOWN:
       case ALLEGRO_EVENT_DISPLAY_CLOSE:
-        done = true;
+      {
+        running = false;
         break;
-    }
-
-    if (done)
-    {
-      break;
-    }
-
-    if (redraw && al_is_event_queue_empty(_queue))
-    {
-      al_clear_to_color(al_map_rgb(0, 0, 0));
-
-      t.onRender();
-
-      al_flip_display();
-
-      redraw = false;
-    }
-
-    // Função para adicionar a funcionalidade do mouse dentro do display e
-    // descobrir sua posição
-    switch (event.type)
-    {
-      case ALLEGRO_EVENT_TIMER:
-        // game logic goes here.
-        redraw = true;
-        break;
-
-      case ALLEGRO_EVENT_KEY_DOWN:
-        if (event.keyboard.keycode == ALLEGRO_KEY_ESCAPE)
-        {
-        }
-        break;
+      }
 
       case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN:
-
+      {
         if (event.mouse.button & 1)
-        { // Se o botão esquerdo do mouse for pressionado
+        {                                  // Se o botão esquerdo do mouse for pressionado
           posmouse_x = event.mouse.x / 80; // Posição x do mouse nesse momento
           posmouse_y = event.mouse.y / 80; // Posição y do mouse nesse momento
           // std::cout << "Posição X: " << posmouse_x << " Posição Y: " <<
           // posmouse_y << std::endl;
         }
         else if (event.mouse.button & 2)
-        { // Se o botão direito do mouse for pressionado
-          posmouse_x2 =
-            event.mouse.x / 80; // Salva a posição x do mouse nesse momento
-          posmouse_y2 =
-            event.mouse.y / 80; // Salva a posição y do mouse nesse momento
-          std::cout << "Posição X2: " << posmouse_x2
-                    << " Posição Y2: " << posmouse_y2 << std::endl;
+        {                                   // Se o botão direito do mouse for pressionado
+          posmouse_x2 = event.mouse.x / 80; // Salva a posição x do mouse nesse momento
+          posmouse_y2 = event.mouse.y / 80; // Salva a posição y do mouse nesse momento
+          std::cout << "Posição X2: " << posmouse_x2 << " Posição Y2: " << posmouse_y2 << std::endl;
         }
         t.moverPeca(posmouse_x, posmouse_y, posmouse_x2, posmouse_y2);
 
         // std::cout << "Mouse button " << event.mouse.button << " at (" <<
         // event.mouse.x/80 << ", " << event.mouse.y/80 << ")" << std::endl;
         break;
+      }
 
-      case ALLEGRO_EVENT_DISPLAY_CLOSE:
-        break;
+        if (redraw && al_is_event_queue_empty(_queue))
+        {
+          al_clear_to_color(al_map_rgb(0, 0, 0));
+
+          // Começar o fram do Dear ImGui
+          ImGui_ImplAllegro5_NewFrame();
+          ImGui::NewFrame();
+
+          timer.onRender();
+          t.onRender();
+
+          al_flip_display();
+
+          redraw = false;
+        }
     }
   }
 }

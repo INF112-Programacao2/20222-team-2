@@ -19,16 +19,14 @@ Torre::validarMovimento(Position pos)
   else
   {
     // Movimentação da Torre
-    if (_cor == Cor::PRETO && pos.get_x() == _pos.get_x() + 1 ||
-        pos.get_x() == _pos.get_x() - 1 || pos.get_y() == _pos.get_y() + 1 ||
-        pos.get_y() == _pos.get_y() - 1)
+    if (_cor == Cor::PRETO && pos.get_x() == _pos.get_x() + 1 || pos.get_x() == _pos.get_x() - 1 ||
+        pos.get_y() == _pos.get_y() + 1 || pos.get_y() == _pos.get_y() - 1)
     {
       _pos = pos;
       return true;
     }
     else if (_cor == Cor::BRANCO && pos.get_x() == _pos.get_x() + pos_aux_x ||
-             pos.get_x() == _pos.get_x() - pos_aux_x ||
-             pos.get_y() == _pos.get_y() + pos_aux_y ||
+             pos.get_x() == _pos.get_x() - pos_aux_x || pos.get_y() == _pos.get_y() + pos_aux_y ||
              pos.get_y() == _pos.get_y() - pos_aux_y)
     {
       _pos = pos;

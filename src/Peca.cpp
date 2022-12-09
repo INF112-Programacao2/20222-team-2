@@ -14,8 +14,8 @@ void
 Peca::onRender()
 {
   al_draw_bitmap(_sprite,
-                 (float)_pos.get_x() * BOARD_STEP,
-                 (float)_pos.get_y() * BOARD_STEP,
+                 (float)_pos.get_x() * BOARD_STEP + OFFSET_X,
+                 (float)_pos.get_y() * BOARD_STEP + OFFSET_Y,
                  0);
 }
 
