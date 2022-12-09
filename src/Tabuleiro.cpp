@@ -109,54 +109,48 @@ void Tabuleiro::moverPeca(int x, int y, int x2, int y2)
 
 
 
-  
-   
 
-    if (_tabuleiro[x][y] != nullptr && _tabuleiro[x][y]->getCor() == Cor::PRETO) //Caso queiram testar mais alguma peça basta mudar o tipo em parenteses
+    if (_tabuleiro[x][y] != nullptr && _tabuleiro[x][y]->getCor() == Cor::PRETO &&  _tabuleiro[x][y] -> validarMovimento({x1, y1})==true) 
     {
-      
-      if (_tabuleiro[x2][y2] == nullptr &&  _tabuleiro[x][y] -> validarMovimento({x1, y1}))
+      if (_tabuleiro[x2][y2] == nullptr)
       {
         _tabuleiro[x2][y2] = _tabuleiro[x][y];
         _tabuleiro[x][y] = nullptr;
         _tabuleiro[x2][y2]->setpos({x1, y1});
         
       }
-      else if (_tabuleiro[x2][y2]->getCor() == Cor::BRANCO &&  _tabuleiro[x][y] -> validarMovimento({x1, y1}) ) //Se quise
+      else if (_tabuleiro[x2][y2] != nullptr && _tabuleiro[x2][y2]->getCor() == Cor::BRANCO) //Se quise
       {
         _tabuleiro[x2][y2] = _tabuleiro[x][y];
         _tabuleiro[x][y] = nullptr;
         _tabuleiro[x2][y2]->setpos({x1, y1});
         contplacarpretas++;
+        std::cout << "Pontos do time preto: " << contplacarpretas << std::endl;
       }
+     
     }
 
-       
-     std::cout << "Pontos do time preto: " << contplacarpretas << std::endl;
- 
- 
-    if (_tabuleiro[x][y] != nullptr && _tabuleiro[x][y]->getCor() == Cor::BRANCO) //Caso queiram testar mais alguma peça basta mudar o tipo em parenteses
+
+  else if (_tabuleiro[x][y] != nullptr && _tabuleiro[x][y]->getCor() == Cor::BRANCO &&  _tabuleiro[x][y] -> validarMovimento({x1, y1})==true) 
     {
-      if (_tabuleiro[x2][y2] == nullptr && _tabuleiro[x][y] -> validarMovimento({x1, y1}))
+      if (_tabuleiro[x2][y2] == nullptr)
       {
-        _tabuleiro[x2][y2] = _tabuleiro[x][y]; //Troca a peça de posição
-        _tabuleiro[x][y] = nullptr; //A posição antiga fica vazia
-        _tabuleiro[x2][y2]->setpos({x1, y1}); //A posição nova recebe a peça
+        _tabuleiro[x2][y2] = _tabuleiro[x][y];
+        _tabuleiro[x][y] = nullptr;
+        _tabuleiro[x2][y2]->setpos({x1, y1});
         
       }
-      else if (_tabuleiro[x2][y2]->getCor() == Cor::PRETO &&  _tabuleiro[x][y] -> validarMovimento({x1, y1})) //Se quiser mover para uma posição onde tenha peça de outra cor 
+      else if (_tabuleiro[x2][y2] != nullptr && _tabuleiro[x2][y2]->getCor() == Cor::PRETO) //Se quise
       {
-        _tabuleiro[x2][y2] = _tabuleiro[x][y]; //Troca a peça de posição
-        _tabuleiro[x][y] = nullptr; //A posição antiga fica vazia
-        _tabuleiro[x2][y2]->setpos({x1, y1}); //A posição nova recebe a peça
-        contplacarbrancas++;
+        _tabuleiro[x2][y2] = _tabuleiro[x][y];
+        _tabuleiro[x][y] = nullptr;
+        _tabuleiro[x2][y2]->setpos({x1, y1});
+        contplacarpretas++;
+        //std::cout << "Pontos do time preto: " << contplacarpretas << std::endl;
       }
+     
     }
-    
-  
- std::cout << "Pontos do time branco: " << contplacarbrancas << std::endl;
- }
-
+}
 
 
 

@@ -87,9 +87,10 @@ void Game::mainLoop() {
   ALLEGRO_EVENT event;
   int posmouse_x; //Posição inicial x do mouse com botão esquerdo pressionado
   int posmouse_y; //Posição inicial y do mouse com botão esquerdo pressionado
-  int posmouse_x2; //Posição inicial x do mouse com botão direito pressionado
-  int posmouse_y2; //Posição inicial y do mouse com botão direito pressionado
-
+  int posmouse_x2 = 7; //Posição inicial x do mouse com botão direito pressionado
+  int posmouse_y2= 5; //Posição inicial y do mouse com botão direito pressionado
+  std::cout << posmouse_x2 << std::endl;
+  std::cout << posmouse_y2 << std::endl;
   // Text text({ 64, 64 }, { 255, 0, 0 }, "Hello World");
   // Rei r(Cor::BRANCO, { 1, 1 }, _kingWhiteBmp);
   Tabuleiro t;
@@ -141,6 +142,7 @@ void Game::mainLoop() {
       break;
     
     case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN:
+    
     if(event.mouse.button & 1){ //Se o botão esquerdo do mouse for pressionado
       posmouse_x = event.mouse.x/80; //Posição x do mouse nesse momento
       posmouse_y = event.mouse.y/80; //Posição y do mouse nesse momento
@@ -149,7 +151,7 @@ void Game::mainLoop() {
     else if(event.mouse.button & 2){ //Se o botão direito do mouse for pressionado
       posmouse_x2 = event.mouse.x/80; //Salva a posição x do mouse nesse momento 
       posmouse_y2 = event.mouse.y/80; //Salva a posição y do mouse nesse momento
-      //std::cout << "Posição X2: " << posmouse_x2 << " Posição Y2: " << posmouse_y2 << std::endl;
+      std::cout << "Posição X2: " << posmouse_x2 << " Posição Y2: " << posmouse_y2 << std::endl;
     }
     t.moverPeca(posmouse_x, posmouse_y, posmouse_x2, posmouse_y2);
      

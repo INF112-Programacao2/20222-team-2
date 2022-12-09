@@ -10,13 +10,16 @@ bool Rei::validarMovimento(Position pos) {
     return false;
   } else {
     //Movimentação do Rei
-    if(pos.get_x() == _pos.get_x() + 1 && pos.get_y() == _pos.get_y() + 1){
+    if(_cor == Cor::PRETO && pos.get_x() == _pos.get_x() + 1 && pos.get_y() == _pos.get_y() + 1){
+    _pos = pos;
+    return true;
+    }
+    else if(_cor == Cor::BRANCO && pos.get_x() == _pos.get_x() - 1 && pos.get_y() == _pos.get_y() - 1){
     _pos = pos;
     return true;
     }
     else
     return false;
   }
-
 
 }
