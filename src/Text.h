@@ -7,20 +7,22 @@
 
 #include <string>
 
-struct RGBColor {
+struct RGBColor
+{
   unsigned char red;
   unsigned char green;
   unsigned char blue;
 };
 
-class Text : public GameObject {
+class Text : public GameObject
+{
 private:
   Position _pos;
   RGBColor _color;
   std::string _text;
 
 public:
-  Text(Position pos, RGBColor color, const std::string &text);
+  Text(Position pos, RGBColor color, const std::string& text);
   ~Text() {}
 
   Position get_pos() const;

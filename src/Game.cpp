@@ -4,20 +4,20 @@
 
 #include <iostream>
 
-#include "Text.h"
-#include "Tabuleiro.h"
 #include "Rei.h"
+#include "Tabuleiro.h"
+#include "Text.h"
 
 #include "constants.h"
-#include "globals.h"
 #include "errorHandling.h"
+#include "globals.h"
 
-
-Game::Game() {
+Game::Game()
+{
   // inicializa allegro e seus sistemas
   EC_CALL(al_init());
   EC_CALL(al_install_keyboard());
-  EC_CALL(al_install_mouse()); //Instalação do mouse
+  EC_CALL(al_install_mouse()); // Instalação do mouse
   EC_CALL(_display = al_create_display(SCREEN_W, SCREEN_H));
   EC_CALL(_font = al_create_builtin_font());
   EC_CALL(al_init_image_addon());
@@ -46,14 +46,16 @@ Game::Game() {
   EC_CALL(_queue = al_create_event_queue());
   al_register_event_source(_queue, al_get_keyboard_event_source());
   al_register_event_source(_queue, al_get_display_event_source(_display));
-  al_register_event_source(_queue , al_get_mouse_event_source()); //New evento para o mouse
+  al_register_event_source(
+    _queue, al_get_mouse_event_source()); // New evento para o mouse
   al_register_event_source(_queue, al_get_timer_event_source(_timer));
 
   // define o alvo padrão para renderizar na tela
   al_set_target_bitmap(al_get_backbuffer(_display));
 }
 
-Game::~Game() {
+Game::~Game()
+{
   // desaloca todas as imagens das peças
   // pretas
   al_destroy_bitmap(_kingBlackBmp);
@@ -81,88 +83,99 @@ Game::~Game() {
   al_uninstall_system();
 }
 
-void Game::mainLoop() {
+void
+Game::mainLoop()
+{
   bool done = false;
   bool redraw = true;
   ALLEGRO_EVENT event;
-  int posmouse_x; //Posição inicial x do mouse com botão esquerdo pressionado
-  int posmouse_y; //Posição inicial y do mouse com botão esquerdo pressionado
-  int posmouse_x2; //Posição inicial x do mouse com botão direito pressionado
-  int posmouse_y2; //Posição inicial y do mouse com botão direito pressionado
+  int posmouse_x; // Posição inicial x do mouse com botão esquerdo pressionado
+  int posmouse_y; // Posição inicial y do mouse com botão esquerdo pressionado
+  int posmouse_x2; // Posição inicial x do mouse com botão direito pressionado
+  int posmouse_y2; // Posição inicial y do mouse com botão direito pressionado
   std::cout << posmouse_x2 << std::endl;
   std::cout << posmouse_y2 << std::endl;
   // Text text({ 64, 64 }, { 255, 0, 0 }, "Hello World");
   // Rei r(Cor::BRANCO, { 1, 1 }, _kingWhiteBmp);
   Tabuleiro t;
-  
-  
+
   t.inicializarJogo();
 
   al_start_timer(_timer);
-  while (true) {
+  while (true)
+  {
     al_wait_for_event(_queue, &event);
 
-    switch (event.type) {
-    case ALLEGRO_EVENT_TIMER:
-      // game logic goes here.
-      redraw = true;
-      break;
+    switch (event.type)
+    {
+      case ALLEGRO_EVENT_TIMER:
+        // game logic goes here.
+        redraw = true;
+        break;
 
-    // case ALLEGRO_EVENT_KEY_DOWN:
-    case ALLEGRO_EVENT_DISPLAY_CLOSE:
-      done = true;
+      // case ALLEGRO_EVENT_KEY_DOWN:
+      case ALLEGRO_EVENT_DISPLAY_CLOSE:
+        done = true;
+        break;
+    }
+
+    if (done)
+    {
       break;
     }
 
-    if (done) {
-      break;
-    }
-
-    if (redraw && al_is_event_queue_empty(_queue)) {
-      al_clear_to_color(al_map_rgb(0, 0, 0)); 
+    if (redraw && al_is_event_queue_empty(_queue))
+    {
+      al_clear_to_color(al_map_rgb(0, 0, 0));
 
       t.onRender();
 
-      al_flip_display(); 
+      al_flip_display();
 
       redraw = false;
     }
 
-//Função para adicionar a funcionalidade do mouse dentro do display e descobrir sua posição
-  switch (event.type) {
-    case ALLEGRO_EVENT_TIMER:
-      // game logic goes here.
-      redraw = true;
-      break;
+    // Função para adicionar a funcionalidade do mouse dentro do display e
+    // descobrir sua posição
+    switch (event.type)
+    {
+      case ALLEGRO_EVENT_TIMER:
+        // game logic goes here.
+        redraw = true;
+        break;
 
-    case ALLEGRO_EVENT_KEY_DOWN:
-      if (event.keyboard.keycode == ALLEGRO_KEY_ESCAPE) {
-        
-      }
-      break;
-    
-    case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN:
-    
-    if(event.mouse.button & 1){ //Se o botão esquerdo do mouse for pressionado
-      posmouse_x = event.mouse.x/80; //Posição x do mouse nesse momento
-      posmouse_y = event.mouse.y/80; //Posição y do mouse nesse momento
-      //std::cout << "Posição X: " << posmouse_x << " Posição Y: " << posmouse_y << std::endl;
-    }
-    else if(event.mouse.button & 2){ //Se o botão direito do mouse for pressionado
-      posmouse_x2 = event.mouse.x/80; //Salva a posição x do mouse nesse momento 
-      posmouse_y2 = event.mouse.y/80; //Salva a posição y do mouse nesse momento
-      std::cout << "Posição X2: " << posmouse_x2 << " Posição Y2: " << posmouse_y2 << std::endl;
-    }
-    t.moverPeca(posmouse_x, posmouse_y, posmouse_x2, posmouse_y2);
-     
-      //std::cout << "Mouse button " << event.mouse.button << " at (" << event.mouse.x/80 << ", " << event.mouse.y/80 << ")" << std::endl;
-      break;
-         
-    case ALLEGRO_EVENT_DISPLAY_CLOSE:
-      break;
-    }
+      case ALLEGRO_EVENT_KEY_DOWN:
+        if (event.keyboard.keycode == ALLEGRO_KEY_ESCAPE)
+        {
+        }
+        break;
+
+      case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN:
+
+        if (event.mouse.button & 1)
+        { // Se o botão esquerdo do mouse for pressionado
+          posmouse_x = event.mouse.x / 80; // Posição x do mouse nesse momento
+          posmouse_y = event.mouse.y / 80; // Posição y do mouse nesse momento
+          // std::cout << "Posição X: " << posmouse_x << " Posição Y: " <<
+          // posmouse_y << std::endl;
+        }
+        else if (event.mouse.button & 2)
+        { // Se o botão direito do mouse for pressionado
+          posmouse_x2 =
+            event.mouse.x / 80; // Salva a posição x do mouse nesse momento
+          posmouse_y2 =
+            event.mouse.y / 80; // Salva a posição y do mouse nesse momento
+          std::cout << "Posição X2: " << posmouse_x2
+                    << " Posição Y2: " << posmouse_y2 << std::endl;
+        }
+        t.moverPeca(posmouse_x, posmouse_y, posmouse_x2, posmouse_y2);
+
+        // std::cout << "Mouse button " << event.mouse.button << " at (" <<
+        // event.mouse.x/80 << ", " << event.mouse.y/80 << ")" << std::endl;
+        break;
+
+      case ALLEGRO_EVENT_DISPLAY_CLOSE:
+        break;
     }
   }
-  
-
-
+}

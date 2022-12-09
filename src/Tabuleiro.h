@@ -3,20 +3,20 @@
 #include "allegro5/allegro.h"
 #include "allegro5/allegro_primitives.h"
 
-#include "GameObject.h"
-#include "Peca.h"
-#include "Rei.h"
-#include "Rainha.h"
 #include "Bispo.h"
 #include "Cavalo.h"
-#include "Torre.h"
+#include "GameObject.h"
 #include "Peao.h"
-//#include "Turno.h"
+#include "Peca.h"
+#include "Rainha.h"
+#include "Rei.h"
+#include "Torre.h"
+// #include "Turno.h"
 
-class Tabuleiro : public GameObject {
+class Tabuleiro : public GameObject
+{
 private:
   Peca* _tabuleiro[8][8];
-  
 
 public:
   Tabuleiro();

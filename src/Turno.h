@@ -1,21 +1,22 @@
-#include <iostream> 
-#include <allegro5/allegro.h>
-#include "Tabuleiro.h"
 #include "Game.h"
 #include "Peca.h"
+#include "Tabuleiro.h"
+#include <allegro5/allegro.h>
+#include <iostream>
 
-class Turno {
+class Turno
+{
 
 private:
-int _turno;
-int _turno_atual;
+  int _turno;
+  int _turno_atual;
 
 public:
-Turno();
-~Turno();
-void setTurnoAtual(int turno_atual);
-int getTurnoAtual();
-void setTurno(int _turno);
-int getTurno();
-void trocarTurno();
+  Turno();
+  ~Turno();
+  void setTurnoAtual(int turno_atual);
+  int getTurnoAtual();
+  void setTurno(int _turno);
+  int getTurno();
+  void trocarTurno();
 };

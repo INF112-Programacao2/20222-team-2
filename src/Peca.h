@@ -2,15 +2,17 @@
 
 #include "GameObject.h"
 #include "Position.h"
-#include <string>
 #include <allegro5/allegro.h>
+#include <string>
 
-enum class Cor {
+enum class Cor
+{
   PRETO,
   BRANCO
 };
 
-class Peca : public GameObject {
+class Peca : public GameObject
+{
 protected:
   Cor _cor;
   Position _pos;
@@ -23,7 +25,7 @@ protected:
 
 public:
   virtual void onRender();
-  Position movepeca(float x, float y); //New
+  Position movepeca(float x, float y); // New
   std::string getTipo();
   Cor getCor();
   Position setpos(Position pos);

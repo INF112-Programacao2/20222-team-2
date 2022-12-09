@@ -1,6 +1,7 @@
 #pragma once
 
-class GameObject {
+class GameObject
+{
 public:
   virtual void onRender() = 0;
 };

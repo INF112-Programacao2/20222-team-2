@@ -1,6 +1,7 @@
 #pragma once
 
-class Position {
+class Position
+{
 private:
   float _pos_x;
   float _pos_y;
@@ -13,7 +14,6 @@ public:
   float get_y();
   float set_x(float pos_x);
   float set_y(float pos_y);
-  //Função para mover a peça
+  // Função para mover a peça
   void movepeca(float x, float y);
-
 };

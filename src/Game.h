@@ -2,7 +2,8 @@
 
 #include <allegro5/allegro.h>
 
-class Game {
+class Game
+{
 private:
   ALLEGRO_DISPLAY* _display;
   ALLEGRO_TIMER* _timer;
