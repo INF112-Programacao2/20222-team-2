@@ -128,7 +128,7 @@ Tabuleiro::moverPeca(int origem_X, int origem_Y, int destino_X, int destino_Y)
   int auxiliar_Y = destino_Y;
 
   //Se a origem for nula
-  if (_tabuleiro[origem_X][origem_Y] == nullptr) {
+  if (_tabuleiro[origem_X][origem_Y] == nullptr || _tabuleiro[destino_X][destino_Y] == nullptr) {
     return;
   }
 

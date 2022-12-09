@@ -30,7 +30,7 @@ Timer::get_seconds() const
 {
   return std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now() -
                                                           _startTime)
-    .count();
+.count();
 }
 
 void
@@ -52,7 +52,7 @@ Timer::onRender() const
 
   ImGui::Text("Tempo: ");
   ImGui::SameLine();
-  ImGui::Text("%02lld:%02lld:%02lld", get_hours(), get_minutes(), get_seconds());
+  ImGui::Text("%02lld:%02lld:%02lld", get_hours(), get_minutes(), (get_seconds() % 60));
 
   ImGui::End();
 }
