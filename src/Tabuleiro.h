@@ -24,8 +24,7 @@ private:
 public:
   Tabuleiro();
   ~Tabuleiro() {}
-
-  void moverPeca(int x, int y, int x2, int y2);
+  void moverPeca(int origem_X, int origem_Y, int destino_X, int destino_Y);
   void inicializarJogo();
   virtual void onRender() const override;
   void onClick(const ALLEGRO_EVENT& e);
