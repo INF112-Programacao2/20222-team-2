@@ -10,7 +10,7 @@ Timer::Timer()
 }
 
 long long int
-Timer::get_hours()
+Timer::get_hours() const
 {
   return std::chrono::duration_cast<std::chrono::hours>(std::chrono::system_clock::now() -
                                                         _startTime)
@@ -18,7 +18,7 @@ Timer::get_hours()
 }
 
 long long int
-Timer::get_minutes()
+Timer::get_minutes() const
 {
   return std::chrono::duration_cast<std::chrono::minutes>(std::chrono::system_clock::now() -
                                                           _startTime)
@@ -26,7 +26,7 @@ Timer::get_minutes()
 }
 
 long long int
-Timer::get_seconds()
+Timer::get_seconds() const
 {
   return std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now() -
                                                           _startTime)
@@ -34,7 +34,7 @@ Timer::get_seconds()
 }
 
 void
-Timer::onRender()
+Timer::onRender() const
 {
   const ImGuiViewport* main_viewport = ImGui::GetMainViewport();
   ImGui::SetNextWindowPos(ImVec2(main_viewport->WorkPos.x, main_viewport->WorkPos.y));
@@ -48,12 +48,16 @@ Timer::onRender()
   window_flags |= ImGuiWindowFlags_NoResize;
   window_flags |= ImGuiWindowFlags_NoCollapse;
   window_flags |= ImGuiWindowFlags_NoNav;
-  ImGui::Begin(
-    "status", nullptr, window_flags); // Create a window called "Hello, world!" and append into it.
+  ImGui::Begin("status", nullptr, window_flags);
 
-  ImGui::Text("Tempo: "); // Display some text (you can use a format strings too)
+  ImGui::Text("Tempo: ");
   ImGui::SameLine();
   ImGui::Text("%02lld:%02lld:%02lld", get_hours(), get_minutes(), get_seconds());
 
   ImGui::End();
+}
+
+void Timer::reset()
+{
+  _startTime = std::chrono::system_clock::now();
 }

@@ -3,5 +3,5 @@
 class GameObject
 {
 public:
-  virtual void onRender() = 0;
+  virtual void onRender() const = 0;
 };

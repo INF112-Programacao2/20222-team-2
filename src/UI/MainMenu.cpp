@@ -3,6 +3,6 @@
 MainMenu::MainMenu() {}
 
 void
-MainMenu::onRender()
+MainMenu::onRender() const
 {
 }

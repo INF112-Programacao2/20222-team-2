@@ -9,5 +9,5 @@ public:
   MainMenu();
   ~MainMenu() {}
 
-  virtual void onRender() override;
+  virtual void onRender() const override;
 };

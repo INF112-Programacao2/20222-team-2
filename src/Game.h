@@ -14,6 +14,4 @@ public:
   ~Game();
 
   void mainLoop();
-  int retornaposmouse_x();
-  int retornaposmouse_y();
 };

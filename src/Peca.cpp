@@ -2,27 +2,20 @@
 #include "constants.h"
 #include <string>
 
-Peca::Peca(Cor cor, Position pos, ALLEGRO_BITMAP* sprite, std::string tipo)
+Peca::Peca(Cor cor, Position pos, ALLEGRO_BITMAP* sprite)
   : _cor(cor)
   , _pos(pos)
   , _sprite(sprite)
-  , _tipo(tipo)
 {
 }
 
 void
-Peca::onRender()
+Peca::onRender() const
 {
   al_draw_bitmap(_sprite,
                  (float)_pos.get_x() * BOARD_STEP + OFFSET_X,
                  (float)_pos.get_y() * BOARD_STEP + OFFSET_Y,
                  0);
-}
-
-std::string
-Peca::getTipo()
-{
-  return _tipo;
 }
 
 Cor

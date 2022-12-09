@@ -7,13 +7,13 @@ Position::Position(float pos_x, float pos_y)
 }
 
 float
-Position::get_x()
+Position::get_x() const
 {
   return _pos_x;
 }
 
 float
-Position::get_y()
+Position::get_y() const
 {
   return _pos_y;
 }

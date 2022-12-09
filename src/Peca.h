@@ -1,15 +1,12 @@
 #pragma once
 
+#include "common.h"
+
 #include "GameObject.h"
 #include "Position.h"
 #include <allegro5/allegro.h>
 #include <string>
 
-enum class Cor
-{
-  PRETO,
-  BRANCO
-};
 
 class Peca : public GameObject
 {
@@ -17,14 +14,13 @@ protected:
   Cor _cor;
   Position _pos;
   ALLEGRO_BITMAP* _sprite;
-  std::string _tipo;
   int turno = 1;
 
-  Peca(Cor cor, Position pos, ALLEGRO_BITMAP* _sprite, std::string tipo);
+  Peca(Cor cor, Position pos, ALLEGRO_BITMAP* _sprite);
   ~Peca() {}
 
 public:
-  virtual void onRender();
+  virtual void onRender() const override;
   Position movepeca(float x, float y); // New
   std::string getTipo();
   Cor getCor();

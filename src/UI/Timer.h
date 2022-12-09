@@ -13,10 +13,10 @@ public:
   Timer();
   ~Timer() {}
 
-  void update();
-  long long int get_hours();
-  long long int get_minutes();
-  long long int get_seconds();
+  void reset();
+  long long int get_hours() const;
+  long long int get_minutes() const;
+  long long int get_seconds() const;
 
-  virtual void onRender() override;
+  virtual void onRender() const override;
 };

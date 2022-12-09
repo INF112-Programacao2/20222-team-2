@@ -5,7 +5,7 @@
 class Peao : public Peca
 {
 public:
-  Peao(Cor cor, Position pos, ALLEGRO_BITMAP* sprite, std::string tipo);
+  Peao(Cor cor, Position pos, ALLEGRO_BITMAP* sprite);
   ~Peao() {}
   Position movepeca();
 
