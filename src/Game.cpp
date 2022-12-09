@@ -87,8 +87,8 @@ void Game::mainLoop() {
   ALLEGRO_EVENT event;
   int posmouse_x; //Posição inicial x do mouse com botão esquerdo pressionado
   int posmouse_y; //Posição inicial y do mouse com botão esquerdo pressionado
-  int posmouse_x2 = 7; //Posição inicial x do mouse com botão direito pressionado
-  int posmouse_y2= 5; //Posição inicial y do mouse com botão direito pressionado
+  int posmouse_x2; //Posição inicial x do mouse com botão direito pressionado
+  int posmouse_y2; //Posição inicial y do mouse com botão direito pressionado
   std::cout << posmouse_x2 << std::endl;
   std::cout << posmouse_y2 << std::endl;
   // Text text({ 64, 64 }, { 255, 0, 0 }, "Hello World");
