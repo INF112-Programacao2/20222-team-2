@@ -1,5 +1,7 @@
 #pragma once
 
+#include <iostream>
+
 class Position
 {
 private:
@@ -16,4 +18,6 @@ public:
   int set_y(int pos_y);
   // Função para mover a peça
   void movepeca(int x, int y);
+
+  friend std::ostream& operator<<(std::ostream& os, const Position& p);
 };

@@ -1,13 +1,13 @@
 #pragma once
 
-#include "common.h"
+#include "GameObject.h"
 #include "Tabuleiro.h"
 #include "Timer.h"
+#include "common.h"
 
-class Partida
+class Partida : public GameObject
 {
 private:
-  Cor _jogadorAtual;
   unsigned int _turnoAtual;
   Tabuleiro _tabuleiro;
   Timer _timer;
@@ -15,4 +15,7 @@ private:
 public:
   Partida();
   ~Partida();
+
+  virtual void onRender() const override;
+  void onClick(const ALLEGRO_EVENT& e);
 };

@@ -100,7 +100,12 @@ Tabuleiro::onClick(const ALLEGRO_EVENT& e)
 {
   if (_pecaSelecionada != nullptr)
   {
-    // TODO: mover peca
+    Position pos = _screenToBoard(e);
+    Position selPos = _pecaSelecionada->getPos();
+    int x1 = selPos.get_x();
+    int y1 = selPos.get_y();
+    moverPeca(x1, y1, pos.get_x(), pos.get_y());
+    _pecaSelecionada = nullptr;
   }
   else
   {
@@ -116,7 +121,10 @@ Tabuleiro::onClick(const ALLEGRO_EVENT& e)
 Position
 Tabuleiro::_screenToBoard(const ALLEGRO_EVENT& e) const
 {
-  return { ((int)e.mouse.x) / BOARD_STEP, ((int)e.mouse.y) / BOARD_STEP };
+  Position p = { ((int)e.mouse.x - OFFSET_X) / BOARD_STEP,
+                 ((int)e.mouse.y - OFFSET_Y) / BOARD_STEP };
+  std::cout << p << std::endl;
+  return p;
 }
 
 // x e y são as coordenadas de origem da peça e x2 e y2 são as coordenadas de destino
