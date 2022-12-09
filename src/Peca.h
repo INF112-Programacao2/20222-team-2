@@ -24,6 +24,7 @@ public:
   std::string getTipo();
   Cor getCor();
   Position setpos(Position pos);
+  Position getPos();
   int getTurno();
   void setTurno(int turno);
   void trocarTurno();

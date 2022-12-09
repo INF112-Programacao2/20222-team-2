@@ -31,6 +31,12 @@ Peca::setpos(Position pos)
   return _pos;
 }
 
+Position
+Peca::getPos()
+{
+  return _pos;
+}
+
 int
 Peca::getTurno()
 {
