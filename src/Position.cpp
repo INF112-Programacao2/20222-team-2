@@ -24,3 +24,9 @@ Position::movepeca(int x, int y)
   _pos_x = x;
   _pos_y = y;
 }
+
+std::ostream&
+operator<<(std::ostream& os, const Position& p)
+{
+  os << "{ " << p.get_x() << ", " << p.get_y() << " }";
+}
