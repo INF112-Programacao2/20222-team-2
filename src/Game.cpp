@@ -17,18 +17,19 @@
 #include "errorHandling.h"
 #include "globals.h"
 
+//Construtor da classe Game
 Game::Game()
 {
-  // inicializa allegro e seus sistemas
-  EC_CALL(al_init());
-  EC_CALL(al_install_keyboard());
-  EC_CALL(al_install_mouse()); // Instalação do mouse
-  EC_CALL(_display = al_create_display(SCREEN_W, SCREEN_H));
-  EC_CALL(_font = al_create_builtin_font());
-  EC_CALL(al_init_image_addon());
-  EC_CALL(al_init_primitives_addon());
+  // inicialização do allegro e criação da janela
+  EC_CALL(al_init()); // inicializa o allegro
+  EC_CALL(al_install_keyboard()); // inicializa o teclado
+  EC_CALL(al_install_mouse()); // inicializa o mouse
+  EC_CALL(_display = al_create_display(SCREEN_W, SCREEN_H)); // cria a janela
+  EC_CALL(_font = al_create_builtin_font()); // cria a fonte padrão
+  EC_CALL(al_init_image_addon()); // inicializa o addon de imagens
+  EC_CALL(al_init_primitives_addon()); // inicializa o addon de primitivas
 
-  // carregar imagens das pecas
+  // inicializa as imagens das peças
   // pretas
   EC_CALL(_kingBlackBmp = al_load_bitmap("./assets/Chess_kdt45.png"));
   EC_CALL(_queenBlackBmp = al_load_bitmap("./assets/Chess_qdt45.png"));
@@ -44,35 +45,36 @@ Game::Game()
   EC_CALL(_rookWhiteBmp = al_load_bitmap("./assets/Chess_rlt45.png"));
   EC_CALL(_pawnWhiteBmp = al_load_bitmap("./assets/Chess_plt45.png"));
 
-  // inicializa o timer para rodar o jogo a 30 fps
+  // inicializa o timer para 30 fps
   EC_CALL(_timer = al_create_timer(1.0 / 30.0));
 
-  // cria fila de eventos para usar com a API da allegro
-  EC_CALL(_queue = al_create_event_queue());
-  al_register_event_source(_queue, al_get_keyboard_event_source());
-  al_register_event_source(_queue, al_get_display_event_source(_display));
-  al_register_event_source(_queue, al_get_mouse_event_source()); // New evento para o mouse
-  al_register_event_source(_queue, al_get_timer_event_source(_timer));
+  // inicializa a fila de eventos e registra os eventos que serão capturados
+  EC_CALL(_queue = al_create_event_queue()); // cria a fila de eventos
+  al_register_event_source(_queue, al_get_keyboard_event_source()); // registra o teclado
+  al_register_event_source(_queue, al_get_display_event_source(_display)); // registra a janela
+  al_register_event_source(_queue, al_get_mouse_event_source()); // registra o mouse
+  al_register_event_source(_queue, al_get_timer_event_source(_timer)); // registra o timer
 
-  // define o alvo padrão para renderizar na tela
+  // inicializa o tabuleiro
   al_set_target_bitmap(al_get_backbuffer(_display));
 
-  // Inicializar contexto da Dear ImGui
-  IMGUI_CHECKVERSION();
-  ImGui::CreateContext();
-  ImGuiIO& io = ImGui::GetIO();
-  io.Fonts->AddFontFromFileTTF("assets/Inter-Regular.ttf", 24);
-  ImGui::StyleColorsLight();
-  ImGui_ImplAllegro5_Init(_display);
+  // inicializa o sistema de textos do allegro e cria a fonte padrão do jogo (Inter) com tamanho 24 pixels
+  IMGUI_CHECKVERSION(); // verifica a versão do ImGui
+  ImGui::CreateContext(); // cria o contexto da Dear ImGui
+  ImGuiIO& io = ImGui::GetIO(); 
+  io.Fonts->AddFontFromFileTTF("assets/Inter-Regular.ttf", 24); // carrega a fonte padrão do jogo
+  ImGui::StyleColorsLight(); // carrega o estilo padrão do ImGui
+  ImGui_ImplAllegro5_Init(_display); // inicializa o ImGui para o Allegro
 }
 
+// Destrutor da classe Game
 Game::~Game()
 {
-  // Limpa o contexto da Dear ImGui
+  // desaloca o contexto do ImGui e desliga o ImGui do Allegro
   ImGui_ImplAllegro5_Shutdown();
-  ImGui::DestroyContext();
+  ImGui::DestroyContext(); 
 
-  // desaloca todas as imagens das peças
+  // desaloca as imagens das peças
   // pretas
   al_destroy_bitmap(_kingBlackBmp);
   al_destroy_bitmap(_queenBlackBmp);
@@ -102,32 +104,38 @@ Game::~Game()
 void
 Game::mainLoop()
 {
-  bool running = true;
-  bool redraw = true;
-  ALLEGRO_EVENT event;
+  bool running = true; // indica se o jogo está rodando
+  bool redraw = true;  // indica se a tela deve ser redesenhada
+  ALLEGRO_EVENT event; // evento que será capturado
 
-  Partida partida;
+  Partida partida; // cria a partida
 
+  // inicia o timer para o jogo rodar a 30 fps
   al_start_timer(_timer);
+
+  // loop principal do jogo
   while (running)
   {
-    al_wait_for_event(_queue, &event);
+    al_wait_for_event(_queue, &event); // aguarda um evento
 
-    ImGui_ImplAllegro5_ProcessEvent(&event);
+    ImGui_ImplAllegro5_ProcessEvent(&event); // processa o evento para o ImGui
 
+    // verifica o tipo do evento
     switch (event.type)
     {
+      // se o evento for um evento de teclado
       case ALLEGRO_EVENT_TIMER:
-        // game logic goes here.
+      {
         redraw = true;
         break;
-
+      }
+      // se o evento for um evento de janela
       case ALLEGRO_EVENT_DISPLAY_CLOSE:
       {
         running = false;
         break;
       }
-
+      // se o evento for um evento de mouse
       case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN:
       {
         partida.onClick(event);
@@ -135,19 +143,19 @@ Game::mainLoop()
       }
     }
 
+    // se a tela deve ser redesenhada e não há eventos na fila
     if (redraw && al_is_event_queue_empty(_queue))
     {
-      al_clear_to_color(al_map_rgb(0, 0, 0));
+      al_clear_to_color(al_map_rgb(0, 0, 0)); // limpa a tela para preto (apaga o que estava na tela)
 
-      // Começar o fram do Dear ImGui
-      ImGui_ImplAllegro5_NewFrame();
-      ImGui::NewFrame();
+      ImGui_ImplAllegro5_NewFrame(); // inicia o frame do ImGui
+      ImGui::NewFrame(); // inicia o frame do ImGui
 
-      partida.onRender();
+      partida.onRender(); // renderiza a partida
 
-      ImGui::Render();
-      ImGui_ImplAllegro5_RenderDrawData(ImGui::GetDrawData());
-      al_flip_display();
+      ImGui::Render(); // renderiza o ImGui
+      ImGui_ImplAllegro5_RenderDrawData(ImGui::GetDrawData()); // renderiza o ImGui
+      al_flip_display(); // atualiza a tela
 
       redraw = false;
     }
