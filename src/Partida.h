@@ -17,5 +17,5 @@ public:
   ~Partida();
 
   virtual void onRender() const override;
-  bool onClick(const ALLEGRO_EVENT& e);
+  void onClick(const ALLEGRO_EVENT& e);
 };

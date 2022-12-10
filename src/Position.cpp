@@ -29,4 +29,5 @@ std::ostream&
 operator<<(std::ostream& os, const Position& p)
 {
   os << "{ " << p.get_x() << ", " << p.get_y() << " }";
+  return os;
 }

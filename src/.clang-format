@@ -1,0 +1,5 @@
+BasedOnStyle: Mozilla
+BreakBeforeBraces: Allman
+IncludeBlocks: Preserve
+SortIncludes: CaseSensitive
+ColumnLimit: 100

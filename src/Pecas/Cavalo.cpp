@@ -6,6 +6,13 @@ Cavalo::Cavalo(Cor cor, Position pos, ALLEGRO_BITMAP* sprite)
 {
 }
 
+std::vector<Movimento>
+Cavalo::gerarMovimentos(const Tabuleiro& t) const
+{
+  std::vector<Movimento> movimentos;
+  return movimentos;
+}
+
 bool
 Cavalo::validarMovimento(Position pos) const
 {

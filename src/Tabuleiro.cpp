@@ -1,9 +1,13 @@
 #include "Tabuleiro.h"
 
 #include <iostream>
-#include <memory>
 
-#include "Game.h"
+#include "Bispo.h"
+#include "Cavalo.h"
+#include "Peao.h"
+#include "Rainha.h"
+#include "Rei.h"
+#include "Torre.h"
 #include "constants.h"
 #include "globals.h"
 
@@ -52,10 +56,13 @@ Tabuleiro::onRender() const
   }
 }
 
+// Limpa o tabuleiro e coloca as peças como num jogo padrão de xadrez, alocando novas peças
 void
-Tabuleiro::inicializarJogo()
+Tabuleiro::inicializarJogo() // TODO: trocar o nome para algo que faça mais sentido
 {
   // zerar todas as posições do tabuleiro
+  // TODO: copiar esse loop para o construtor, e verificar se existem peças nesse loop. Se
+  // existirem, deletar antes de setar para nullptr
   for (int x = 0; x < 8; ++x)
   {
     for (int y = 0; y < 8; ++y)
@@ -109,7 +116,7 @@ Tabuleiro::onClick(const ALLEGRO_EVENT& e, unsigned int& turno)
       _pecaSelecionada = dest;
       return;
     }
-    if (moverPeca(pos.get_x(), pos.get_y(), turno))
+    if (moverPeca(pos.get_x(), pos.get_y()))
     {
       ++turno;
       _pecaSelecionada = nullptr;
@@ -140,7 +147,7 @@ Tabuleiro::_screenToBoard(const ALLEGRO_EVENT& e) const
 //
 // Retorna 1 se o movimento ocorrer, 0 se o movimento for inválido.
 unsigned int
-Tabuleiro::moverPeca(int destX, int destY, unsigned int turno)
+Tabuleiro::moverPeca(int destX, int destY)
 {
   Peca* pecaDestino = _tabuleiro[destX][destY];
 
@@ -183,4 +190,14 @@ Tabuleiro::_moverPeca(int destX, int destY)
   Position posOrigem = _pecaSelecionada->getPos();
   _tabuleiro[posOrigem.get_x()][posOrigem.get_y()] = nullptr;
   _pecaSelecionada->setPos({ destX, destY });
+}
+
+// Função auxiliar
+// Verifica se uma posição está ou não dentro do tabuleiro
+bool
+Tabuleiro::isInside(const Position& pos) const
+{
+  int x = pos.get_x();
+  int y = pos.get_y();
+  return x >= 0 && x < 8 && y >= 0 && y < 8;
 }

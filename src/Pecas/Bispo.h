@@ -6,7 +6,8 @@ class Bispo : public Peca
 {
 public:
   Bispo(Cor cor, Position pos, ALLEGRO_BITMAP* sprite);
-  ~Bispo() {}
+  virtual ~Bispo() {}
 
   virtual bool validarMovimento(Position pos) const override;
+  virtual std::vector<Movimento> gerarMovimentos(const Tabuleiro& t) const override;
 };

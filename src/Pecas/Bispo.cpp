@@ -6,6 +6,13 @@ Bispo::Bispo(Cor cor, Position pos, ALLEGRO_BITMAP* sprite)
 {
 }
 
+std::vector<Movimento>
+Bispo::gerarMovimentos(const Tabuleiro& t) const
+{
+  std::vector<Movimento> movimentos;
+  return movimentos;
+}
+
 bool
 Bispo::validarMovimento(Position pos) const
 {

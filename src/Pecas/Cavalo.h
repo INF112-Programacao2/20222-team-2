@@ -6,7 +6,8 @@ class Cavalo : public Peca
 {
 public:
   Cavalo(Cor cor, Position pos, ALLEGRO_BITMAP* sprite);
-  ~Cavalo() {}
+  virtual ~Cavalo() {}
 
   virtual bool validarMovimento(Position pos) const override;
+  virtual std::vector<Movimento> gerarMovimentos(const Tabuleiro& t) const override;
 };

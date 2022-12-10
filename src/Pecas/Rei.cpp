@@ -6,6 +6,13 @@ Rei::Rei(Cor cor, Position pos, ALLEGRO_BITMAP* sprite)
 {
 }
 
+std::vector<Movimento>
+Rei::gerarMovimentos(const Tabuleiro& t) const
+{
+  std::vector<Movimento> movimentos;
+  return movimentos;
+}
+
 bool
 Rei::validarMovimento(Position pos) const
 {

@@ -6,8 +6,8 @@ class Peao : public Peca
 {
 public:
   Peao(Cor cor, Position pos, ALLEGRO_BITMAP* sprite);
-  ~Peao() {}
-  Position movepeca();
+  virtual ~Peao() {}
 
   virtual bool validarMovimento(Position pos) const override;
+  virtual std::vector<Movimento> gerarMovimentos(const Tabuleiro& t) const override;
 };

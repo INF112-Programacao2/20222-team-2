@@ -16,9 +16,8 @@ Partida::onRender() const
   _timer.onRender();
 }
 
-bool
+void
 Partida::onClick(const ALLEGRO_EVENT& e)
 {
   _tabuleiro.onClick(e, _turnoAtual);
-  return true;
 }

@@ -6,6 +6,23 @@ Peao::Peao(Cor cor, Position pos, ALLEGRO_BITMAP* sprite)
 {
 }
 
+std::vector<Movimento>
+Peao::gerarMovimentos(const Tabuleiro& t) const
+{
+  std::vector<Movimento> movimentos;
+
+  int sinal = (_cor == Cor::BRANCO ? -1 : 1);
+  if (t.isInside({ _pos.get_x(), _pos.get_y() + 1 * sinal }))
+  {
+    movimentos.push_back(Movimento(_pos, { _pos.get_x(), _pos.get_y() + 1 * sinal }, true));
+  }
+  if (!_movimentos)
+  {
+    movimentos.push_back(Movimento(_pos, { _pos.get_x(), _pos.get_y() + 2 * sinal }, true));
+  }
+  return movimentos;
+}
+
 bool
 Peao::validarMovimento(Position pos) const
 {

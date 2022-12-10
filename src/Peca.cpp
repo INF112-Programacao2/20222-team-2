@@ -1,6 +1,5 @@
 #include "Peca.h"
 #include "constants.h"
-#include <string>
 
 Peca::Peca(Cor cor, Position pos, ALLEGRO_BITMAP* sprite)
   : _cor(cor)

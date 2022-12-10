@@ -6,7 +6,8 @@ class Rei : public Peca
 {
 public:
   Rei(Cor cor, Position pos, ALLEGRO_BITMAP* sprite);
-  ~Rei() {}
+  virtual ~Rei() {}
 
   virtual bool validarMovimento(Position pos) const override;
+  virtual std::vector<Movimento> gerarMovimentos(const Tabuleiro& t) const override;
 };
