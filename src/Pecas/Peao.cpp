@@ -20,6 +20,7 @@ Peao::gerarMovimentos(const Tabuleiro& t) const
   {
     movimentos.push_back(Movimento(_pos, { _pos.get_x(), _pos.get_y() + 2 * sinal }, true));
   }
+
   return movimentos;
 }
 

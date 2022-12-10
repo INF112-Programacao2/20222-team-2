@@ -30,6 +30,7 @@ public:
   Cor getCor() const;
   Position setPos(Position pos);
   Position getPos() const;
+  // TODO: tentar retornar esse vetor como referencia para evitar cópias
   virtual std::vector<Movimento> gerarMovimentos(const Tabuleiro& t) const = 0;
 
   virtual bool validarMovimento(Position pos) const = 0;
