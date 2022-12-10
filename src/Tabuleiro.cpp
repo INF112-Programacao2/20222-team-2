@@ -1,6 +1,7 @@
 #include "Tabuleiro.h"
 
 #include <iostream>
+#include <memory>
 
 #include "Game.h"
 #include "constants.h"
@@ -65,6 +66,7 @@ Tabuleiro::inicializarJogo()
 
   // colocar as peças como num jogo padrão de xadrez
   // pretas, fileira de trás
+  _tabuleiro[0][0] = new Torre(Cor::PRETO, { 0, 0 }, _rookBlackBmp);
   _tabuleiro[1][0] = new Cavalo(Cor::PRETO, { 1, 0 }, _knightBlackBmp);
   _tabuleiro[2][0] = new Bispo(Cor::PRETO, { 2, 0 }, _bishopBlackBmp);
   _tabuleiro[3][0] = new Rainha(Cor::PRETO, { 3, 0 }, _queenBlackBmp);
@@ -72,7 +74,6 @@ Tabuleiro::inicializarJogo()
   _tabuleiro[5][0] = new Bispo(Cor::PRETO, { 5, 0 }, _bishopBlackBmp);
   _tabuleiro[6][0] = new Cavalo(Cor::PRETO, { 6, 0 }, _knightBlackBmp);
   _tabuleiro[7][0] = new Torre(Cor::PRETO, { 7, 0 }, _rookBlackBmp);
-  _tabuleiro[0][0] = new Torre(Cor::PRETO, { 0, 0 }, _rookBlackBmp);
   // pretas, peões
   for (int x = 0; x < 8; ++x)
   {
@@ -96,24 +97,31 @@ Tabuleiro::inicializarJogo()
 }
 
 void
-Tabuleiro::onClick(const ALLEGRO_EVENT& e)
+Tabuleiro::onClick(const ALLEGRO_EVENT& e, unsigned int& turno)
 {
   if (_pecaSelecionada != nullptr)
   {
     Position pos = _screenToBoard(e);
-    Position selPos = _pecaSelecionada->getPos();
-    int x1 = selPos.get_x();
-    int y1 = selPos.get_y();
-    moverPeca(x1, y1, pos.get_x(), pos.get_y());
-    _pecaSelecionada = nullptr;
+
+    Peca* dest = _tabuleiro[pos.get_x()][pos.get_y()];
+    if (dest && (dest->getCor() == (turno % 2 ? Cor::BRANCO : Cor::PRETO)))
+    {
+      _pecaSelecionada = dest;
+      return;
+    }
+    if (moverPeca(pos.get_x(), pos.get_y(), turno))
+    {
+      ++turno;
+      _pecaSelecionada = nullptr;
+    }
   }
   else
   {
     Position pos = _screenToBoard(e);
-    if (_tabuleiro[pos.get_x()][pos.get_y()] != nullptr)
+    Peca* sel = _tabuleiro[pos.get_x()][pos.get_y()];
+    if (sel && (sel->getCor() == (turno % 2 ? Cor::BRANCO : Cor::PRETO)))
     {
       _pecaSelecionada = _tabuleiro[pos.get_x()][pos.get_y()];
-      std::cout << (_pecaSelecionada->getCor() == Cor::BRANCO ? "BRANCO" : "PRETO") << std::endl;
     }
   }
 }
@@ -123,74 +131,91 @@ Tabuleiro::_screenToBoard(const ALLEGRO_EVENT& e) const
 {
   Position p = { ((int)e.mouse.x - OFFSET_X) / BOARD_STEP,
                  ((int)e.mouse.y - OFFSET_Y) / BOARD_STEP };
-  std::cout << p << std::endl;
   return p;
 }
 
-// x e y são as coordenadas de origem da peça e x2 e y2 são as coordenadas de destino
-void
-Tabuleiro::moverPeca(int origem_X, int origem_Y, int destino_X, int destino_Y)
+// Move a peça selecionada para a posição x, y (coluna / linha), começando na (0, 0)
+// O turno começa em 1 (branco), então para saber se o jogador atual é o preto ou o branco, basta
+// saber se o turno é par ou ímpar.
+//
+// Retorna 1 se o movimento ocorrer, 0 se o movimento for inválido.
+unsigned int
+Tabuleiro::moverPeca(int x, int y, unsigned int turno)
 {
-  // x1 e y1 são as coordenadas de destino da peça
-  int auxiliar_X = destino_X;
-  int auxiliar_Y = destino_Y;
+  static int ntimes = 0;
+  ++ntimes;
+  std::cout << ntimes << std::endl;
 
-  //Se a origem for nula
-  if (_tabuleiro[origem_X][origem_Y] == nullptr || _tabuleiro[destino_X][destino_Y] == nullptr) {
+  std::cout << "ORIGEM:" << std::endl;
+  _debugarPeca(_pecaSelecionada);
+  std::cout << "DESTINO:" << std::endl;
+  Peca* destino = _tabuleiro[x][y];
+  _debugarPeca(destino);
+
+  std::cout << "Turno: " << turno << '\n' << std::endl;
+
+  if (destino != nullptr)
+  {
+    delete destino;
+    _moverPeca(_pecaSelecionada, x, y);
+    return 1;
+  }
+  else
+  {
+    _moverPeca(_pecaSelecionada, x, y);
+    return 1;
+  }
+  return 0;
+}
+
+void
+Tabuleiro::_moverPeca(Peca* p, int destX, int destY)
+{
+  _tabuleiro[destX][destY] = _pecaSelecionada;
+  Position posOrigem = _pecaSelecionada->getPos();
+  _tabuleiro[posOrigem.get_x()][posOrigem.get_y()] = nullptr;
+  _pecaSelecionada->setPos({ destX, destY });
+  _pecaSelecionada = nullptr;
+}
+
+void
+Tabuleiro::_debugarPeca(Peca* p)
+{
+  if (!p)
+  {
+    std::cout << "Vazio" << '\n' << std::endl;
     return;
   }
-
-  //Se a peça for preta e o movimento for válido conforme a peça
-  if (_tabuleiro[origem_X][origem_Y]->getCor() == Cor::PRETO && 
-      _tabuleiro[origem_X][origem_Y]->validarMovimento({ auxiliar_X, auxiliar_Y }))
+  Torre* t1 = dynamic_cast<Torre*>(p);
+  Cavalo* t2 = dynamic_cast<Cavalo*>(p);
+  Bispo* t3 = dynamic_cast<Bispo*>(p);
+  Rainha* t4 = dynamic_cast<Rainha*>(p);
+  Rei* t5 = dynamic_cast<Rei*>(p);
+  Peao* t6 = dynamic_cast<Peao*>(p);
+  if (t1)
   {
-    //Se o destino for nulo apenas move
-    if (_tabuleiro[destino_X][destino_Y] == nullptr)
-    {
-      _tabuleiro[destino_X][destino_Y] = _tabuleiro[origem_X][origem_Y];
-      _tabuleiro[origem_X][origem_Y] = nullptr;
-      _tabuleiro[destino_X][destino_Y]->setpos({ auxiliar_X, auxiliar_Y });
-    }
-    //Se o destino for diferente de nulo e a cor for branca, são peças de times diferentes então pode mover e comer
-    else if (_tabuleiro[destino_X][destino_Y] != nullptr && 
-             _tabuleiro[destino_X][destino_Y]->getCor() == Cor::BRANCO)
-    {
-      _tabuleiro[destino_X][destino_Y] = _tabuleiro[origem_X][origem_Y];
-      _tabuleiro[origem_X][origem_Y] = nullptr;
-      _tabuleiro[destino_X][destino_Y]->setpos({ auxiliar_X, auxiliar_Y });
-    }
-    //Se o destino for diferente de nulo e a cor for preta, são peças da mesma cor então não pode mover
-    else if (_tabuleiro[destino_X][destino_Y] != nullptr &&
-             _tabuleiro[destino_X][destino_Y]->getCor() == Cor::PRETO)
-    {
-      return;
-    }
+    std::cout << "TORRE" << std::endl;
   }
-
-  //Se a peça for branca
-  else if (_tabuleiro[origem_X][origem_Y]->getCor() == Cor::BRANCO && 
-           _tabuleiro[origem_X][origem_Y]->validarMovimento({ auxiliar_X, auxiliar_Y }))
+  else if (t2)
   {
-    //Se o destino for nulo
-    if (_tabuleiro[destino_X][destino_Y] == nullptr)
-    {
-      _tabuleiro[destino_X][destino_Y] = _tabuleiro[origem_X][origem_Y];
-      _tabuleiro[origem_X][origem_Y] = nullptr;
-      _tabuleiro[destino_X][destino_Y]->setpos({ auxiliar_X, auxiliar_Y });
-    }
-    //Se o destino for diferente de nulo e a cor for preta, são peças de times diferentes então pode mover e comer
-    else if (_tabuleiro[destino_X][destino_Y] != nullptr &&
-             _tabuleiro[destino_X][destino_Y]->getCor() == Cor::PRETO)
-    {
-      _tabuleiro[destino_X][destino_Y] = _tabuleiro[origem_X][origem_Y];
-      _tabuleiro[origem_X][origem_Y] = nullptr;
-      _tabuleiro[destino_X][destino_Y]->setpos({ auxiliar_X, auxiliar_Y });
-    }
-    //Se o destino for diferente de nulo e a cor for branca, são peças da mesma cor então não pode mover
-    else if (_tabuleiro[destino_X][destino_Y] != nullptr &&
-             _tabuleiro[destino_X][destino_Y]->getCor() == Cor::BRANCO)
-    {
-      return;
-    }   
+    std::cout << "CAVALO" << std::endl;
   }
+  else if (t3)
+  {
+    std::cout << "BISPO" << std::endl;
+  }
+  else if (t4)
+  {
+    std::cout << "RAINHA" << std::endl;
+  }
+  else if (t5)
+  {
+    std::cout << "REI" << std::endl;
+  }
+  else if (t6)
+  {
+    std::cout << "PEAO" << std::endl;
+  }
+  std::cout << (p->getCor() == Cor::BRANCO ? "BRANCO" : "PRETO") << std::endl;
+  std::cout << p->getPos() << std::endl;
 }

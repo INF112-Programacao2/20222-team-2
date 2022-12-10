@@ -16,14 +16,13 @@ protected:
   int turno = 1;
 
   Peca(Cor cor, Position pos, ALLEGRO_BITMAP* _sprite);
+ 
+public:
   ~Peca() {}
 
-public:
   virtual void onRender() const override;
-  Position movepeca(float x, float y); // New
-  std::string getTipo();
   Cor getCor();
-  Position setpos(Position pos);
+  Position setPos(Position pos);
   Position getPos();
   int getTurno();
   void setTurno(int turno);

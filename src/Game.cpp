@@ -108,7 +108,9 @@ Game::mainLoop()
   bool redraw = true;  // indica se a tela deve ser redesenhada
   ALLEGRO_EVENT event; // evento que será capturado
 
-  Partida partida; // cria a partida
+  Partida partida;
+  ALLEGRO_EVENT mouseClick;
+  bool clicked = false;
 
   // inicia o timer para o jogo rodar a 30 fps
   al_start_timer(_timer);
@@ -126,6 +128,12 @@ Game::mainLoop()
       // se o evento for um evento de teclado
       case ALLEGRO_EVENT_TIMER:
       {
+        // game logic goes here.
+        if (clicked)
+        {
+          partida.onClick(mouseClick);
+          clicked = false;
+        }
         redraw = true;
         break;
       }
@@ -138,7 +146,8 @@ Game::mainLoop()
       // se o evento for um evento de mouse
       case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN:
       {
-        partida.onClick(event);
+        clicked = true;
+        mouseClick = event;
         break;
       }
     }

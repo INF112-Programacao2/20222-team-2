@@ -25,7 +25,7 @@ Peca::getCor()
 }
 
 Position
-Peca::setpos(Position pos)
+Peca::setPos(Position pos)
 {
   _pos = pos;
   return _pos;

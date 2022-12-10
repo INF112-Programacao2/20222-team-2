@@ -18,14 +18,17 @@ class Tabuleiro : public GameObject
 private:
   Peca* _tabuleiro[8][8];
   Peca* _pecaSelecionada;
-
-  Position _screenToBoard(const ALLEGRO_EVENT& e) const;
+  void _debugarPeca(Peca* p);
+  void _moverPeca(Peca* p, int destX, int destY);
 
 public:
   Tabuleiro();
   ~Tabuleiro() {}
-  void moverPeca(int origem_X, int origem_Y, int destino_X, int destino_Y);
+
+  Position _screenToBoard(const ALLEGRO_EVENT& e) const;
+  unsigned int moverPeca(int x, int y, unsigned int turno);
   void inicializarJogo();
   virtual void onRender() const override;
-  void onClick(const ALLEGRO_EVENT& e);
+  void onClick(const ALLEGRO_EVENT& e, unsigned int& turno);
+  Peca* get_peca(int x, int y);
 };
