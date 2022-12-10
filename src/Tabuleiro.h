@@ -18,7 +18,6 @@ class Tabuleiro : public GameObject
 private:
   Peca* _tabuleiro[8][8];
   Peca* _pecaSelecionada;
-  void _debugarPeca(Peca* p);
   void _moverPeca(int destX, int destY);
 
 public:

@@ -8,5 +8,5 @@ public:
   Rei(Cor cor, Position pos, ALLEGRO_BITMAP* sprite);
   ~Rei() {}
 
-  bool validarMovimento(Position pos);
+  virtual bool validarMovimento(Position pos) const override;
 };

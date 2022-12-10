@@ -7,7 +7,7 @@ Rainha::Rainha(Cor cor, Position pos, ALLEGRO_BITMAP* sprite)
 }
 
 bool
-Rainha::validarMovimento(Position pos)
+Rainha::validarMovimento(Position pos) const
 {
   if (pos.get_x() < 0 || pos.get_x() > 7 || pos.get_y() < 0 || pos.get_y() > 7)
   {

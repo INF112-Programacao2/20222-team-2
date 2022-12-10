@@ -7,7 +7,7 @@ Torre::Torre(Cor cor, Position pos, ALLEGRO_BITMAP* sprite)
 }
 
 bool
-Torre::validarMovimento(Position pos)
+Torre::validarMovimento(Position pos) const
 {
   int pos_aux_x = pos.get_x();
   int pos_aux_y = pos.get_y() - _pos.get_y();

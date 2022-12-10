@@ -7,7 +7,7 @@ Cavalo::Cavalo(Cor cor, Position pos, ALLEGRO_BITMAP* sprite)
 }
 
 bool
-Cavalo::validarMovimento(Position pos)
+Cavalo::validarMovimento(Position pos) const
 {
   if (pos.get_x() < 0 || pos.get_x() > 7 || pos.get_y() < 0 || pos.get_y() > 7)
   {

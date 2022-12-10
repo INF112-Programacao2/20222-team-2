@@ -9,5 +9,5 @@ public:
   ~Peao() {}
   Position movepeca();
 
-  bool validarMovimento(Position pos);
+  virtual bool validarMovimento(Position pos) const override;
 };

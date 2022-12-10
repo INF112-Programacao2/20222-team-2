@@ -8,5 +8,5 @@ public:
   Torre(Cor cor, Position pos, ALLEGRO_BITMAP* sprite);
   ~Torre() {}
 
-  bool validarMovimento(Position pos);
+  virtual bool validarMovimento(Position pos) const override;
 };

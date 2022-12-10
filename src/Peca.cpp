@@ -19,7 +19,7 @@ Peca::onRender() const
 }
 
 Cor
-Peca::getCor()
+Peca::getCor() const
 {
   return _cor;
 }
@@ -32,36 +32,7 @@ Peca::setPos(Position pos)
 }
 
 Position
-Peca::getPos()
+Peca::getPos() const
 {
   return _pos;
 }
-
-int
-Peca::getTurno()
-{
-  return turno;
-}
-
-void
-Peca::setTurno(int turno)
-{
-  this->turno = turno;
-}
-
-void
-Peca::trocarTurno()
-{
-  if (turno == 1)
-  {
-    turno = 2;
-  }
-  else
-  {
-    turno = 1;
-  }
-}
-
-bool
-Peca::validarMovimento(Position pos)
-{}

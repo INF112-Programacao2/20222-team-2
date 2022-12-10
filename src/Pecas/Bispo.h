@@ -8,5 +8,5 @@ public:
   Bispo(Cor cor, Position pos, ALLEGRO_BITMAP* sprite);
   ~Bispo() {}
 
-  bool validarMovimento(Position pos);
+  virtual bool validarMovimento(Position pos) const override;
 };

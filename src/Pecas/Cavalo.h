@@ -8,5 +8,5 @@ public:
   Cavalo(Cor cor, Position pos, ALLEGRO_BITMAP* sprite);
   ~Cavalo() {}
 
-  bool validarMovimento(Position pos);
+  virtual bool validarMovimento(Position pos) const override;
 };
