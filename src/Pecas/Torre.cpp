@@ -30,6 +30,11 @@ Torre::gerarMovimentos(Peca* tabuleiro[8][8]) const
         movimentos.push_back(Movimento(_pos, pos, true, false));
         break;
       }
+
+      else if (tabuleiro[pos.get_x()][pos.get_y()]->getCor() == _cor)
+      {
+        break;
+      }
     }
   }
 
@@ -47,6 +52,11 @@ Torre::gerarMovimentos(Peca* tabuleiro[8][8]) const
       else if (tabuleiro[pos.get_x()][pos.get_y()]->getCor() != _cor)
       {
         movimentos.push_back(Movimento(_pos, pos, true, false));
+        break;
+      }
+
+      else if (tabuleiro[pos.get_x()][pos.get_y()]->getCor() == _cor)
+      {
         break;
       }
     }
@@ -68,6 +78,11 @@ Torre::gerarMovimentos(Peca* tabuleiro[8][8]) const
         movimentos.push_back(Movimento(_pos, pos, true, false));
         break;
       }
+
+      else if (tabuleiro[pos.get_x()][pos.get_y()]->getCor() == _cor)
+      {
+        break;
+      }
     }
   }
 
@@ -85,6 +100,11 @@ Torre::gerarMovimentos(Peca* tabuleiro[8][8]) const
       else if (tabuleiro[pos.get_x()][pos.get_y()]->getCor() != _cor)
       {
         movimentos.push_back(Movimento(_pos, pos, true, false));
+        break;
+      }
+
+      else if (tabuleiro[pos.get_x()][pos.get_y()]->getCor() == _cor)
+      {
         break;
       }
     }
