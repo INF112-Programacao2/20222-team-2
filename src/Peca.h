@@ -7,11 +7,7 @@
 #include "GameObject.h"
 #include "Movimento.h"
 #include "Position.h"
-#include "Tabuleiro.h"
 #include "common.h"
-
-// forward declaration to solve circular dependency
-class Tabuleiro;
 
 class Peca : public GameObject
 {
@@ -30,8 +26,8 @@ public:
   Cor getCor() const;
   Position setPos(Position pos);
   Position getPos() const;
+  void incrementarMovimentos();
   // TODO: tentar retornar esse vetor como referencia para evitar cópias
-  virtual std::vector<Movimento> gerarMovimentos(const Tabuleiro& t) const = 0;
-
+  virtual std::vector<Movimento> gerarMovimentos(Peca* tabuleiro[8][8]) const = 0;
   virtual bool validarMovimento(Position pos) const = 0;
 };

@@ -190,12 +190,13 @@ Tabuleiro::_moverPeca(int destX, int destY)
   Position posOrigem = _pecaSelecionada->getPos();
   _tabuleiro[posOrigem.get_x()][posOrigem.get_y()] = nullptr;
   _pecaSelecionada->setPos({ destX, destY });
+  _pecaSelecionada->incrementarMovimentos();
 }
 
 // Função auxiliar
 // Verifica se uma posição está ou não dentro do tabuleiro
 bool
-Tabuleiro::isInside(const Position& pos) const
+Tabuleiro::isInside(const Position& pos)
 {
   int x = pos.get_x();
   int y = pos.get_y();

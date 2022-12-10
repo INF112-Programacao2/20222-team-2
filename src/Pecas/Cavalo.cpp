@@ -7,7 +7,7 @@ Cavalo::Cavalo(Cor cor, Position pos, ALLEGRO_BITMAP* sprite)
 }
 
 std::vector<Movimento>
-Cavalo::gerarMovimentos(const Tabuleiro& t) const
+Cavalo::gerarMovimentos(Peca* tabuleiro[8][8]) const
 {
   std::vector<Movimento> movimentos;
   return movimentos;

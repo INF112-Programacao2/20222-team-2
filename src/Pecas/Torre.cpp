@@ -7,7 +7,7 @@ Torre::Torre(Cor cor, Position pos, ALLEGRO_BITMAP* sprite)
 }
 
 std::vector<Movimento>
-Torre::gerarMovimentos(const Tabuleiro& t) const
+Torre::gerarMovimentos(Peca* tabuleiro[8][8]) const
 {
   std::vector<Movimento> movimentos;
   return movimentos;

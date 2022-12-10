@@ -7,15 +7,12 @@
 #include "Movimento.h"
 #include "Peca.h"
 
-// forward declaration to solve circular dependency
-class Peca;
-
 class Tabuleiro : public GameObject
 {
 private:
   Peca* _tabuleiro[8][8];
   Peca* _pecaSelecionada;
-  std::vector<std::vector<Movimento>> _movimentos;
+  std::vector<Movimento> _movimentos[2][16];
   void _moverPeca(int destX, int destY);
 
 public:
@@ -23,7 +20,7 @@ public:
   ~Tabuleiro() {}
 
   Position _screenToBoard(const ALLEGRO_EVENT& e) const;
-  bool isInside(const Position& pos) const;
+  static bool isInside(const Position& pos);
   unsigned int moverPeca(int destX, int destY);
   void inicializarJogo();
   virtual void onRender() const override;

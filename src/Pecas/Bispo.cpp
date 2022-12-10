@@ -7,7 +7,7 @@ Bispo::Bispo(Cor cor, Position pos, ALLEGRO_BITMAP* sprite)
 }
 
 std::vector<Movimento>
-Bispo::gerarMovimentos(const Tabuleiro& t) const
+Bispo::gerarMovimentos(Peca* tabuleiro[8][8]) const
 {
   std::vector<Movimento> movimentos;
   return movimentos;

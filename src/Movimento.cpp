@@ -1,8 +1,7 @@
 #include "Movimento.h"
 
-Movimento::Movimento(Position origem, Position destino, bool isValid)
+Movimento::Movimento(Position origem, Position destino)
   : _origem(origem)
   , _destino(destino)
-  , _isValid(isValid)
 {
 }

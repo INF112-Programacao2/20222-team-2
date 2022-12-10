@@ -7,7 +7,7 @@ Rei::Rei(Cor cor, Position pos, ALLEGRO_BITMAP* sprite)
 }
 
 std::vector<Movimento>
-Rei::gerarMovimentos(const Tabuleiro& t) const
+Rei::gerarMovimentos(Peca* tabuleiro[8][8]) const
 {
   std::vector<Movimento> movimentos;
   return movimentos;

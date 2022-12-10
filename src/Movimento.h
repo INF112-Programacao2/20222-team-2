@@ -8,9 +8,10 @@ class Movimento
 private:
   Position _origem;
   Position _destino;
-  bool _isValid;
+  bool _eCaptura;
+  bool _atacaRei;
 
 public:
-  Movimento(Position origem, Position destino, bool isValid);
+  Movimento(Position origem, Position destino);
   ~Movimento() {}
 };

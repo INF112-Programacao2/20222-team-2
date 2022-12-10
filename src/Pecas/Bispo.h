@@ -9,5 +9,5 @@ public:
   virtual ~Bispo() {}
 
   virtual bool validarMovimento(Position pos) const override;
-  virtual std::vector<Movimento> gerarMovimentos(const Tabuleiro& t) const override;
+  virtual std::vector<Movimento> gerarMovimentos(Peca* tabuleiro[8][8]) const override;
 };
