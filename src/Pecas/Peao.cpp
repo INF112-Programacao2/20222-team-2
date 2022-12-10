@@ -15,14 +15,14 @@ Peao::gerarMovimentos(Peca* tabuleiro[8][8]) const
   std::vector<Movimento> movimentos;
 
   // o sinal é usado para mover o peão apenas para cima ou apenas para baixo, dependendo de sua cor
-  int sinal = (_cor == Cor::BRANCO ? -1 : 1);
+  int sinal = (_cor == Cor::BRANCO ? -1 : 1); //Operador ternario
   // verifica se mover pra frente ainda está dentro do tabuleiro
   if (Tabuleiro::isInside({ _pos.get_x(), _pos.get_y() + 1 * sinal }))
   {
     // TODO: implementar verificação se o peão pode capturar e se ataca o Rei
     movimentos.push_back(Movimento(_pos, { _pos.get_x(), _pos.get_y() + 1 * sinal }, false, false));
   }
-  if (!_movimentos)
+  if (!_movimentos) // se o peão ainda não se moveu, ele pode mover duas casas
   {
     movimentos.push_back(Movimento(_pos, { _pos.get_x(), _pos.get_y() + 2 * sinal }, false, false));
   }

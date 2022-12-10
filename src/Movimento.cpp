@@ -32,6 +32,7 @@ Movimento::get_atacaRei() const
   return _atacaRei;
 }
 
+// A saída está configurada de forma que o número da peça seja contado de Y para X dentro da matriz tabuleiro
 std::ostream&
 operator<<(std::ostream& os, const Movimento& m)
 {
