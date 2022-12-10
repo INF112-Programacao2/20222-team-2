@@ -2,9 +2,7 @@
 #include <string>
 
 Peao::Peao(Cor cor, Position pos, ALLEGRO_BITMAP* sprite)
-  : Peca(cor, pos, sprite)
-{
-}
+  : Peca(cor, pos, sprite) {};
 
 bool
 Peao::validarMovimento(Position pos) const
@@ -55,10 +53,10 @@ Peao::validarMovimento(Position pos) const
     else if (_cor == Cor::PRETO && pos.get_x() == _pos.get_x() - 1 && pos.get_y() == _pos.get_y() + 1){
       return true;
     }
-    else
-    {
+    else{
       return false;
     }
+    
   }
   
 }

@@ -148,7 +148,7 @@ Tabuleiro::moverPeca(int destX, int destY, unsigned int turno)
   {
     return 0;
   }
-
+  
   if (pecaDestino)
   {
     if (pecaDestino->getCor() != _pecaSelecionada->getCor())
