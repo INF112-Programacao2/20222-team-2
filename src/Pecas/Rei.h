@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Peca.h"
+#include "Tabuleiro.h"
 
 class Rei : public Peca
 {
