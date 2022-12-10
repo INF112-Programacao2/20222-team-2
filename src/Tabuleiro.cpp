@@ -140,82 +140,47 @@ Tabuleiro::_screenToBoard(const ALLEGRO_EVENT& e) const
 //
 // Retorna 1 se o movimento ocorrer, 0 se o movimento for inválido.
 unsigned int
-Tabuleiro::moverPeca(int x, int y, unsigned int turno)
+Tabuleiro::moverPeca(int destX, int destY, unsigned int turno)
 {
-  static int ntimes = 0;
-  ++ntimes;
-  std::cout << ntimes << std::endl;
+  Peca* pecaDestino = _tabuleiro[destX][destY];
 
-  std::cout << "ORIGEM:" << std::endl;
-  _debugarPeca(_pecaSelecionada);
-  std::cout << "DESTINO:" << std::endl;
-  Peca* destino = _tabuleiro[x][y];
-  _debugarPeca(destino);
-
-  std::cout << "Turno: " << turno << '\n' << std::endl;
-
-  if (destino != nullptr)
+  if (!(_pecaSelecionada->validarMovimento({ destX, destY })))
   {
-    delete destino;
-    _moverPeca(_pecaSelecionada, x, y);
-    return 1;
+    return 0;
+  }
+
+  if (pecaDestino)
+  {
+    if (pecaDestino->getCor() != _pecaSelecionada->getCor())
+    {
+      _moverPeca(destX, destY);
+      delete pecaDestino;
+      return 1;
+    }
+    else
+    {
+      // clique em peças de mesma cor, selecionar a outra peça
+      _pecaSelecionada = pecaDestino;
+      return 0;
+    }
   }
   else
   {
-    _moverPeca(_pecaSelecionada, x, y);
+    _moverPeca(destX, destY);
     return 1;
   }
   return 0;
 }
 
+// Função auxiliar
+// Move a peca selecionada para a posição de destino, independente do que estiver lá.
+// NOTA: essa função NÃO deleta a peça de destino, isso deve ser feito na função que está chamando
+// esta.
 void
-Tabuleiro::_moverPeca(Peca* p, int destX, int destY)
+Tabuleiro::_moverPeca(int destX, int destY)
 {
   _tabuleiro[destX][destY] = _pecaSelecionada;
   Position posOrigem = _pecaSelecionada->getPos();
   _tabuleiro[posOrigem.get_x()][posOrigem.get_y()] = nullptr;
   _pecaSelecionada->setPos({ destX, destY });
-  _pecaSelecionada = nullptr;
-}
-
-void
-Tabuleiro::_debugarPeca(Peca* p)
-{
-  if (!p)
-  {
-    std::cout << "Vazio" << '\n' << std::endl;
-    return;
-  }
-  Torre* t1 = dynamic_cast<Torre*>(p);
-  Cavalo* t2 = dynamic_cast<Cavalo*>(p);
-  Bispo* t3 = dynamic_cast<Bispo*>(p);
-  Rainha* t4 = dynamic_cast<Rainha*>(p);
-  Rei* t5 = dynamic_cast<Rei*>(p);
-  Peao* t6 = dynamic_cast<Peao*>(p);
-  if (t1)
-  {
-    std::cout << "TORRE" << std::endl;
-  }
-  else if (t2)
-  {
-    std::cout << "CAVALO" << std::endl;
-  }
-  else if (t3)
-  {
-    std::cout << "BISPO" << std::endl;
-  }
-  else if (t4)
-  {
-    std::cout << "RAINHA" << std::endl;
-  }
-  else if (t5)
-  {
-    std::cout << "REI" << std::endl;
-  }
-  else if (t6)
-  {
-    std::cout << "PEAO" << std::endl;
-  }
-  std::cout << (p->getCor() == Cor::BRANCO ? "BRANCO" : "PRETO") << std::endl;
-  std::cout << p->getPos() << std::endl;
 }

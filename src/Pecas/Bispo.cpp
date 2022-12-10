@@ -22,7 +22,6 @@ Bispo::validarMovimento(Position pos)
         pos.get_x() == _pos.get_x() - 1 && pos.get_y() == _pos.get_y() + 1 ||
         pos.get_x() == _pos.get_x() + 1 && pos.get_y() == _pos.get_y() - 1)
     {
-      _pos = pos;
       return true;
     }
     else

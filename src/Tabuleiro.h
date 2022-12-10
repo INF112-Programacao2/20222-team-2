@@ -19,7 +19,7 @@ private:
   Peca* _tabuleiro[8][8];
   Peca* _pecaSelecionada;
   void _debugarPeca(Peca* p);
-  void _moverPeca(Peca* p, int destX, int destY);
+  void _moverPeca(int destX, int destY);
 
 public:
   Tabuleiro();
