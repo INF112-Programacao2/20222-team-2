@@ -1,5 +1,8 @@
 #include "Pecas/Torre.h"
+
 #include <string>
+
+#include "Tabuleiro.h"
 
 Torre::Torre(Cor cor, Position pos, ALLEGRO_BITMAP* sprite)
   : Peca(cor, pos, sprite)
@@ -10,6 +13,83 @@ std::vector<Movimento>
 Torre::gerarMovimentos(Peca* tabuleiro[8][8]) const
 {
   std::vector<Movimento> movimentos;
+
+  //Movimentos para a baixo
+  for (int i = 1; i < 8; i++)
+  {
+    if (Tabuleiro::isInside({_pos.get_x(), _pos.get_y() + i}))
+    {
+      Position pos(_pos.get_x(), _pos.get_y() + i);
+      if (tabuleiro[pos.get_x()][pos.get_y()] == nullptr)
+      {
+        movimentos.push_back(Movimento(_pos, pos, false, false));
+      }
+
+      else if (tabuleiro[pos.get_x()][pos.get_y()]->getCor() != _cor)
+      {
+        movimentos.push_back(Movimento(_pos, pos, true, false));
+        break;
+      }
+    }
+  }
+
+  //Movimentos para a cima
+  for (int i = 1; i < 8; i++)
+  {
+    if (Tabuleiro::isInside({_pos.get_x(), _pos.get_y() - i}))
+    {
+      Position pos(_pos.get_x(), _pos.get_y() - i);
+      if (tabuleiro[pos.get_x()][pos.get_y()] == nullptr)
+      {
+        movimentos.push_back(Movimento(_pos, pos, false, false));
+      }
+
+      else if (tabuleiro[pos.get_x()][pos.get_y()]->getCor() != _cor)
+      {
+        movimentos.push_back(Movimento(_pos, pos, true, false));
+        break;
+      }
+    }
+  }
+
+  //Movimentos para direita
+  for (int i = 1; i < 8; i++)
+  {
+    if (Tabuleiro::isInside({_pos.get_x() + i, _pos.get_y()}))
+    {
+      Position pos(_pos.get_x() + i, _pos.get_y());
+      if (tabuleiro[pos.get_x()][pos.get_y()] == nullptr)
+      {
+        movimentos.push_back(Movimento(_pos, pos, false, false));
+      }
+      
+      else if (tabuleiro[pos.get_x()][pos.get_y()]->getCor() != _cor)
+      {
+        movimentos.push_back(Movimento(_pos, pos, true, false));
+        break;
+      }
+    }
+  }
+
+  //Movimentos para esquerda
+  for (int i = 1; i < 8; i++)
+  {
+    if (Tabuleiro::isInside({_pos.get_x() - i, _pos.get_y()}))
+    {
+      Position pos(_pos.get_x() - i, _pos.get_y());
+      if (tabuleiro[pos.get_x()][pos.get_y()] == nullptr)
+      {
+        movimentos.push_back(Movimento(_pos, pos, false, false));
+      }
+
+      else if (tabuleiro[pos.get_x()][pos.get_y()]->getCor() != _cor)
+      {
+        movimentos.push_back(Movimento(_pos, pos, true, false));
+        break;
+      }
+    }
+  }
+
   return movimentos;
 }
 
