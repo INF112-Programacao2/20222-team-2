@@ -101,6 +101,17 @@ Tabuleiro::inicializarJogo() // TODO: trocar o nome para algo que faça mais sen
   {
     _tabuleiro[x][6] = new Peao(Cor::BRANCO, { x, 6 }, _pawnWhiteBmp);
   }
+
+  _gerarMovimentos();
+  // DEBUG: imprimir todos os movimentos
+  for (int i = 0; i < _movimentos.size(); ++i)
+  {
+    std::cout << i << std::endl;
+    for (Movimento& movimento : _movimentos[i])
+    {
+      std::cout << movimento << std::endl;
+    }
+  }
 }
 
 void
@@ -120,6 +131,17 @@ Tabuleiro::onClick(const ALLEGRO_EVENT& e, unsigned int& turno)
     {
       ++turno;
       _pecaSelecionada = nullptr;
+      _movimentos.clear();
+      _gerarMovimentos();
+      // DEBUG: imprimir todos os movimentos
+      for (int i = 0; i < _movimentos.size(); ++i)
+      {
+        std::cout << i << std::endl;
+        for (Movimento& movimento : _movimentos[i])
+        {
+          std::cout << movimento << std::endl;
+        }
+      }
     }
   }
   else
@@ -177,6 +199,21 @@ Tabuleiro::moverPeca(int destX, int destY)
     return 1;
   }
   return 0;
+}
+
+void
+Tabuleiro::_gerarMovimentos()
+{
+  for (int x = 0; x < 8; ++x)
+  {
+    for (int y = 0; y < 8; ++y)
+    {
+      if (_tabuleiro[x][y])
+      {
+        _movimentos.push_back(_tabuleiro[x][y]->gerarMovimentos(_tabuleiro));
+      }
+    }
+  }
 }
 
 // Função auxiliar
