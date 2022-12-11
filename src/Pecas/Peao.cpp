@@ -16,13 +16,39 @@ Peao::gerarMovimentos(Peca* tabuleiro[8][8]) const
 
   // o sinal é usado para mover o peão apenas para cima ou apenas para baixo, dependendo de sua cor
   int sinal = (_cor == Cor::BRANCO ? -1 : 1); //Operador ternario
-  // verifica se mover pra frente ainda está dentro do tabuleiro
+
+  // Detecta movimentos a esquerda da peça
   if (Tabuleiro::isInside({ _pos.get_x(), _pos.get_y() + 1 * sinal }))
   {
-    // TODO: implementar verificação se o peão pode capturar e se ataca o Rei
+    if (tabuleiro[_pos.get_x() - 1][_pos.get_y() + 1 * sinal] != nullptr)
+    {
+      if (tabuleiro[_pos.get_x() - 1][_pos.get_y() + 1 * sinal]->getCor() != _cor)
+      {
+        movimentos.push_back(Movimento(_pos, { _pos.get_x() - 1, _pos.get_y() + 1 * sinal }, true, false));
+      }
+    }
+  }
+
+  // Detecta movimentos a frente da peça
+  if (Tabuleiro::isInside({ _pos.get_x(), _pos.get_y() + 1 * sinal }))
+  {
     movimentos.push_back(Movimento(_pos, { _pos.get_x(), _pos.get_y() + 1 * sinal }, false, false));
   }
-  if (!_movimentos) // se o peão ainda não se moveu, ele pode mover duas casas
+
+  // Detecta movimentos a direita da peça
+  if (Tabuleiro::isInside({ _pos.get_x() + 1, _pos.get_y() + 1 * sinal }))
+  {
+    if (tabuleiro[_pos.get_x() + 1][_pos.get_y() + 1 * sinal] != nullptr)
+    {
+      if (tabuleiro[_pos.get_x() + 1][_pos.get_y() + 1 * sinal]->getCor() != _cor)
+      {
+        movimentos.push_back(Movimento(_pos, { _pos.get_x() + 1, _pos.get_y() + 1 * sinal }, true, false));
+      }
+    }
+  }
+
+  // Caso a peça ainda não tenha se movido, ela pode se mover duas casas
+  if (!_movimentos)
   {
     movimentos.push_back(Movimento(_pos, { _pos.get_x(), _pos.get_y() + 2 * sinal }, false, false));
   }
@@ -30,6 +56,7 @@ Peao::gerarMovimentos(Peca* tabuleiro[8][8]) const
   return movimentos;
 }
 
+//TO DO: configurar restrições conforme a função gerarMovimento
 bool
 Peao::validarMovimento(Position pos) const
 {
