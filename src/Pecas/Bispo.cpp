@@ -34,7 +34,7 @@ Bispo::gerarMovimentos(Peca* tabuleiro[8][8]) const
 
     if (Tabuleiro::isInside({_pos.get_x() - i, _pos.get_y() - i}))
     {
-      Position pos({_pos.get_x() + i, _pos.get_y() - i});
+      Position pos({_pos.get_x() - i, _pos.get_y() - i});
       if (tabuleiro[pos.get_x()][pos.get_y()] == nullptr ||
           tabuleiro[pos.get_x()][pos.get_y()]->getCor() != _cor)
       {
@@ -53,7 +53,7 @@ Bispo::gerarMovimentos(Peca* tabuleiro[8][8]) const
 
     if (Tabuleiro::isInside({_pos.get_x() - i, _pos.get_y() + i}))
     {
-      Position pos({_pos.get_x() + i, _pos.get_y() - i});
+      Position pos({_pos.get_x() - i, _pos.get_y() + i});
       if (tabuleiro[pos.get_x()][pos.get_y()] == nullptr ||
           tabuleiro[pos.get_x()][pos.get_y()]->getCor() != _cor)
       {
@@ -71,7 +71,7 @@ Bispo::gerarMovimentos(Peca* tabuleiro[8][8]) const
   //Movimento -2 para esquerda e +1 para baixo
     if (Tabuleiro::isInside({_pos.get_x() + i, _pos.get_y() + i}))
     {
-      Position pos({_pos.get_x() + i, _pos.get_y() - i});
+      Position pos({_pos.get_x() + i, _pos.get_y() + i});
       if (tabuleiro[pos.get_x()][pos.get_y()] == nullptr ||
           tabuleiro[pos.get_x()][pos.get_y()]->getCor() != _cor)
       {
@@ -94,6 +94,8 @@ Bispo::gerarMovimentos(Peca* tabuleiro[8][8]) const
 bool
 Bispo::validarMovimento(Position pos) const
 {
+  int posauxx = _pos.get_x() - pos.get_x();
+  int posauxy = _pos.get_y() - pos.get_y();
   if (pos.get_x() < 0 || pos.get_x() > 7 || pos.get_y() < 0 || pos.get_y() > 7)
   {
     throw "Movimento inválido";
@@ -102,10 +104,10 @@ Bispo::validarMovimento(Position pos) const
   else
   {
     // Movimentação do Bispo
-    if (pos.get_x() == _pos.get_x() + 1 && pos.get_y() == _pos.get_y() + 1 ||
-        pos.get_x() == _pos.get_x() - 1 && pos.get_y() == _pos.get_y() - 1 ||
-        pos.get_x() == _pos.get_x() - 1 && pos.get_y() == _pos.get_y() + 1 ||
-        pos.get_x() == _pos.get_x() + 1 && pos.get_y() == _pos.get_y() - 1)
+    if (pos.get_x() ==  _pos.get_x() - posauxx && pos.get_y() == _pos.get_y() - posauxy ||
+        pos.get_x() == _pos.get_x() + posauxx && pos.get_y() == _pos.get_y() + posauxy || 
+        pos.get_x() ==  _pos.get_x() + posauxx && pos.get_y() == _pos.get_y() - posauxy ||
+        pos.get_x() == _pos.get_x() - posauxx && pos.get_y() == _pos.get_y() + posauxy)
     {
       return true;
     }
