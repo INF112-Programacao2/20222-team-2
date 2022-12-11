@@ -27,4 +27,6 @@ public:
   void inicializarJogo();
   virtual void onRender() const override;
   void onClick(const ALLEGRO_EVENT& e, unsigned int& turno);
+  
+  void pawnPromotion(Peca* p);
 };

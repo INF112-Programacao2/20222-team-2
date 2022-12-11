@@ -105,15 +105,18 @@ Tabuleiro::inicializarJogo() // TODO: trocar o nome para algo que faça mais sen
 
   // Para testes apenas
   // Bispo, Torre ou Rainha
-  _tabuleiro[4][4] = new Rainha(Cor::BRANCO, { 4, 4 }, _queenWhiteBmp);
-  _tabuleiro[4][1] = new Cavalo(Cor::BRANCO, { 4, 1 }, _knightWhiteBmp);
-  _tabuleiro[4][6] = new Cavalo(Cor::PRETO, { 4, 6 }, _knightBlackBmp);
-  _tabuleiro[6][4] = new Torre(Cor::BRANCO, { 6, 4 }, _rookWhiteBmp);
-  _tabuleiro[2][4] = new Torre(Cor::BRANCO, { 2, 4 }, _rookWhiteBmp);
-  _tabuleiro[6][6] = new Bispo(Cor::BRANCO, { 6, 6 }, _bishopWhiteBmp);
-  _tabuleiro[5][3] = new Bispo(Cor::PRETO, { 5, 3 }, _bishopBlackBmp);
-  _tabuleiro[1][7] = new Rei(Cor::PRETO, { 1, 7 }, _kingBlackBmp);
-  _tabuleiro[0][0] = new Rei(Cor::BRANCO, { 0, 0 }, _kingWhiteBmp);
+  //_tabuleiro[4][4] = new Rainha(Cor::BRANCO, { 4, 4 }, _queenWhiteBmp);
+  //_tabuleiro[4][1] = new Cavalo(Cor::BRANCO, { 4, 1 }, _knightWhiteBmp);
+  //_tabuleiro[4][6] = new Cavalo(Cor::PRETO, { 4, 6 }, _knightBlackBmp);
+  //_tabuleiro[6][4] = new Torre(Cor::BRANCO, { 6, 4 }, _rookWhiteBmp);
+  //_tabuleiro[2][4] = new Torre(Cor::BRANCO, { 2, 4 }, _rookWhiteBmp);
+  //_tabuleiro[6][6] = new Bispo(Cor::BRANCO, { 6, 6 }, _bishopWhiteBmp);
+  //_tabuleiro[5][3] = new Bispo(Cor::PRETO, { 5, 3 }, _bishopBlackBmp);
+  //_tabuleiro[1][7] = new Rei(Cor::PRETO, { 1, 7 }, _kingBlackBmp);
+  //_tabuleiro[0][0] = new Rei(Cor::BRANCO, { 0, 0 }, _kingWhiteBmp);
+
+  _tabuleiro[2][5] = new Peao(Cor::PRETO, { 2, 5 }, _pawnBlackBmp);
+  _tabuleiro[0][5] = new Peao(Cor::BRANCO, { 0, 5 }, _pawnWhiteBmp);
 
   // Cavalo
   // _tabuleiro[4][4] = new Cavalo(Cor::BRANCO, { 4, 4 }, _knightWhiteBmp);
@@ -327,4 +330,15 @@ Tabuleiro::_debugarPeca(Peca* p)
   }
   std::cout << ' ' << (p->getCor() == Cor::BRANCO ? "BRANCO" : "PRETO");
   std::cout << ' ' << p->getPos() << std::endl;
+}
+
+void
+Tabuleiro::pawnPromotion(Peca* p)
+{
+  if (p->getPos().get_y() == 0 || p->getPos().get_y() == 7)
+  {
+    Position pos = p->getPos();
+    delete _tabuleiro[pos.get_x()][pos.get_y()];
+    _tabuleiro[pos.get_x()][pos.get_y()] = new Rainha(p->getCor(), { pos.get_x(), pos.get_y()}, _queenWhiteBmp);
+  }
 }
