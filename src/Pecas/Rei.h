@@ -6,7 +6,7 @@
 class Rei : public Peca
 {
 public:
-  Rei(Cor cor, Position pos, ALLEGRO_BITMAP* sprite);
+  Rei(Cor cor, Position pos);
   virtual ~Rei() {}
 
   virtual std::vector<Movimento> gerarMovimentos(Peca* tabuleiro[8][8]) const override;
