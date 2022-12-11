@@ -3,9 +3,10 @@
 #include <string>
 
 #include "../Tabuleiro.h"
+#include "../globals.h"
 
-Torre::Torre(Cor cor, Position pos, ALLEGRO_BITMAP* sprite)
-  : Peca(cor, pos, sprite)
+Torre::Torre(Cor cor, Position pos)
+  : Peca(cor, pos, (cor == Cor::BRANCO ? _rookWhiteBmp : _rookBlackBmp))
 {
 }
 

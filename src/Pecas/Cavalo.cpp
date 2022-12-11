@@ -4,9 +4,10 @@
 
 #include "../Tabuleiro.h"
 #include "../Movimento.h"
+#include "../globals.h"
 
-Cavalo::Cavalo(Cor cor, Position pos, ALLEGRO_BITMAP* sprite)
-  : Peca(cor, pos, sprite)
+Cavalo::Cavalo(Cor cor, Position pos)
+  : Peca(cor, pos, (cor == Cor::BRANCO ? _knightWhiteBmp : _knightBlackBmp))
 {
 }
 

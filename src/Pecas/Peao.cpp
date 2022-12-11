@@ -3,9 +3,10 @@
 #include <string>
 
 #include "../Tabuleiro.h"
+#include "../globals.h"
 
-Peao::Peao(Cor cor, Position pos, ALLEGRO_BITMAP* sprite)
-  : Peca(cor, pos, sprite)
+Peao::Peao(Cor cor, Position pos)
+  : Peca(cor, pos, (cor == Cor::BRANCO ? _pawnWhiteBmp : _pawnBlackBmp))
 {
 }
 
