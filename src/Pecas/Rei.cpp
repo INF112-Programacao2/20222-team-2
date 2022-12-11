@@ -16,6 +16,19 @@ Rei::gerarMovimentos(Peca* tabuleiro[8][8]) const
 {
   std::vector<Movimento> movimentos;
 
+  if (getMovimentos() == 0)
+  {
+    if (roque(tabuleiro, { _pos.get_x() + 3, _pos.get_y() }))
+    {
+      movimentos.push_back(Movimento(_pos, { _pos.get_x() + 2, _pos.get_y() }, false, false));
+    }
+
+    if (roque(tabuleiro, { _pos.get_x() - 4, _pos.get_y() }))
+    {
+      movimentos.push_back(Movimento(_pos, { _pos.get_x() - 2, _pos.get_y() }, false, false));
+    }
+  }
+
   Position p = Position(_pos.get_x() + 1, _pos.get_y() + 1);
   if (Tabuleiro::isInside(p))
   {
@@ -67,75 +80,49 @@ Rei::gerarMovimentos(Peca* tabuleiro[8][8]) const
   return movimentos;
 }
 
-//Função que retorna se o rei pode roque com a torre
-//Se o rei já tiver se movido, não pode roque
-//Se a torre já tiver se movido, não pode roque
-//Se houver peças entre o rei e a torre, não pode roque
-/*bool
-Rei::roque(Peca* tabuleiro[8][8])
+bool
+Rei::roque(Peca* tabuleiro[8][8], Position posTorre) const
 {
-  if (getMovimentos() > 0)
+  //Posições das torres
+  //Torre branca 1: (0, 7)
+  //Torre branca 2: (7, 7)
+  //Torre preta 1: (0, 0)
+  //Torre preta 2: (7, 0)
+
+  int x = posTorre.get_x();
+  int y = posTorre.get_y();
+
+  if (tabuleiro[x][y] != nullptr && tabuleiro[x][y]->getMovimentos() > 0)
   {
     return false;
   }
 
-  Position torreBranca_1 = Position(0, 7);
-  Position torreBranca_2 = Position(7, 7);
-  Position torrePreta_1 = Position(0, 0);
-  Position torrePreta_2 = Position(7, 0);
-
-  //Verificar na posição das torres se elas já se moveram
-  if (tabuleiro[torreBranca_1.get_x()][torreBranca_1.get_y()]->getMovimentos() > 0)
+  if (x != 0 && x != 7)
   {
     return false;
   }
 
-  if (tabuleiro[torreBranca_2.get_x()][torreBranca_2.get_y()]->getMovimentos() > 0)
+  if (y != 0 && y != 7)
   {
     return false;
   }
 
-  if (tabuleiro[torrePreta_1.get_x()][torrePreta_1.get_y()]->getMovimentos() > 0)
+  //Roque Maior
+  if (x == 0)
   {
-    return false;
+    if (tabuleiro[1][y] != nullptr || tabuleiro[2][y] != nullptr || tabuleiro[3][y] != nullptr)
+    {
+      return false;
+    }
+  }
+  //Roque
+  else
+  {
+    if (tabuleiro[5][y] != nullptr || tabuleiro[6][y] != nullptr)
+    {
+      return false;
+    }
   }
 
-  if (tabuleiro[torrePreta_2.get_x()][torrePreta_2.get_y()]->getMovimentos() > 0)
-  {
-    return false;
-  }
-
-  //Verificar se há peças entre o rei e a torre
-  if (tabuleiro[torreBranca_1.get_x() + 1][torreBranca_1.get_y()]->getTipo() != Tipo::VAZIO)
-  {
-    return false;
-  }
-
-  if (tabuleiro[torreBranca_1.get_x() + 2][torreBranca_1.get_y()]->getTipo() != Tipo::VAZIO)
-  {
-    return false;
-  }
-
-  if (tabuleiro[torreBranca_2.get_x() - 1][torreBranca_2.get_y()]->getTipo() != Tipo::VAZIO)
-  {
-    return false;
-  }
-
-  if (tabuleiro[torrePreta_1.get_x() + 1][torrePreta_1.get_y()]->getTipo() != Tipo::VAZIO)
-  {
-    return false;
-  }
-
-  if (tabuleiro[torrePreta_1.get_x() + 2][torrePreta_1.get_y()]->getTipo() != Tipo::VAZIO)
-  {
-    return false;
-  }
-
-  if (tabuleiro[torrePreta_2.get_x() - 1][torrePreta_2.get_y()]->getTipo() != Tipo::VAZIO)
-  {
-    return false;
-  }
-
-  //Verificar se o rei está em xeque
-  
-}*/
+  return true;
+}

@@ -9,6 +9,6 @@ public:
   Rei(Cor cor, Position pos);
   virtual ~Rei() {}
 
-  bool roque(Peca* tabuleiro[8][8]);
+  bool roque(Peca* tabuleiro[8][8], Position posTorre) const;
   virtual std::vector<Movimento> gerarMovimentos(Peca* tabuleiro[8][8]) const override;
 };
