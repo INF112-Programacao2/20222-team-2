@@ -1,6 +1,6 @@
 #include "Movimento.h"
 
-#include "Rei.h"
+#include "./Pecas/Rei.h"
 
 Movimento::Movimento(Position origem, Position destino, bool eCaptura, bool atacaRei)
   : _origem(origem)
