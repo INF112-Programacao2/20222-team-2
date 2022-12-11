@@ -2,12 +2,12 @@
 
 #include <iostream>
 
-#include "Bispo.h"
-#include "Cavalo.h"
-#include "Peao.h"
-#include "Rainha.h"
-#include "Rei.h"
-#include "Torre.h"
+#include "Pecas/Bispo.h"
+#include "Pecas/Cavalo.h"
+#include "Pecas/Peao.h"
+#include "Pecas/Rainha.h"
+#include "Pecas/Rei.h"
+#include "Pecas/Torre.h"
 #include "constants.h"
 #include "globals.h"
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Peca.h"
+#include "../Peca.h"
 
 class Bispo : public Peca
 {

@@ -1,8 +1,8 @@
-#include "Pecas/Torre.h"
+#include "Torre.h"
 
 #include <string>
 
-#include "Tabuleiro.h"
+#include "../Tabuleiro.h"
 
 Torre::Torre(Cor cor, Position pos, ALLEGRO_BITMAP* sprite)
   : Peca(cor, pos, sprite)

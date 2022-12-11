@@ -1,5 +1,8 @@
-#include "Pecas/Rainha.h"
+#include "Rainha.h"
+
 #include <string>
+
+#include "../Tabuleiro.h"
 
 Rainha::Rainha(Cor cor, Position pos, ALLEGRO_BITMAP* sprite)
   : Peca(cor, pos, sprite)

@@ -1,6 +1,8 @@
 #include "Rei.h"
+
 #include <string>
-#include "Tabuleiro.h"
+
+#include "../Tabuleiro.h"
 
 
 Rei::Rei(Cor cor, Position pos, ALLEGRO_BITMAP* sprite)

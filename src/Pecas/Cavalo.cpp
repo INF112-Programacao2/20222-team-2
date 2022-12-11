@@ -1,8 +1,8 @@
-#include "Pecas/Cavalo.h"
+#include "Cavalo.h"
 
 #include <string>
 
-#include "Tabuleiro.h"
+#include "../Tabuleiro.h"
 
 Cavalo::Cavalo(Cor cor, Position pos, ALLEGRO_BITMAP* sprite)
   : Peca(cor, pos, sprite)

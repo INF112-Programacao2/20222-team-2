@@ -1,6 +1,8 @@
-#include "Pecas/Bispo.h"
+#include "Bispo.h"
+
 #include <string>
-#include "Tabuleiro.h"
+
+#include "../Tabuleiro.h"
 
 Bispo::Bispo(Cor cor, Position pos, ALLEGRO_BITMAP* sprite)
   : Peca(cor, pos, sprite)

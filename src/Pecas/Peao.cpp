@@ -1,8 +1,8 @@
-#include "Pecas/Peao.h"
+#include "Peao.h"
 
 #include <string>
 
-#include "Tabuleiro.h"
+#include "../Tabuleiro.h"
 
 Peao::Peao(Cor cor, Position pos, ALLEGRO_BITMAP* sprite)
   : Peca(cor, pos, sprite)
@@ -57,8 +57,9 @@ Peao::gerarMovimentos(Peca* tabuleiro[8][8]) const
 }
 
 //TO DO: configurar restrições conforme a função gerarMovimento
+
 bool
-Peao::validarMovimento(Position pos) const
+Peao::validarMovimento(Peca* tabuleiro[8][8], Position pos) const
 {
   if (pos.get_x() < 0 || pos.get_x() > 7 || pos.get_y() < 0 || pos.get_y() > 7)
   {
@@ -66,13 +67,13 @@ Peao::validarMovimento(Position pos) const
     return false;
   }
 
+  int sinal = (_cor == Cor::BRANCO ? -1 : 1); //Operador ternario
+
   if (_movimentos > 0)
   {
-    if (_cor == Cor::PRETO && pos.get_x() == _pos.get_x() && pos.get_y() == _pos.get_y() + 1)
-    {
-      return true; // tirar as cores, não são necessárias mais
-    }
-    else if (_cor == Cor::BRANCO && pos.get_x() == _pos.get_x() && pos.get_y() == _pos.get_y() - 1)
+    if ((pos.get_x() == _pos.get_x() && pos.get_y() == _pos.get_y() + 1 * sinal) && tabuleiro[_pos.get_x()][_pos.get_y() + 1 * sinal] == nullptr ||
+        (pos.get_x() == _pos.get_x() + 1 && pos.get_y() == _pos.get_y() + 1 * sinal && tabuleiro[_pos.get_x() + 1][_pos.get_y() + 1 * sinal] != nullptr) && (_cor != tabuleiro[_pos.get_x() + 1][_pos.get_y() + 1]->getCor()) ||
+        (pos.get_x() == _pos.get_x() - 1 && pos.get_y() == _pos.get_y() + 1 * sinal && tabuleiro[_pos.get_x() - 1][_pos.get_y() + 1 * sinal] != nullptr) && (_cor != tabuleiro[_pos.get_x() + 1][_pos.get_y() + 1]->getCor()))
     {
       return true;
     }
@@ -83,32 +84,10 @@ Peao::validarMovimento(Position pos) const
   }
   else
   {
-    if (_cor == Cor::PRETO && pos.get_x() == _pos.get_x() && pos.get_y() <= _pos.get_y() + 2 &&
-        pos.get_y() > _pos.get_y())
-    {
-      return true;
-    }
-    else if (_cor == Cor::BRANCO && pos.get_x() == _pos.get_x() && pos.get_y() >= _pos.get_y() - 2)
-    {
-      return true;
-    }
-    else if (_cor == Cor::BRANCO && pos.get_x() == _pos.get_x() + 1 &&
-             pos.get_y() == _pos.get_y() - 1)
-    {
-      return true;
-    }
-    else if (_cor == Cor::PRETO && pos.get_x() == _pos.get_x() + 1 &&
-             pos.get_y() == _pos.get_y() + 1)
-    {
-      return true;
-    }
-    else if (_cor == Cor::BRANCO && pos.get_x() == _pos.get_x() - 1 &&
-             pos.get_y() == _pos.get_y() - 1)
-    {
-      return true;
-    }
-    else if (_cor == Cor::PRETO && pos.get_x() == _pos.get_x() - 1 &&
-             pos.get_y() == _pos.get_y() + 1)
+    if ((pos.get_x() == _pos.get_x() && pos.get_y() == _pos.get_y() + 1 * sinal) && (tabuleiro[_pos.get_x()][_pos.get_y() + 1 * sinal] == nullptr) ||
+        (pos.get_x() == _pos.get_x() && pos.get_y() == _pos.get_y() + 2 * sinal) && (tabuleiro[_pos.get_x()][_pos.get_y() + 1 * sinal] == nullptr) && (tabuleiro[_pos.get_x()][_pos.get_y() + 2 * sinal] == nullptr) ||
+        (pos.get_x() == _pos.get_x() + 1 && pos.get_y() == _pos.get_y() + 1 * sinal) && (tabuleiro[_pos.get_x() + 1][_pos.get_y() + 1 * sinal] != nullptr) && (_cor != tabuleiro[_pos.get_x() + 1][_pos.get_y() + 1]->getCor()) ||
+        (pos.get_x() == _pos.get_x() - 1 && pos.get_y() == _pos.get_y() + 1 * sinal) && (tabuleiro[_pos.get_x() - 1][_pos.get_y() + 1 * sinal] != nullptr) && (_cor != tabuleiro[_pos.get_x() + 1][_pos.get_y() + 1]->getCor()))
     {
       return true;
     }
