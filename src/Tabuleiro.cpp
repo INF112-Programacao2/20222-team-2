@@ -117,7 +117,7 @@ Tabuleiro::inicializarJogo() // TODO: trocar o nome para algo que faça mais sen
 
   // Cavalo
   // _tabuleiro[4][4] = new Cavalo(Cor::BRANCO, { 4, 4 }, _knightWhiteBmp);
-  // _tabuleiro[3][2] = new Cavalo(Cor::PRETO, { 3, 2 }, _knightBlackBmp);
+  // _tabuleiro[3][2] = new Rei(Cor::PRETO, { 3, 2 }, _kingBlackBmp);
   // _tabuleiro[5][2] = new Cavalo(Cor::PRETO, { 5, 2 }, _knightBlackBmp);
   // _tabuleiro[2][3] = new Cavalo(Cor::PRETO, { 2, 3 }, _knightBlackBmp);
   // _tabuleiro[2][5] = new Cavalo(Cor::PRETO, { 2, 5 }, _knightBlackBmp);
@@ -219,10 +219,10 @@ Tabuleiro::moverPeca(int destX, int destY)
 {
   Peca* pecaDestino = _tabuleiro[destX][destY];
 
-  if (!(_pecaSelecionada->validarMovimento({ destX, destY })))
-  {
-    return 0;
-  }
+  // if (!(_pecaSelecionada->validarMovimento({ destX, destY })))
+  // {
+  //   return 0;
+  // }
 
   if (pecaDestino)
   {

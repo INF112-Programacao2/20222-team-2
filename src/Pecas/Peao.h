@@ -9,6 +9,4 @@ public:
   virtual ~Peao() {}
 
   virtual std::vector<Movimento> gerarMovimentos(Peca* tabuleiro[8][8]) const override;
-  //virtual bool validarMovimento(Position pos) const;
-  virtual bool validarMovimento(Peca* tabuleiro[8][8], Position pos) const; //Sobrecarga para o peâo
 };
