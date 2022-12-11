@@ -173,6 +173,7 @@ Tabuleiro::onClick(const ALLEGRO_EVENT& e, unsigned int& turno)
     if (moverPeca(pos.get_x(), pos.get_y()))
     {
       ++turno;
+      pawnPromotion(_tabuleiro[pos.get_x()][pos.get_y()]);
       _pecaSelecionada = nullptr;
       _movimentos.clear();
       _gerarMovimentos();
@@ -303,6 +304,17 @@ Tabuleiro::isInside(const Position& pos)
 }
 
 void
+Tabuleiro::pawnPromotion(Peca* p)
+{
+  if (p->getPos().get_y() == 0 || p->getPos().get_y() == 7)
+  {
+    Position pos = p->getPos();
+    _tabuleiro[pos.get_x()][pos.get_y()] = new Rainha(p->getCor(), { pos.get_x(), pos.get_y()});
+    delete p;
+  }
+}
+
+void
 Tabuleiro::_debugarPeca(Peca* p)
 {
   if (!p)
@@ -342,15 +354,4 @@ Tabuleiro::_debugarPeca(Peca* p)
   }
   std::cout << ' ' << (p->getCor() == Cor::BRANCO ? "BRANCO" : "PRETO");
   std::cout << ' ' << p->getPos() << std::endl;
-}
-
-void
-Tabuleiro::pawnPromotion(Peca* p)
-{
-  if (p->getPos().get_y() == 0 || p->getPos().get_y() == 7)
-  {
-    Position pos = p->getPos();
-    delete _tabuleiro[pos.get_x()][pos.get_y()];
-    _tabuleiro[pos.get_x()][pos.get_y()] = new Rainha(p->getCor(), { pos.get_x(), pos.get_y()}, _queenWhiteBmp);
-  }
 }
