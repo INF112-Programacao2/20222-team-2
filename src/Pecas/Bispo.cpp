@@ -1,6 +1,8 @@
-#include "Pecas/Bispo.h"
+#include "Bispo.h"
+
 #include <string>
-#include "Tabuleiro.h"
+
+#include "../Tabuleiro.h"
 
 Bispo::Bispo(Cor cor, Position pos, ALLEGRO_BITMAP* sprite)
   : Peca(cor, pos, sprite)
@@ -46,28 +48,4 @@ Bispo::gerarMovimentos(Peca* tabuleiro[8][8]) const
   }
 
   return movimentos;
-}
-
-bool
-Bispo::validarMovimento(Position pos) const
-{
-  int posauxy = _pos.get_y() - pos.get_y();
-  if (pos.get_x() < 0 || pos.get_x() > 7 || pos.get_y() < 0 || pos.get_y() > 7)
-  {
-    throw "Movimento inválido";
-    return false;
-  }
-  else
-  {
-    // Movimentação do Bispo
-    if ((pos.get_x() == _pos.get_x() - posauxy && pos.get_y() == _pos.get_y() - posauxy) ||
-        (pos.get_x() == _pos.get_x() + posauxy && pos.get_y() == _pos.get_y() + posauxy) ||
-        (pos.get_x() == _pos.get_x() + posauxy && pos.get_y() == _pos.get_y() - posauxy) ||
-        (pos.get_x() == _pos.get_x() - posauxy && pos.get_y() == _pos.get_y() + posauxy))
-    {
-      return true;
-    }
-    else
-      return false;
-  }
 }
