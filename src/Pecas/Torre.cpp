@@ -14,99 +14,36 @@ Torre::gerarMovimentos(Peca* tabuleiro[8][8]) const
 {
   std::vector<Movimento> movimentos;
 
-  //Movimentos para a baixo
-  for (int i = 1; i < 8; i++)
+  //Movimentos para baixo
+  for (int y = _pos.get_y() + 1; y <= 7; ++y)
   {
-    if (Tabuleiro::isInside({_pos.get_x(), _pos.get_y() + i}))
+    if (Movimento::geraMovimento(_pos, { _pos.get_x(), y }, tabuleiro, movimentos))
     {
-      Position pos(_pos.get_x(), _pos.get_y() + i);
-      if (tabuleiro[pos.get_x()][pos.get_y()] == nullptr)
-      {
-        movimentos.push_back(Movimento(_pos, pos, false, false));
-      }
-
-      else if (tabuleiro[pos.get_x()][pos.get_y()]->getCor() != _cor)
-      {
-        movimentos.push_back(Movimento(_pos, pos, true, false));
-        break;
-      }
-
-      else if (tabuleiro[pos.get_x()][pos.get_y()]->getCor() == _cor)
-      {
-        break;
-      }
+      break;
     }
   }
-
-  //Movimentos para a cima
-  for (int i = 1; i < 8; i++)
+  //Movimentos para cima
+  for (int y = _pos.get_y() - 1; y >= 0; --y)
   {
-    if (Tabuleiro::isInside({_pos.get_x(), _pos.get_y() - i}))
+    if (Movimento::geraMovimento(_pos, { _pos.get_x(), y }, tabuleiro, movimentos))
     {
-      Position pos(_pos.get_x(), _pos.get_y() - i);
-      if (tabuleiro[pos.get_x()][pos.get_y()] == nullptr)
-      {
-        movimentos.push_back(Movimento(_pos, pos, false, false));
-      }
-
-      else if (tabuleiro[pos.get_x()][pos.get_y()]->getCor() != _cor)
-      {
-        movimentos.push_back(Movimento(_pos, pos, true, false));
-        break;
-      }
-
-      else if (tabuleiro[pos.get_x()][pos.get_y()]->getCor() == _cor)
-      {
-        break;
-      }
+      break;
     }
   }
-
-  //Movimentos para direita
-  for (int i = 1; i < 8; i++)
+  //Movimentos para a direita
+  for (int x = _pos.get_x() + 1; x <= 7; ++x)
   {
-    if (Tabuleiro::isInside({_pos.get_x() + i, _pos.get_y()}))
+    if (Movimento::geraMovimento(_pos, { x, _pos.get_y() }, tabuleiro, movimentos))
     {
-      Position pos(_pos.get_x() + i, _pos.get_y());
-      if (tabuleiro[pos.get_x()][pos.get_y()] == nullptr)
-      {
-        movimentos.push_back(Movimento(_pos, pos, false, false));
-      }
-      
-      else if (tabuleiro[pos.get_x()][pos.get_y()]->getCor() != _cor)
-      {
-        movimentos.push_back(Movimento(_pos, pos, true, false));
-        break;
-      }
-
-      else if (tabuleiro[pos.get_x()][pos.get_y()]->getCor() == _cor)
-      {
-        break;
-      }
+      break;
     }
   }
-
-  //Movimentos para esquerda
-  for (int i = 1; i < 8; i++)
+  //Movimentos para a esquerda
+  for (int x = _pos.get_x() - 1; x >= 0; --x)
   {
-    if (Tabuleiro::isInside({_pos.get_x() - i, _pos.get_y()}))
+    if (Movimento::geraMovimento(_pos, { x, _pos.get_y() }, tabuleiro, movimentos))
     {
-      Position pos(_pos.get_x() - i, _pos.get_y());
-      if (tabuleiro[pos.get_x()][pos.get_y()] == nullptr)
-      {
-        movimentos.push_back(Movimento(_pos, pos, false, false));
-      }
-
-      else if (tabuleiro[pos.get_x()][pos.get_y()]->getCor() != _cor)
-      {
-        movimentos.push_back(Movimento(_pos, pos, true, false));
-        break;
-      }
-
-      else if (tabuleiro[pos.get_x()][pos.get_y()]->getCor() == _cor)
-      {
-        break;
-      }
+      break;
     }
   }
 

@@ -1,6 +1,6 @@
 #include "Pecas/Bispo.h"
+
 #include <string>
-#include "Tabuleiro.h"
 
 Bispo::Bispo(Cor cor, Position pos, ALLEGRO_BITMAP* sprite)
   : Peca(cor, pos, sprite)
@@ -11,85 +11,42 @@ std::vector<Movimento>
 Bispo::gerarMovimentos(Peca* tabuleiro[8][8]) const
 {
   std::vector<Movimento> movimentos;
-  
-  for (int i=0; i<8; i++){
-    if (Tabuleiro::isInside({_pos.get_x() + i, _pos.get_y() - i}))
-    {
-      Position pos({_pos.get_x() + i, _pos.get_y() - i});
-      if (tabuleiro[pos.get_x()][pos.get_y()] == nullptr ||
-          tabuleiro[pos.get_x()][pos.get_y()]->getCor() != _cor)
-      {
-        movimentos.push_back(Movimento(_pos, pos, false, false));
-      }
-      if (tabuleiro[pos.get_x()][pos.get_y()]->getCor() != _cor || tabuleiro[pos.get_x()][pos.get_y()]!= nullptr){
-        movimentos.push_back(Movimento(_pos, pos, true, false));
-        break;
-      }
-      if (tabuleiro[pos.get_x()][pos.get_y()]->getCor() == _cor){
-        break;
-      }
-    }
-  
-  //Movimento +1 para direita e +2 para baixo
 
-    if (Tabuleiro::isInside({_pos.get_x() - i, _pos.get_y() - i}))
+  // gera movimentos para cima e para a esquerda
+  for (int x = _pos.get_x() - 1, y = _pos.get_y() - 1; x >= 0 && y >= 0; --x, --y)
+  {
+    if (Movimento::geraMovimento(_pos, { x, y }, tabuleiro, movimentos))
     {
-      Position pos({_pos.get_x() - i, _pos.get_y() - i});
-      if (tabuleiro[pos.get_x()][pos.get_y()] == nullptr ||
-          tabuleiro[pos.get_x()][pos.get_y()]->getCor() != _cor)
-      {
-        movimentos.push_back(Movimento(_pos, pos, false, false));
-      }
-      if (tabuleiro[pos.get_x()][pos.get_y()]->getCor() != _cor || tabuleiro[pos.get_x()][pos.get_y()]!= nullptr){
-        movimentos.push_back(Movimento(_pos, pos, true, false));
-        break;
-      }
-      if (tabuleiro[pos.get_x()][pos.get_y()]->getCor() == _cor){
-        break;
-      }
+      break;
     }
-  
-  //Movimento -1 para esquerda e +2 para baixo
-
-    if (Tabuleiro::isInside({_pos.get_x() - i, _pos.get_y() + i}))
+  }
+  // gera movimentos para cima e para a direita
+  for (int x = _pos.get_x() + 1, y = _pos.get_y() - 1; x <= 7 && y >= 0; ++x, --y)
+  {
+    if (Movimento::geraMovimento(_pos, { x, y }, tabuleiro, movimentos))
     {
-      Position pos({_pos.get_x() - i, _pos.get_y() + i});
-      if (tabuleiro[pos.get_x()][pos.get_y()] == nullptr ||
-          tabuleiro[pos.get_x()][pos.get_y()]->getCor() != _cor)
-      {
-        movimentos.push_back(Movimento(_pos, pos, false, false));
-      }
-      if (tabuleiro[pos.get_x()][pos.get_y()]->getCor() != _cor || tabuleiro[pos.get_x()][pos.get_y()]!= nullptr){
-        movimentos.push_back(Movimento(_pos, pos, true, false));
-        break;
-      }
-      if (tabuleiro[pos.get_x()][pos.get_y()]->getCor() == _cor){
-        break;
-      }
+      break;
     }
-  
-  //Movimento -2 para esquerda e +1 para baixo
-    if (Tabuleiro::isInside({_pos.get_x() + i, _pos.get_y() + i}))
+  }
+  // gera movimentos para baixo e para a direita
+  for (int x = _pos.get_x() + 1, y = _pos.get_y() + 1; x <= 7 && y <= 7; ++x, ++y)
+  {
+    if (Movimento::geraMovimento(_pos, { x, y }, tabuleiro, movimentos))
     {
-      Position pos({_pos.get_x() + i, _pos.get_y() + i});
-      if (tabuleiro[pos.get_x()][pos.get_y()] == nullptr ||
-          tabuleiro[pos.get_x()][pos.get_y()]->getCor() != _cor)
-      {
-        movimentos.push_back(Movimento(_pos, pos, false, false));
-      }
-      if (tabuleiro[pos.get_x()][pos.get_y()]->getCor() != _cor || tabuleiro[pos.get_x()][pos.get_y()]!= nullptr){
-        movimentos.push_back(Movimento(_pos, pos, true, false));
-        break;
-      }
-      if (tabuleiro[pos.get_x()][pos.get_y()]->getCor() == _cor){
-        break;
-      }
+      break;
+    }
+  }
+  // gera movimentos para cima e para a direita
+  for (int x = _pos.get_x() - 1, y = _pos.get_y() + 1; x >= 0 && y <= 7; --x, ++y)
+  {
+    if (Movimento::geraMovimento(_pos, { x, y }, tabuleiro, movimentos))
+    {
+      break;
     }
   }
 
   return movimentos;
 }
-  
 
 bool
 Bispo::validarMovimento(Position pos) const
@@ -103,9 +60,9 @@ Bispo::validarMovimento(Position pos) const
   else
   {
     // Movimentação do Bispo
-    if ((pos.get_x() ==  _pos.get_x() - posauxy && pos.get_y() == _pos.get_y() - posauxy) ||
-        (pos.get_x() == _pos.get_x() + posauxy && pos.get_y() == _pos.get_y() + posauxy) || 
-        (pos.get_x() ==  _pos.get_x() + posauxy && pos.get_y() == _pos.get_y() - posauxy) ||
+    if ((pos.get_x() == _pos.get_x() - posauxy && pos.get_y() == _pos.get_y() - posauxy) ||
+        (pos.get_x() == _pos.get_x() + posauxy && pos.get_y() == _pos.get_y() + posauxy) ||
+        (pos.get_x() == _pos.get_x() + posauxy && pos.get_y() == _pos.get_y() - posauxy) ||
         (pos.get_x() == _pos.get_x() - posauxy && pos.get_y() == _pos.get_y() + posauxy))
     {
       return true;

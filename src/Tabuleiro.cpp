@@ -71,42 +71,78 @@ Tabuleiro::inicializarJogo() // TODO: trocar o nome para algo que faça mais sen
     }
   }
 
-  // colocar as peças como num jogo padrão de xadrez
-  // pretas, fileira de trás
-  _tabuleiro[0][0] = new Torre(Cor::PRETO, { 0, 0 }, _rookBlackBmp);
-  _tabuleiro[1][0] = new Cavalo(Cor::PRETO, { 1, 0 }, _knightBlackBmp);
-  _tabuleiro[2][0] = new Bispo(Cor::PRETO, { 2, 0 }, _bishopBlackBmp);
-  _tabuleiro[3][0] = new Rainha(Cor::PRETO, { 3, 0 }, _queenBlackBmp);
-  _tabuleiro[4][0] = new Rei(Cor::PRETO, { 4, 0 }, _kingBlackBmp);
-  _tabuleiro[5][0] = new Bispo(Cor::PRETO, { 5, 0 }, _bishopBlackBmp);
-  _tabuleiro[6][0] = new Cavalo(Cor::PRETO, { 6, 0 }, _knightBlackBmp);
-  _tabuleiro[7][0] = new Torre(Cor::PRETO, { 7, 0 }, _rookBlackBmp);
-  // pretas, peões
-  for (int x = 0; x < 8; ++x)
-  {
-    _tabuleiro[x][1] = new Peao(Cor::PRETO, { x, 1 }, _pawnBlackBmp);
-  }
+  // // colocar as peças como num jogo padrão de xadrez
+  // // pretas, fileira de trás
+  // _tabuleiro[0][0] = new Torre(Cor::PRETO, { 0, 0 }, _rookBlackBmp);
+  // _tabuleiro[1][0] = new Cavalo(Cor::PRETO, { 1, 0 }, _knightBlackBmp);
+  // _tabuleiro[2][0] = new Bispo(Cor::PRETO, { 2, 0 }, _bishopBlackBmp);
+  // _tabuleiro[3][0] = new Rainha(Cor::PRETO, { 3, 0 }, _queenBlackBmp);
+  // _tabuleiro[4][0] = new Rei(Cor::PRETO, { 4, 0 }, _kingBlackBmp);
+  // _tabuleiro[5][0] = new Bispo(Cor::PRETO, { 5, 0 }, _bishopBlackBmp);
+  // _tabuleiro[6][0] = new Cavalo(Cor::PRETO, { 6, 0 }, _knightBlackBmp);
+  // _tabuleiro[7][0] = new Torre(Cor::PRETO, { 7, 0 }, _rookBlackBmp);
+  // // pretas, peões
+  // for (int x = 0; x < 8; ++x)
+  // {
+  //   _tabuleiro[x][1] = new Peao(Cor::PRETO, { x, 1 }, _pawnBlackBmp);
+  // }
 
-  // brancas, fileira de trás
-  _tabuleiro[0][7] = new Torre(Cor::BRANCO, { 0, 7 }, _rookWhiteBmp);
-  _tabuleiro[1][7] = new Cavalo(Cor::BRANCO, { 1, 7 }, _knightWhiteBmp);
-  _tabuleiro[2][7] = new Bispo(Cor::BRANCO, { 2, 7 }, _bishopWhiteBmp);
-  _tabuleiro[3][7] = new Rainha(Cor::BRANCO, { 3, 7 }, _queenWhiteBmp);
-  _tabuleiro[4][7] = new Rei(Cor::BRANCO, { 4, 7 }, _kingWhiteBmp);
-  _tabuleiro[5][7] = new Bispo(Cor::BRANCO, { 5, 7 }, _bishopWhiteBmp);
-  _tabuleiro[6][7] = new Cavalo(Cor::BRANCO, { 6, 7 }, _knightWhiteBmp);
-  _tabuleiro[7][7] = new Torre(Cor::BRANCO, { 7, 7 }, _rookWhiteBmp);
-  // brancas, peões
-  for (int x = 0; x < 8; ++x)
-  {
-    _tabuleiro[x][6] = new Peao(Cor::BRANCO, { x, 6 }, _pawnWhiteBmp);
-  }
+  // // brancas, fileira de trás
+  // _tabuleiro[0][7] = new Torre(Cor::BRANCO, { 0, 7 }, _rookWhiteBmp);
+  // _tabuleiro[1][7] = new Cavalo(Cor::BRANCO, { 1, 7 }, _knightWhiteBmp);
+  // _tabuleiro[2][7] = new Bispo(Cor::BRANCO, { 2, 7 }, _bishopWhiteBmp);
+  // _tabuleiro[3][7] = new Rainha(Cor::BRANCO, { 3, 7 }, _queenWhiteBmp);
+  // _tabuleiro[4][7] = new Rei(Cor::BRANCO, { 4, 7 }, _kingWhiteBmp);
+  // _tabuleiro[5][7] = new Bispo(Cor::BRANCO, { 5, 7 }, _bishopWhiteBmp);
+  // _tabuleiro[6][7] = new Cavalo(Cor::BRANCO, { 6, 7 }, _knightWhiteBmp);
+  // _tabuleiro[7][7] = new Torre(Cor::BRANCO, { 7, 7 }, _rookWhiteBmp);
+  // // brancas, peões
+  // for (int x = 0; x < 8; ++x)
+  // {
+  //   _tabuleiro[x][6] = new Peao(Cor::BRANCO, { x, 6 }, _pawnWhiteBmp);
+  // }
+
+
+  // Para testes apenas
+  // Bispo, Torre ou Rainha
+  _tabuleiro[4][4] = new Rainha(Cor::BRANCO, { 4, 4 }, _queenWhiteBmp);
+  _tabuleiro[4][1] = new Cavalo(Cor::BRANCO, { 4, 1 }, _knightWhiteBmp);
+  _tabuleiro[4][6] = new Cavalo(Cor::PRETO, { 4, 6 }, _knightBlackBmp);
+  _tabuleiro[6][4] = new Torre(Cor::BRANCO, { 6, 4 }, _rookWhiteBmp);
+  _tabuleiro[2][4] = new Torre(Cor::BRANCO, { 2, 4 }, _rookWhiteBmp);
+  _tabuleiro[6][6] = new Bispo(Cor::BRANCO, { 6, 6 }, _bishopWhiteBmp);
+  _tabuleiro[5][3] = new Bispo(Cor::PRETO, { 5, 3 }, _bishopBlackBmp);
+  _tabuleiro[1][7] = new Rei(Cor::PRETO, { 1, 7 }, _kingBlackBmp);
+  _tabuleiro[0][0] = new Rei(Cor::BRANCO, { 0, 0 }, _kingWhiteBmp);
+
+  // Cavalo
+  // _tabuleiro[4][4] = new Cavalo(Cor::BRANCO, { 4, 4 }, _knightWhiteBmp);
+  // _tabuleiro[3][2] = new Cavalo(Cor::PRETO, { 3, 2 }, _knightBlackBmp);
+  // _tabuleiro[5][2] = new Cavalo(Cor::PRETO, { 5, 2 }, _knightBlackBmp);
+  // _tabuleiro[2][3] = new Cavalo(Cor::PRETO, { 2, 3 }, _knightBlackBmp);
+  // _tabuleiro[2][5] = new Cavalo(Cor::PRETO, { 2, 5 }, _knightBlackBmp);
+  // _tabuleiro[3][6] = new Cavalo(Cor::PRETO, { 3, 6 }, _knightBlackBmp);
+  // _tabuleiro[5][6] = new Cavalo(Cor::PRETO, { 5, 6 }, _knightBlackBmp);
+  // _tabuleiro[6][5] = new Cavalo(Cor::PRETO, { 6, 5 }, _knightBlackBmp);
+  // _tabuleiro[6][3] = new Cavalo(Cor::PRETO, { 6, 3 }, _knightBlackBmp);
+
+  // Rei
+  // _tabuleiro[0][0] = new Rei(Cor::BRANCO, { 0, 0 }, _kingWhiteBmp);
+  // _tabuleiro[7][0] = new Rei(Cor::BRANCO, { 7, 0 }, _kingWhiteBmp);
+  // _tabuleiro[0][7] = new Rei(Cor::BRANCO, { 0, 7 }, _kingWhiteBmp);
+  // _tabuleiro[7][7] = new Rei(Cor::BRANCO, { 7, 7 }, _kingWhiteBmp);
+  // _tabuleiro[5][5] = new Rei(Cor::PRETO, { 5, 5 }, _kingBlackBmp);
 
   _gerarMovimentos();
   // DEBUG: imprimir todos os movimentos
   for (int i = 0; i < _movimentos.size(); ++i)
   {
     std::cout << i << std::endl;
+    if (_movimentos[i].size() > 0)
+    {
+      _debugarPeca(
+        _tabuleiro[_movimentos[i][0].get_origem().get_x()][_movimentos[i][0].get_origem().get_y()]);
+    }
     for (Movimento& movimento : _movimentos[i])
     {
       std::cout << movimento << std::endl;
@@ -114,13 +150,18 @@ Tabuleiro::inicializarJogo() // TODO: trocar o nome para algo que faça mais sen
   }
 }
 
+// Gerencia o que ocorre quando o jogador clicka na tela
 void
 Tabuleiro::onClick(const ALLEGRO_EVENT& e, unsigned int& turno)
 {
+  Position pos = _screenToBoard(e);
+  if (!isInside(pos))
+  {
+    return;
+  }
+
   if (_pecaSelecionada != nullptr)
   {
-    Position pos = _screenToBoard(e);
-
     Peca* dest = _tabuleiro[pos.get_x()][pos.get_y()];
     if (dest && (dest->getCor() == (turno % 2 ? Cor::BRANCO : Cor::PRETO)))
     {
@@ -137,6 +178,11 @@ Tabuleiro::onClick(const ALLEGRO_EVENT& e, unsigned int& turno)
       for (int i = 0; i < _movimentos.size(); ++i)
       {
         std::cout << i << std::endl;
+        if (_movimentos[i].size() > 0)
+        {
+          _debugarPeca(_tabuleiro[_movimentos[i][0].get_origem().get_x()]
+                                 [_movimentos[i][0].get_origem().get_y()]);
+        }
         for (Movimento& movimento : _movimentos[i])
         {
           std::cout << movimento << std::endl;
@@ -146,7 +192,6 @@ Tabuleiro::onClick(const ALLEGRO_EVENT& e, unsigned int& turno)
   }
   else
   {
-    Position pos = _screenToBoard(e);
     Peca* sel = _tabuleiro[pos.get_x()][pos.get_y()];
     if (sel && (sel->getCor() == (turno % 2 ? Cor::BRANCO : Cor::PRETO)))
     {
@@ -155,6 +200,7 @@ Tabuleiro::onClick(const ALLEGRO_EVENT& e, unsigned int& turno)
   }
 }
 
+// Converte uma posição do mouse na tela para uma posição no tabuleiro
 Position
 Tabuleiro::_screenToBoard(const ALLEGRO_EVENT& e) const
 {
@@ -201,6 +247,7 @@ Tabuleiro::moverPeca(int destX, int destY)
   return 0;
 }
 
+// Gera todos os movimentos possíveis para todas as peças do tabuleiro
 void
 Tabuleiro::_gerarMovimentos()
 {
@@ -238,4 +285,46 @@ Tabuleiro::isInside(const Position& pos)
   int x = pos.get_x();
   int y = pos.get_y();
   return x >= 0 && x < 8 && y >= 0 && y < 8;
+}
+
+void
+Tabuleiro::_debugarPeca(Peca* p)
+{
+  if (!p)
+  {
+    std::cout << "Vazio" << '\n' << std::endl;
+    return;
+  }
+  Torre* t1 = dynamic_cast<Torre*>(p);
+  Cavalo* t2 = dynamic_cast<Cavalo*>(p);
+  Bispo* t3 = dynamic_cast<Bispo*>(p);
+  Rainha* t4 = dynamic_cast<Rainha*>(p);
+  Rei* t5 = dynamic_cast<Rei*>(p);
+  Peao* t6 = dynamic_cast<Peao*>(p);
+  if (t1)
+  {
+    std::cout << "TORRE";
+  }
+  else if (t2)
+  {
+    std::cout << "CAVALO";
+  }
+  else if (t3)
+  {
+    std::cout << "BISPO";
+  }
+  else if (t4)
+  {
+    std::cout << "RAINHA";
+  }
+  else if (t5)
+  {
+    std::cout << "REI";
+  }
+  else if (t6)
+  {
+    std::cout << "PEAO";
+  }
+  std::cout << ' ' << (p->getCor() == Cor::BRANCO ? "BRANCO" : "PRETO");
+  std::cout << ' ' << p->getPos() << std::endl;
 }
