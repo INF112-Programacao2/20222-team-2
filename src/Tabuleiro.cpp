@@ -98,6 +98,20 @@ Tabuleiro::inicializarJogo() // TODO: trocar o nome para algo que faça mais sen
     }
   }
 
+  // deletar todas as peças que já existem
+  for (int x = 0; x < 8; ++x)
+  {
+    for (int y = 0; y < 8; ++y)
+    {
+      if (_tabuleiro[x][y])
+      {
+        delete _tabuleiro[x][y];
+      }
+    }
+  }
+
+
+
   // colocar as peças como num jogo padrão de xadrez
   // pretas, fileira de trás
   _tabuleiro[0][0] = new Torre(Cor::PRETO, { 0, 0 });
