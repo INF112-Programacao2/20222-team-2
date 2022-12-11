@@ -12,6 +12,8 @@ class Tabuleiro : public GameObject
 private:
   Peca* _tabuleiro[8][8];
   Peca* _pecaSelecionada;
+  Peca* _reiBranco;
+  Peca* _reiPreto;
   std::vector<std::vector<Movimento>> _movimentos;
   void _moverPeca(int destX, int destY);
   void _gerarMovimentos();

@@ -112,7 +112,6 @@ Tabuleiro::inicializarJogo() // TODO: trocar o nome para algo que faça mais sen
     }
   }
 
-
   // colocar as peças como num jogo comum de xadrez
   // pretas, fileira de trás
   _tabuleiro[0][0] = new Torre(Cor::PRETO, { 0, 0 });
@@ -120,6 +119,7 @@ Tabuleiro::inicializarJogo() // TODO: trocar o nome para algo que faça mais sen
   //_tabuleiro[2][0] = new Bispo(Cor::PRETO, { 2, 0 });
   //_tabuleiro[3][0] = new Rainha(Cor::PRETO, { 3, 0 });
   _tabuleiro[4][0] = new Rei(Cor::PRETO, { 4, 0 });
+  _reiPreto = _tabuleiro[4][0];
   //_tabuleiro[5][0] = new Bispo(Cor::PRETO, { 5, 0 });
   //_tabuleiro[6][0] = new Cavalo(Cor::PRETO, { 6, 0 });
   _tabuleiro[7][0] = new Torre(Cor::PRETO, { 7, 0 });
@@ -135,6 +135,7 @@ Tabuleiro::inicializarJogo() // TODO: trocar o nome para algo que faça mais sen
   //_tabuleiro[2][7] = new Bispo(Cor::BRANCO, { 2, 7 });
   //_tabuleiro[3][7] = new Rainha(Cor::BRANCO, { 3, 7 });
   _tabuleiro[4][7] = new Rei(Cor::BRANCO, { 4, 7 });
+  _reiBranco = _tabuleiro[4][7];
   //_tabuleiro[5][7] = new Bispo(Cor::BRANCO, { 5, 7 });
   //_tabuleiro[6][7] = new Cavalo(Cor::BRANCO, { 6, 7 });
   _tabuleiro[7][7] = new Torre(Cor::BRANCO, { 7, 7 });
@@ -235,7 +236,10 @@ Tabuleiro::onClick(const ALLEGRO_EVENT& e, unsigned int& turno)
       _gerarMovimentos();
 
       // Após gerar os movimentos, verificar se o rei está em xeque com a função isCheck
-      bool check = isCheck(/*Receber o rei*/);
+      bool check_Branco = isCheck(_reiBranco);
+      std::cout << "Rei branco em xeque: " << check_Branco << std::endl;
+      bool check_Preto = isCheck(_reiPreto);
+      std::cout << "Rei preto em xeque: " << check_Preto << std::endl;
       // Se estiver, verificar se o rei pode se mover
 
       // DEBUG: imprimir todos os movimentos
@@ -401,8 +405,7 @@ Tabuleiro::isCheck(Peca* rei) const
         {
           for (const Movimento& movimento : _movimentos[i])
           {
-            if (movimento.get_destino().get_x() == posRei.get_x() &&
-                movimento.get_destino().get_y() == posRei.get_y())
+            if (movimento.get_atacaRei())
             {
               return true;
             }
