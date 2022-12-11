@@ -102,7 +102,6 @@ Tabuleiro::inicializarJogo() // TODO: trocar o nome para algo que faça mais sen
     _tabuleiro[x][6] = new Peao(Cor::BRANCO, { x, 6 });
   }
 
-
   // Para testes apenas
   // Bispo, Torre ou Rainha
   // _tabuleiro[4][4] = new Rainha(Cor::BRANCO, { 4, 4 });
@@ -216,36 +215,49 @@ Tabuleiro::_screenToBoard(const ALLEGRO_EVENT& e) const
 // saber se o turno é par ou ímpar.
 //
 // Retorna 1 se o movimento ocorrer, 0 se o movimento for inválido.
+//
+// Essa função retorna um unsigned int para ser somado (incrementar) ao número de turnos, por isso
+// não pode ser bool
 unsigned int
 Tabuleiro::moverPeca(int destX, int destY)
 {
   Peca* pecaDestino = _tabuleiro[destX][destY];
+  std::vector<Movimento> movPecaSelecionada;
 
-  // if (!(_pecaSelecionada->validarMovimento({ destX, destY })))
-  // {
-  //   return 0;
-  // }
-
-  if (pecaDestino)
+  if (pecaDestino && pecaDestino->getCor() == _pecaSelecionada->getCor())
   {
-    if (pecaDestino->getCor() != _pecaSelecionada->getCor())
+    // clique em peças de mesma cor, selecionar a outra peça
+    _pecaSelecionada = pecaDestino;
+    return 0;
+  }
+
+  // procura os movimentos da peça selecionada na lista de movimentos
+  for (int i = 0; i < _movimentos.size(); ++i)
+  {
+    if (_movimentos[i].size() > 0 &&
+        _movimentos[i][0].get_origem().get_x() == _pecaSelecionada->getPos().get_x() &&
+        _movimentos[i][0].get_origem().get_y() == _pecaSelecionada->getPos().get_y())
+    {
+      movPecaSelecionada = _movimentos[i];
+      break;
+    }
+  }
+
+  // verifica se há um movimento com o destino selecionado
+  for (const Movimento& movimento : movPecaSelecionada)
+  {
+    Position posDestino = movimento.get_destino();
+    if (destX == posDestino.get_x() && destY == posDestino.get_y())
     {
       _moverPeca(destX, destY);
-      delete pecaDestino;
+      if (movimento.get_captura())
+      {
+        delete pecaDestino;
+      }
       return 1;
     }
-    else
-    {
-      // clique em peças de mesma cor, selecionar a outra peça
-      _pecaSelecionada = pecaDestino;
-      return 0;
-    }
   }
-  else
-  {
-    _moverPeca(destX, destY);
-    return 1;
-  }
+
   return 0;
 }
 
