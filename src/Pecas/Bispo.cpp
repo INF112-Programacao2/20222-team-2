@@ -21,7 +21,7 @@ Bispo::gerarMovimentos(Peca* tabuleiro[8][8]) const
       {
         movimentos.push_back(Movimento(_pos, pos, false, false));
       }
-      if (tabuleiro[pos.get_x()][pos.get_y()]->getCor() != _cor){
+      if (tabuleiro[pos.get_x()][pos.get_y()]->getCor() != _cor || tabuleiro[pos.get_x()][pos.get_y()]!= nullptr){
         movimentos.push_back(Movimento(_pos, pos, true, false));
         break;
       }
@@ -40,7 +40,7 @@ Bispo::gerarMovimentos(Peca* tabuleiro[8][8]) const
       {
         movimentos.push_back(Movimento(_pos, pos, false, false));
       }
-      if (tabuleiro[pos.get_x()][pos.get_y()]->getCor() != _cor){
+      if (tabuleiro[pos.get_x()][pos.get_y()]->getCor() != _cor || tabuleiro[pos.get_x()][pos.get_y()]!= nullptr){
         movimentos.push_back(Movimento(_pos, pos, true, false));
         break;
       }
@@ -59,7 +59,7 @@ Bispo::gerarMovimentos(Peca* tabuleiro[8][8]) const
       {
         movimentos.push_back(Movimento(_pos, pos, false, false));
       }
-      if (tabuleiro[pos.get_x()][pos.get_y()]->getCor() != _cor){
+      if (tabuleiro[pos.get_x()][pos.get_y()]->getCor() != _cor || tabuleiro[pos.get_x()][pos.get_y()]!= nullptr){
         movimentos.push_back(Movimento(_pos, pos, true, false));
         break;
       }
@@ -77,7 +77,7 @@ Bispo::gerarMovimentos(Peca* tabuleiro[8][8]) const
       {
         movimentos.push_back(Movimento(_pos, pos, false, false));
       }
-      if (tabuleiro[pos.get_x()][pos.get_y()]->getCor() != _cor){
+      if (tabuleiro[pos.get_x()][pos.get_y()]->getCor() != _cor || tabuleiro[pos.get_x()][pos.get_y()]!= nullptr){
         movimentos.push_back(Movimento(_pos, pos, true, false));
         break;
       }
@@ -94,7 +94,6 @@ Bispo::gerarMovimentos(Peca* tabuleiro[8][8]) const
 bool
 Bispo::validarMovimento(Position pos) const
 {
-  int posauxx = _pos.get_x() - pos.get_x();
   int posauxy = _pos.get_y() - pos.get_y();
   if (pos.get_x() < 0 || pos.get_x() > 7 || pos.get_y() < 0 || pos.get_y() > 7)
   {
@@ -104,10 +103,10 @@ Bispo::validarMovimento(Position pos) const
   else
   {
     // Movimentação do Bispo
-    if (pos.get_x() ==  _pos.get_x() - posauxx && pos.get_y() == _pos.get_y() - posauxy ||
-        pos.get_x() == _pos.get_x() + posauxx && pos.get_y() == _pos.get_y() + posauxy || 
-        pos.get_x() ==  _pos.get_x() + posauxx && pos.get_y() == _pos.get_y() - posauxy ||
-        pos.get_x() == _pos.get_x() - posauxx && pos.get_y() == _pos.get_y() + posauxy)
+    if ((pos.get_x() ==  _pos.get_x() - posauxy && pos.get_y() == _pos.get_y() - posauxy) ||
+        (pos.get_x() == _pos.get_x() + posauxy && pos.get_y() == _pos.get_y() + posauxy) || 
+        (pos.get_x() ==  _pos.get_x() + posauxy && pos.get_y() == _pos.get_y() - posauxy) ||
+        (pos.get_x() == _pos.get_x() - posauxy && pos.get_y() == _pos.get_y() + posauxy))
     {
       return true;
     }
