@@ -28,6 +28,7 @@ public:
   Cor getCor() const;
   Position setPos(Position pos);
   Position getPos() const;
+  unsigned int getMovimentos() const;
   void incrementarMovimentos();
   // TODO: tentar retornar esse vetor como referencia para evitar cópias
   virtual std::vector<Movimento> gerarMovimentos(Peca* tabuleiro[8][8]) const = 0;
