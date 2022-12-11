@@ -20,12 +20,12 @@ Rei::gerarMovimentos(Peca* tabuleiro[8][8]) const
   {
     if (roque(tabuleiro, { _pos.get_x() + 3, _pos.get_y() }))
     {
-      movimentos.push_back(Movimento(_pos, { _pos.get_x() + 2, _pos.get_y() }, false, false));
+      movimentos.push_back(Movimento(_pos, { _pos.get_x() + 2, _pos.get_y() }, false, false, true));
     }
 
     if (roque(tabuleiro, { _pos.get_x() - 4, _pos.get_y() }))
     {
-      movimentos.push_back(Movimento(_pos, { _pos.get_x() - 2, _pos.get_y() }, false, false));
+      movimentos.push_back(Movimento(_pos, { _pos.get_x() - 2, _pos.get_y() }, false, false, true));
     }
   }
 

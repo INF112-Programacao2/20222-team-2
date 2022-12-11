@@ -107,11 +107,13 @@ Tabuleiro::inicializarJogo() // TODO: trocar o nome para algo que faça mais sen
       if (_tabuleiro[x][y])
       {
         delete _tabuleiro[x][y];
+        _tabuleiro[x][y] = nullptr;
       }
     }
   }
 
-  // colocar as peças como num jogo padrão de xadrez
+
+  // colocar as peças como num jogo comum de xadrez
   // pretas, fileira de trás
   _tabuleiro[0][0] = new Torre(Cor::PRETO, { 0, 0 });
   //_tabuleiro[1][0] = new Cavalo(Cor::PRETO, { 1, 0 });
@@ -303,6 +305,18 @@ Tabuleiro::moverPeca(int destX, int destY)
     Position posDestino = movimento.get_destino();
     if (destX == posDestino.get_x() && destY == posDestino.get_y())
     {
+      if (movimento.get_roque())
+      {
+        // mover o rei
+        _moverPeca(destX, destY);
+        // calcular posição da torre para o roque baseado na posição do rei
+        Position origTorre = { (destX == 6 ? 7 : 0), destY };
+        Position destTorre = { (destX == 6 ? 5 : 3), destY };
+        _pecaSelecionada = _tabuleiro[origTorre.get_x()][origTorre.get_y()];
+        // mover a torre
+        _moverPeca(destTorre.get_x(), destTorre.get_y());
+        return 1;
+      }
       _moverPeca(destX, destY);
       if (movimento.get_captura())
       {

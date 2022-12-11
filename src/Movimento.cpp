@@ -2,7 +2,7 @@
 
 #include "./Pecas/Rei.h"
 
-Movimento::Movimento(Position origem, Position destino, bool eCaptura, bool atacaRei)
+Movimento::Movimento(Position origem, Position destino, bool eCaptura, bool atacaRei, bool eRoque)
   : _origem(origem)
   , _destino(destino)
   , _eCaptura(eCaptura)
@@ -26,6 +26,12 @@ bool
 Movimento::get_captura() const
 {
   return _eCaptura;
+}
+
+bool
+Movimento::get_roque() const
+{
+  return _eRoque;
 }
 
 bool
