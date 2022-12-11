@@ -8,5 +8,5 @@ public:
   Torre(Cor cor, Position pos, ALLEGRO_BITMAP* sprite);
   virtual ~Torre() {}
 
-  virtual std::vector<Movi mento> gerarMovimentos(Peca* tabuleiro[8][8]) const override;
+  virtual std::vector<Movimento> gerarMovimentos(Peca* tabuleiro[8][8]) const override;
 };
