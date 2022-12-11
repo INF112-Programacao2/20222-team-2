@@ -39,7 +39,8 @@ Rei::gerarMovimentos(Peca* tabuleiro[8][8]) const
     Movimento::geraMovimento(_pos, p, tabuleiro, movimentos);
   }
 
-  if (Tabuleiro::isInside(Position(_pos.get_x() + 1, _pos.get_y())))
+  p = Position(_pos.get_x() + 1, _pos.get_y());
+  if (Tabuleiro::isInside(p))
   {
     Movimento::geraMovimento(_pos, p, tabuleiro, movimentos);
   }

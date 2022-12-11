@@ -19,7 +19,6 @@ Peao::gerarMovimentos(Peca* tabuleiro[8][8]) const
   int sinal = (_cor == Cor::BRANCO ? -1 : 1); // Operador ternario
 
   // Detecta movimentos a esquerda da peça
-
   if (Tabuleiro::isInside({ _pos.get_x() - 1, _pos.get_y() + 1 * sinal }) &&
       tabuleiro[_pos.get_x() - 1][_pos.get_y() + 1 * sinal] != nullptr &&
       tabuleiro[_pos.get_x() - 1][_pos.get_y() + 1 * sinal]->getCor() != _cor)
