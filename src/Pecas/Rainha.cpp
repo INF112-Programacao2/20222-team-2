@@ -1,4 +1,4 @@
-#include "Pecas/Rainha.h"
+#include "Rainha.h"
 
 #include <string>
 
