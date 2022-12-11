@@ -18,33 +18,38 @@ Peao::gerarMovimentos(Peca* tabuleiro[8][8]) const
   // o sinal é usado para mover o peão apenas para cima ou apenas para baixo, dependendo de sua cor
   int sinal = (_cor == Cor::BRANCO ? -1 : 1); // Operador ternario
 
-  // Detecta movimentos a esquerda da peça
-  if (Tabuleiro::isInside({ _pos.get_x() - 1, _pos.get_y() + 1 * sinal }) &&
-      tabuleiro[_pos.get_x() - 1][_pos.get_y() + 1 * sinal] != nullptr &&
-      tabuleiro[_pos.get_x() - 1][_pos.get_y() + 1 * sinal]->getCor() != _cor)
+  Position posFrente = { _pos.get_x(), _pos.get_y() + 1 * sinal };
+  Position posFrente2 = { _pos.get_x(), _pos.get_y() + 2 * sinal };
+  Position diagEsq = { _pos.get_x() - 1, _pos.get_y() + 1 * sinal };
+  Position diagDir = { _pos.get_x() + 1, _pos.get_y() + 1 * sinal };
+
+  // se não houver peça na frente do peão
+  if (!tabuleiro[posFrente.get_x()][posFrente.get_y()])
   {
-    movimentos.push_back(Movimento(_pos, { _pos.get_x() - 1, _pos.get_y() + 1 * sinal }, true, false));
+    Movimento::geraMovimento(_pos, posFrente, tabuleiro, movimentos);
+    if (!_seMovimentou)
+    {
+      if (!tabuleiro[posFrente2.get_x()][posFrente2.get_y()])
+      {
+        Movimento::geraMovimento(_pos, posFrente2, tabuleiro, movimentos);
+      }
+    }
   }
 
-  // Detecta movimentos a frente da peça
-  if (Tabuleiro::isInside({ _pos.get_x(), _pos.get_y() + 1 * sinal }))
+  // Detecta movimentos a esquerda da peça
+  if (Tabuleiro::isInside(diagEsq))
   {
-    movimentos.push_back(Movimento(_pos, { _pos.get_x(), _pos.get_y() + 1 * sinal }, false, false));
+    Peca* pecaEsquerda = tabuleiro[diagEsq.get_x()][diagEsq.get_y()];
+    if (pecaEsquerda && pecaEsquerda->getCor() != _cor)
+    {
+      Movimento::geraMovimento(_pos, diagEsq, tabuleiro, movimentos);
+    }
   }
 
   // Detecta movimentos a direita da peça
-  if (Tabuleiro::isInside({ _pos.get_x() + 1, _pos.get_y() + 1 * sinal }) && 
-      tabuleiro[_pos.get_x() + 1][_pos.get_y() + 1 * sinal] != nullptr && 
-      tabuleiro[_pos.get_x() + 1][_pos.get_y() + 1 * sinal]->getCor() != _cor)
+  if (Tabuleiro::isInside(diagDir) && tabuleiro[diagDir.get_x()][diagDir.get_y()])
   {
-    movimentos.push_back(Movimento(_pos, { _pos.get_x() + 1, _pos.get_y() + 1 * sinal }, true, false));
-  }
-
-  // Caso a peça ainda não tenha se movido, ela pode se mover duas casas
-  //TODO: para o primeiro movimento ainda é necessário verificar se é possivel capturar peça tanto a esquerda quanto a direita
-  if (!_movimentos)
-  {
-    movimentos.push_back(Movimento(_pos, { _pos.get_x(), _pos.get_y() + 2 * sinal }, false, false));
+    Movimento::geraMovimento(_pos, diagDir, tabuleiro, movimentos);
   }
 
   return movimentos;

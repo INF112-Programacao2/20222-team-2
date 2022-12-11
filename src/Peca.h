@@ -17,7 +17,7 @@ protected:
   Cor _cor;
   Position _pos;
   ALLEGRO_BITMAP* _sprite;
-  unsigned int _movimentos = 0;
+  unsigned int _seMovimentou = 0;
 
   Peca(Cor cor, Position pos, ALLEGRO_BITMAP* _sprite);
 

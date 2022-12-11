@@ -39,5 +39,5 @@ Peca::getPos() const
 void
 Peca::incrementarMovimentos()
 {
-  ++_movimentos;
+  ++_seMovimentou;
 }
