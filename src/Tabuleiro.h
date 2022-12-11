@@ -15,6 +15,7 @@ private:
   std::vector<std::vector<Movimento>> _movimentos;
   void _moverPeca(int destX, int destY);
   void _gerarMovimentos();
+  void _debugarPeca(Peca* p);
 
 public:
   Tabuleiro();

@@ -12,180 +12,76 @@ Rainha::Rainha(Cor cor, Position pos, ALLEGRO_BITMAP* sprite)
 std::vector<Movimento>
 Rainha::gerarMovimentos(Peca* tabuleiro[8][8]) const
 {
- std::vector<Movimento> movimentos;
-  if(_cor == Cor::PRETO)
+  std::vector<Movimento> movimentos;
+
+  // gera movimentos para cima e para a esquerda
+  for (int x = _pos.get_x() - 1, y = _pos.get_y() - 1; x >= 0 && y >= 0; --x, --y)
   {
-    // Movimentos para direita cima diagonal
-    for(int i = 1; i < 8; i++)
+    if (Movimento::geraMovimento(_pos, { x, y }, tabuleiro, movimentos))
     {
-      if(_pos.get_x() + i < 8 && _pos.get_y() + i < 8)
-      {
-        if(tabuleiro[_pos.get_x() + i][_pos.get_y() + i] == nullptr)
-        {
-          movimentos.push_back(Movimento(_pos, Position(_pos.get_x() + i, _pos.get_y() + i), false, false));
-        }
-        else if(tabuleiro[_pos.get_x() + i][_pos.get_y() + i]->getCor() == Cor::BRANCO)
-        {
-          movimentos.push_back(Movimento(_pos, Position(_pos.get_x() + i, _pos.get_y() + i), false, false));
-          break;
-        }
-        else
-        {
-          break;
-        }
-      }
+      break;
     }
-    
-    // Movimentos para esquerda baixo diagonal
-    for(int i = 1; i < 8; i++)
+  }
+  // gera movimentos para cima e para a direita
+  for (int x = _pos.get_x() + 1, y = _pos.get_y() - 1; x <= 7 && y >= 0; ++x, --y)
+  {
+    if (Movimento::geraMovimento(_pos, { x, y }, tabuleiro, movimentos))
     {
-      if(_pos.get_x() - i >= 0 && _pos.get_y() - i >= 0)
-      {
-        if(tabuleiro[_pos.get_x() - i][_pos.get_y() - i] == nullptr)
-        {
-          movimentos.push_back(Movimento(_pos, Position(_pos.get_x() - i, _pos.get_y() - i), false, false));
-        }
-        else if(tabuleiro[_pos.get_x() - i][_pos.get_y() - i]->getCor() == Cor::BRANCO)
-        {
-          movimentos.push_back(Movimento(_pos, Position(_pos.get_x() - i, _pos.get_y() - i), false, false));
-          break;
-        }
-        else
-        {
-          break;
-        }
-      }
+      break;
     }
-
-    // Movimentos para direita baixo diagonal
-    for(int i = 1; i < 8; i++)
+  }
+  // gera movimentos para baixo e para a direita
+  for (int x = _pos.get_x() + 1, y = _pos.get_y() + 1; x <= 7 && y <= 7; ++x, ++y)
+  {
+    if (Movimento::geraMovimento(_pos, { x, y }, tabuleiro, movimentos))
     {
-      if(_pos.get_x() + i < 8 && _pos.get_y() - i >= 0)
-      {
-        if(tabuleiro[_pos.get_x() + i][_pos.get_y() - i] == nullptr)
-        {
-          movimentos.push_back(Movimento(_pos, Position(_pos.get_x() + i, _pos.get_y() - i), false, false));
-        }
-        else if(tabuleiro[_pos.get_x() + i][_pos.get_y() - i]->getCor() == Cor::BRANCO)
-        {
-          movimentos.push_back(Movimento(_pos, Position(_pos.get_x() + i, _pos.get_y() - i), false, false));
-          break;
-        }
-        else
-        {
-          break;
-        }
-      }
+      break;
     }
-
-    // Movimentos para esquerda cima diagonal
-    for(int i = 1; i < 8; i++)
+  }
+  // gera movimentos para cima e para a direita
+  for (int x = _pos.get_x() - 1, y = _pos.get_y() + 1; x >= 0 && y <= 7; --x, ++y)
+  {
+    if (Movimento::geraMovimento(_pos, { x, y }, tabuleiro, movimentos))
     {
-      if(_pos.get_x() - i >= 0 && _pos.get_y() + i < 8)
-      {
-        if(tabuleiro[_pos.get_x() - i][_pos.get_y() + i] == nullptr)
-        {
-          movimentos.push_back(Movimento(_pos, Position(_pos.get_x() - i, _pos.get_y() + i), false, false));
-        }
-        else if(tabuleiro[_pos.get_x() - i][_pos.get_y() + i]->getCor() == Cor::BRANCO)
-        {
-          movimentos.push_back(Movimento(_pos, Position(_pos.get_x() - i, _pos.get_y() + i), false, false));
-          break;
-        }
-        else
-        {
-          break;
-        }
-      }
+      break;
     }
-
-    // Movimentos direita
-    for(int i = 1; i < 8; i++)
+  }
+  // Movimentos para baixo
+  for (int y = _pos.get_y() + 1; y <= 7; ++y)
+  {
+    if (Movimento::geraMovimento(_pos, { _pos.get_x(), y }, tabuleiro, movimentos))
     {
-      if(_pos.get_x() + i < 8)
-      {
-        if(tabuleiro[_pos.get_x() + i][_pos.get_y()] == nullptr)
-        {
-          movimentos.push_back(Movimento(_pos, Position(_pos.get_x() + i, _pos.get_y()), false, false));
-        }
-        else if(tabuleiro[_pos.get_x() + i][_pos.get_y()]->getCor() == Cor::BRANCO)
-        {
-          movimentos.push_back(Movimento(_pos, Position(_pos.get_x() + i, _pos.get_y()), false, false));
-          break;
-        }
-        else
-        {
-          break;
-        }
-      }
+      break;
     }
-
-    // Movimentos esquerda
-    for(int i = 1; i < 8; i++)
+  }
+  // Movimentos para cima
+  for (int y = _pos.get_y() - 1; y >= 0; --y)
+  {
+    if (Movimento::geraMovimento(_pos, { _pos.get_x(), y }, tabuleiro, movimentos))
     {
-      if(_pos.get_x() - i >= 0)
-      {
-        if(tabuleiro[_pos.get_x() - i][_pos.get_y()] == nullptr)
-        {
-          movimentos.push_back(Movimento(_pos, Position(_pos.get_x() - i, _pos.get_y()), false, false));
-        }
-        else if(tabuleiro[_pos.get_x() - i][_pos.get_y()]->getCor() == Cor::BRANCO)
-        {
-          movimentos.push_back(Movimento(_pos, Position(_pos.get_x() - i, _pos.get_y()), false, false));
-          break;
-        }
-        else
-        {
-          break;
-        }
-      }
+      break;
     }
-
-    // Movimentos para cima
-    for(int i = 1; i < 8; i++)
+  }
+  // Movimentos para a direita
+  for (int x = _pos.get_x() + 1; x <= 7; ++x)
+  {
+    if (Movimento::geraMovimento(_pos, { x, _pos.get_y() }, tabuleiro, movimentos))
     {
-      if(_pos.get_y() + i < 8)
-      {
-        if(tabuleiro[_pos.get_x()][_pos.get_y() + i] == nullptr)
-        {
-          movimentos.push_back(Movimento(_pos, Position(_pos.get_x(), _pos.get_y() + i), false, false));
-        }
-        else if(tabuleiro[_pos.get_x()][_pos.get_y() + i]->getCor() == Cor::BRANCO)
-        {
-          movimentos.push_back(Movimento(_pos, Position(_pos.get_x(), _pos.get_y() + i), false, false));
-          break;
-        }
-        else
-        {
-          break;
-        }
-      }
+      break;
     }
-
-    // Movimentos para baixo
-    for(int i = 1; i < 8; i++)
+  }
+  // Movimentos para a esquerda
+  for (int x = _pos.get_x() - 1; x >= 0; --x)
+  {
+    if (Movimento::geraMovimento(_pos, { x, _pos.get_y() }, tabuleiro, movimentos))
     {
-      if(_pos.get_y() - i >= 0)
-      {
-        if(tabuleiro[_pos.get_x()][_pos.get_y() - i] == nullptr)
-        {
-          movimentos.push_back(Movimento(_pos, Position(_pos.get_x(), _pos.get_y() - i), false, false ));
-        }
-        else if(tabuleiro[_pos.get_x()][_pos.get_y() - i]->getCor() == Cor::BRANCO)
-        {
-          movimentos.push_back(Movimento(_pos, Position(_pos.get_x(), _pos.get_y() - i), false, false));
-          break;
-        }
-        else
-        {
-          break;
-        }
-      }
+      break;
     }
+  }
 
   return movimentos;
 }
-}
+
 
 bool
 Rainha::validarMovimento(Position pos) const

@@ -15,7 +15,7 @@ Peao::gerarMovimentos(Peca* tabuleiro[8][8]) const
   std::vector<Movimento> movimentos;
 
   // o sinal é usado para mover o peão apenas para cima ou apenas para baixo, dependendo de sua cor
-  int sinal = (_cor == Cor::BRANCO ? -1 : 1); //Operador ternario
+  int sinal = (_cor == Cor::BRANCO ? -1 : 1); // Operador ternario
 
   // Detecta movimentos a esquerda da peça
   if (Tabuleiro::isInside({ _pos.get_x(), _pos.get_y() + 1 * sinal }))
@@ -24,7 +24,8 @@ Peao::gerarMovimentos(Peca* tabuleiro[8][8]) const
     {
       if (tabuleiro[_pos.get_x() - 1][_pos.get_y() + 1 * sinal]->getCor() != _cor)
       {
-        movimentos.push_back(Movimento(_pos, { _pos.get_x() - 1, _pos.get_y() + 1 * sinal }, true, false));
+        movimentos.push_back(
+          Movimento(_pos, { _pos.get_x() - 1, _pos.get_y() + 1 * sinal }, true, false));
       }
     }
   }
@@ -42,7 +43,8 @@ Peao::gerarMovimentos(Peca* tabuleiro[8][8]) const
     {
       if (tabuleiro[_pos.get_x() + 1][_pos.get_y() + 1 * sinal]->getCor() != _cor)
       {
-        movimentos.push_back(Movimento(_pos, { _pos.get_x() + 1, _pos.get_y() + 1 * sinal }, true, false));
+        movimentos.push_back(
+          Movimento(_pos, { _pos.get_x() + 1, _pos.get_y() + 1 * sinal }, true, false));
       }
     }
   }
@@ -55,8 +57,6 @@ Peao::gerarMovimentos(Peca* tabuleiro[8][8]) const
 
   return movimentos;
 }
-
-//TO DO: configurar restrições conforme a função gerarMovimento
 
 bool
 Peao::validarMovimento(Peca* tabuleiro[8][8], Position pos) const

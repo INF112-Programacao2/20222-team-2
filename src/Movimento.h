@@ -1,9 +1,13 @@
 #pragma once
 
 #include <iostream>
+#include <vector>
 
+#include "Peca.h"
 #include "Position.h"
 #include "common.h"
+
+class Peca;
 
 class Movimento
 {
@@ -21,6 +25,11 @@ public:
   Position get_destino() const;
   bool get_captura() const;
   bool get_atacaRei() const;
+
+  static bool geraMovimento(Position origem,
+                            Position destino,
+                            Peca* tabuleiro[8][8],
+                            std::vector<Movimento>& movimentos);
 
   friend std::ostream& operator<<(std::ostream& os, const Movimento& m);
 };

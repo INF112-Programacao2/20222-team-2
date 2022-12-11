@@ -9,6 +9,8 @@
 #include "Position.h"
 #include "common.h"
 
+class Movimento;
+
 class Peca : public GameObject
 {
 protected:
