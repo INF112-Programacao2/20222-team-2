@@ -29,4 +29,5 @@ public:
   void onClick(const ALLEGRO_EVENT& e, unsigned int& turno);
   
   void pawnPromotion(Peca* p);
+  bool isCheck(Peca* rei) const;
 };

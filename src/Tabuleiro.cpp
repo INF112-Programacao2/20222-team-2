@@ -222,15 +222,22 @@ Tabuleiro::onClick(const ALLEGRO_EVENT& e, unsigned int& turno)
     if (moverPeca(pos.get_x(), pos.get_y()))
     {
       ++turno;
+
       Peca* peca = _tabuleiro[pos.get_x()][pos.get_y()];
       Peao* peao = dynamic_cast<Peao*>(peca);
       if (peao)
       {
         pawnPromotion(_tabuleiro[pos.get_x()][pos.get_y()]);
       }
+
       _pecaSelecionada = nullptr;
       _movimentos.clear();
       _gerarMovimentos();
+
+      // Após gerar os movimentos, verificar se o rei está em xeque com a função isCheck
+      bool check = isCheck(/*Receber o rei*/);
+      // Se estiver, verificar se o rei pode se mover
+
       // DEBUG: imprimir todos os movimentos
       for (int i = 0; i < _movimentos.size(); ++i)
       {
@@ -378,6 +385,33 @@ Tabuleiro::pawnPromotion(Peca* p)
     _tabuleiro[pos.get_x()][pos.get_y()] = new Rainha(p->getCor(), { pos.get_x(), pos.get_y() });
     delete p;
   }
+}
+
+bool
+Tabuleiro::isCheck(Peca* rei) const
+{
+  Position posRei = rei->getPos();
+  for (int y = 0; y < 8; ++y)
+  {
+    for (int x = 0; x < 8; ++x)
+    {
+      if (_tabuleiro[x][y] && _tabuleiro[x][y]->getCor() != rei->getCor())
+      {
+        for (int i = 0; i < _movimentos.size(); ++i)
+        {
+          for (const Movimento& movimento : _movimentos[i])
+          {
+            if (movimento.get_destino().get_x() == posRei.get_x() &&
+                movimento.get_destino().get_y() == posRei.get_y())
+            {
+              return true;
+            }
+          }
+        }
+      }
+    }
+  }
+  return false;
 }
 
 void
