@@ -43,6 +43,33 @@ Tabuleiro::onRender() const
     }
   }
 
+  if (_pecaSelecionada)
+  {
+    std::vector<Movimento> movPecaSelecionada;
+    // procura os movimentos da peça selecionada na lista de movimentos
+    for (int i = 0; i < _movimentos.size(); ++i)
+    {
+      if (_movimentos[i].size() > 0 &&
+          _movimentos[i][0].get_origem().get_x() == _pecaSelecionada->getPos().get_x() &&
+          _movimentos[i][0].get_origem().get_y() == _pecaSelecionada->getPos().get_y())
+      {
+        movPecaSelecionada = _movimentos[i];
+        break;
+      }
+    }
+    if (movPecaSelecionada.size() > 0)
+    {
+      c = al_map_rgba(0, 0, 0, 65);
+      for (const Movimento m : movPecaSelecionada)
+      {
+        float x = m.get_destino().get_x() * BOARD_STEP + OFFSET_X;
+        float y = m.get_destino().get_y() * BOARD_STEP + OFFSET_Y;
+        al_draw_filled_circle(
+          (x + x + BOARD_STEP) / 2, (y + y + BOARD_STEP) / 2, BOARD_STEP / 6, c);
+      }
+    }
+  }
+
   // desenha as peças
   for (int x = 0; x < 8; ++x)
   {
@@ -71,7 +98,25 @@ Tabuleiro::inicializarJogo() // TODO: trocar o nome para algo que faça mais sen
     }
   }
 
+<<<<<<< HEAD
   // // colocar as peças como num jogo padrão de xadrez
+=======
+  // deletar todas as peças que já existem
+  for (int x = 0; x < 8; ++x)
+  {
+    for (int y = 0; y < 8; ++y)
+    {
+      if (_tabuleiro[x][y])
+      {
+        delete _tabuleiro[x][y];
+      }
+    }
+  }
+
+
+
+  // colocar as peças como num jogo padrão de xadrez
+>>>>>>> 973ab03cc3c6c4f9cfd67a1cb7891e110a588da1
   // pretas, fileira de trás
   _tabuleiro[0][0] = new Torre(Cor::PRETO, { 0, 0 });
   _tabuleiro[1][0] = new Cavalo(Cor::PRETO, { 1, 0 });
@@ -136,10 +181,17 @@ Tabuleiro::inicializarJogo() // TODO: trocar o nome para algo que faça mais sen
   // _tabuleiro[5][6] = new Cavalo(Cor::PRETO, { 5, 6 });
 
   // Peao
+<<<<<<< HEAD
   //_tabuleiro[4][4] = new Peao(Cor::BRANCO, { 4, 4 });
   //_tabuleiro[4][3] = new Peao(Cor::PRETO, { 4, 3 });
   //_tabuleiro[3][4] = new Peao(Cor::BRANCO, { 3, 4 });
   //_tabuleiro[3][3] = new Peao(Cor::PRETO, { 3, 3 });
+=======
+  // _tabuleiro[4][4] = new Peao(Cor::BRANCO, { 4, 4 });
+  // _tabuleiro[4][3] = new Peao(Cor::PRETO, { 4, 3 });
+  // _tabuleiro[3][4] = new Peao(Cor::BRANCO, { 3, 4 });
+  // _tabuleiro[3][3] = new Peao(Cor::PRETO, { 3, 3 });
+>>>>>>> 973ab03cc3c6c4f9cfd67a1cb7891e110a588da1
 
   _gerarMovimentos();
   // DEBUG: imprimir todos os movimentos
@@ -315,7 +367,7 @@ Tabuleiro::pawnPromotion(Peca* p)
   if (p->getPos().get_y() == 0 || p->getPos().get_y() == 7)
   {
     Position pos = p->getPos();
-    _tabuleiro[pos.get_x()][pos.get_y()] = new Rainha(p->getCor(), { pos.get_x(), pos.get_y()});
+    _tabuleiro[pos.get_x()][pos.get_y()] = new Rainha(p->getCor(), { pos.get_x(), pos.get_y() });
     delete p;
   }
 }
