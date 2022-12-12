@@ -42,6 +42,12 @@ Peca::incrementarMovimentos()
   ++_seMovimentou;
 }
 
+void
+Peca::decrementarMovimentos()
+{
+  --_seMovimentou;
+}
+
 unsigned int
 Peca::getMovimentos() const
 {

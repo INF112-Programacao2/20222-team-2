@@ -21,7 +21,7 @@ private:
   void _simularMovimento(const Movimento& m);
   void _simularMoverPeca(Peca* origem, Peca* destino);
   void _moverPeca(int destX, int destY);
-  void _gerarMovimentos();
+  std::vector<std::vector<Movimento>> _gerarMovimentos();
   void _debugarPeca(Peca* p);
 
 public:

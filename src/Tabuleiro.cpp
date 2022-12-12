@@ -57,6 +57,8 @@ Tabuleiro::onRender() const
         break;
       }
     }
+
+    // TODO: desenhar por cima da peça, se for captura, desenhar um círculo vermelho
     if (movPecaSelecionada.size() > 0)
     {
       c = al_map_rgba(0, 0, 0, 65);
@@ -107,21 +109,21 @@ Tabuleiro::inicializarJogo() // TODO: trocar o nome para algo que faça mais sen
       if (_tabuleiro[x][y])
       {
         delete _tabuleiro[x][y];
-        _tabuleiro[x][y] = nullptr;
       }
+      _tabuleiro[x][y] = nullptr;
     }
   }
 
   // colocar as peças como num jogo comum de xadrez
   // pretas, fileira de trás
   _tabuleiro[0][0] = new Torre(Cor::PRETO, { 0, 0 });
-  //_tabuleiro[1][0] = new Cavalo(Cor::PRETO, { 1, 0 });
-  //_tabuleiro[2][0] = new Bispo(Cor::PRETO, { 2, 0 });
-  //_tabuleiro[3][0] = new Rainha(Cor::PRETO, { 3, 0 });
+  _tabuleiro[1][0] = new Cavalo(Cor::PRETO, { 1, 0 });
+  _tabuleiro[2][0] = new Bispo(Cor::PRETO, { 2, 0 });
+  _tabuleiro[3][0] = new Rainha(Cor::PRETO, { 3, 0 });
   _tabuleiro[4][0] = new Rei(Cor::PRETO, { 4, 0 });
   _reiPreto = _tabuleiro[4][0];
-  //_tabuleiro[5][0] = new Bispo(Cor::PRETO, { 5, 0 });
-  //_tabuleiro[6][0] = new Cavalo(Cor::PRETO, { 6, 0 });
+  _tabuleiro[5][0] = new Bispo(Cor::PRETO, { 5, 0 });
+  _tabuleiro[6][0] = new Cavalo(Cor::PRETO, { 6, 0 });
   _tabuleiro[7][0] = new Torre(Cor::PRETO, { 7, 0 });
   // pretas, peões
   for (int x = 0; x < 8; ++x)
@@ -131,13 +133,13 @@ Tabuleiro::inicializarJogo() // TODO: trocar o nome para algo que faça mais sen
 
   // brancas, fileira de trás
   _tabuleiro[0][7] = new Torre(Cor::BRANCO, { 0, 7 });
-  //_tabuleiro[1][7] = new Cavalo(Cor::BRANCO, { 1, 7 });
-  //_tabuleiro[2][7] = new Bispo(Cor::BRANCO, { 2, 7 });
-  //_tabuleiro[3][7] = new Rainha(Cor::BRANCO, { 3, 7 });
+  _tabuleiro[1][7] = new Cavalo(Cor::BRANCO, { 1, 7 });
+  _tabuleiro[2][7] = new Bispo(Cor::BRANCO, { 2, 7 });
+  _tabuleiro[3][7] = new Rainha(Cor::BRANCO, { 3, 7 });
   _tabuleiro[4][7] = new Rei(Cor::BRANCO, { 4, 7 });
   _reiBranco = _tabuleiro[4][7];
-  //_tabuleiro[5][7] = new Bispo(Cor::BRANCO, { 5, 7 });
-  //_tabuleiro[6][7] = new Cavalo(Cor::BRANCO, { 6, 7 });
+  _tabuleiro[5][7] = new Bispo(Cor::BRANCO, { 5, 7 });
+  _tabuleiro[6][7] = new Cavalo(Cor::BRANCO, { 6, 7 });
   _tabuleiro[7][7] = new Torre(Cor::BRANCO, { 7, 7 });
   // brancas, peões
   for (int x = 0; x < 8; ++x)
@@ -145,47 +147,7 @@ Tabuleiro::inicializarJogo() // TODO: trocar o nome para algo que faça mais sen
     _tabuleiro[x][6] = new Peao(Cor::BRANCO, { x, 6 });
   }
 
-  // Para testes apenas
-  // Bispo, Torre ou Rainha
-
-  // _tabuleiro[4][4] = new Rainha(Cor::BRANCO, { 4, 4 });
-  // _tabuleiro[4][1] = new Cavalo(Cor::BRANCO, { 4, 1 });
-  // _tabuleiro[4][6] = new Cavalo(Cor::PRETO, { 4, 6 });
-  // _tabuleiro[6][4] = new Torre(Cor::BRANCO, { 6, 4 });
-  // _tabuleiro[2][4] = new Torre(Cor::BRANCO, { 2, 4 });
-  // _tabuleiro[6][6] = new Bispo(Cor::BRANCO, { 6, 6 });
-  // _tabuleiro[5][3] = new Bispo(Cor::PRETO, { 5, 3 });
-  // _tabuleiro[1][7] = new Rei(Cor::PRETO, { 1, 7 });
-  // _tabuleiro[0][0] = new Rei(Cor::BRANCO, { 0, 0 });
-
-  // Cavalo
-  // _tabuleiro[4][4] = new Cavalo(Cor::BRANCO, { 4, 4 });
-  // _tabuleiro[3][2] = new Rei(Cor::PRETO, { 3, 2 });
-  // _tabuleiro[5][2] = new Cavalo(Cor::PRETO, { 5, 2 });
-  // _tabuleiro[2][3] = new Cavalo(Cor::PRETO, { 2, 3 });
-  // _tabuleiro[2][5] = new Cavalo(Cor::PRETO, { 2, 5 });
-  // _tabuleiro[3][6] = new Cavalo(Cor::PRETO, { 3, 6 });
-  // _tabuleiro[5][6] = new Cavalo(Cor::PRETO, { 5, 6 });
-  // _tabuleiro[6][5] = new Cavalo(Cor::PRETO, { 6, 5 });
-  // _tabuleiro[6][3] = new Cavalo(Cor::PRETO, { 6, 3 });
-
-  // Rei
-  // _tabuleiro[0][0] = new Rei(Cor::BRANCO, { 0, 0 });
-  // _tabuleiro[7][0] = new Rei(Cor::BRANCO, { 7, 0 });
-  // _tabuleiro[0][7] = new Rei(Cor::BRANCO, { 0, 7 });
-  // _tabuleiro[7][7] = new Rei(Cor::BRANCO, { 7, 7 });
-  // _tabuleiro[5][5] = new Rei(Cor::PRETO, { 5, 5 });
-  // _tabuleiro[5][4] = new Cavalo(Cor::BRANCO, { 5, 4 });
-  // _tabuleiro[5][6] = new Cavalo(Cor::PRETO, { 5, 6 });
-
-  // Peao
-
-  //_tabuleiro[4][4] = new Peao(Cor::BRANCO, { 4, 4 });
-  //_tabuleiro[4][3] = new Peao(Cor::PRETO, { 4, 3 });
-  //_tabuleiro[3][4] = new Peao(Cor::BRANCO, { 3, 4 });
-  //_tabuleiro[3][3] = new Peao(Cor::PRETO, { 3, 3 });
-
-  _gerarMovimentos();
+  _movimentos = _gerarMovimentos();
   // DEBUG: imprimir todos os movimentos
   for (int i = 0; i < _movimentos.size(); ++i)
   {
@@ -233,14 +195,14 @@ Tabuleiro::onClick(const ALLEGRO_EVENT& e, unsigned int& turno)
 
       _pecaSelecionada = nullptr;
       _movimentos.clear();
-      _gerarMovimentos();
+      _movimentos = _gerarMovimentos();
 
+      // TODO: passar essa verificação para a peça?
       // Após gerar os movimentos, verificar se o rei está em xeque com a função isCheck
       bool check_Branco = isCheck(_reiBranco);
       std::cout << "Rei branco em xeque: " << check_Branco << std::endl;
       bool check_Preto = isCheck(_reiPreto);
       std::cout << "Rei preto em xeque: " << check_Preto << std::endl;
-      // Se estiver, verificar se o rei pode se mover
 
       // DEBUG: imprimir todos os movimentos
       for (int i = 0; i < _movimentos.size(); ++i)
@@ -260,6 +222,7 @@ Tabuleiro::onClick(const ALLEGRO_EVENT& e, unsigned int& turno)
   }
   else
   {
+    // Seleciona a peça clickada
     Peca* sel = _tabuleiro[pos.get_x()][pos.get_y()];
     if (sel && (sel->getCor() == (turno % 2 ? Cor::BRANCO : Cor::PRETO)))
     {
@@ -343,19 +306,21 @@ Tabuleiro::moverPeca(int destX, int destY)
 
 // Gera os movimentos possíveis para todas as peças do tabuleiro, validando-os parcialmente. O resto
 // da validação (xeque, mate) será feito na simulação
-void
+std::vector<std::vector<Movimento>>
 Tabuleiro::_gerarMovimentos()
 {
+  std::vector<std::vector<Movimento>> movimentos;
   for (int y = 0; y < 8; ++y)
   {
     for (int x = 0; x < 8; ++x)
     {
       if (_tabuleiro[x][y])
       {
-        _movimentos.push_back(_tabuleiro[x][y]->gerarMovimentos(_tabuleiro));
+        movimentos.push_back(_tabuleiro[x][y]->gerarMovimentos(_tabuleiro));
       }
     }
   }
+  return movimentos;
 }
 
 // Função auxiliar
