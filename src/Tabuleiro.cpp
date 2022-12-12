@@ -115,13 +115,13 @@ Tabuleiro::inicializarJogo() // TODO: trocar o nome para algo que faça mais sen
   // colocar as peças como num jogo comum de xadrez
   // pretas, fileira de trás
   _tabuleiro[0][0] = new Torre(Cor::PRETO, { 0, 0 });
-  //_tabuleiro[1][0] = new Cavalo(Cor::PRETO, { 1, 0 });
-  //_tabuleiro[2][0] = new Bispo(Cor::PRETO, { 2, 0 });
-  //_tabuleiro[3][0] = new Rainha(Cor::PRETO, { 3, 0 });
+  _tabuleiro[1][0] = new Cavalo(Cor::PRETO, { 1, 0 });
+  _tabuleiro[2][0] = new Bispo(Cor::PRETO, { 2, 0 });
+  _tabuleiro[3][0] = new Rainha(Cor::PRETO, { 3, 0 });
   _tabuleiro[4][0] = new Rei(Cor::PRETO, { 4, 0 });
   _reiPreto = _tabuleiro[4][0];
-  //_tabuleiro[5][0] = new Bispo(Cor::PRETO, { 5, 0 });
-  //_tabuleiro[6][0] = new Cavalo(Cor::PRETO, { 6, 0 });
+  _tabuleiro[5][0] = new Bispo(Cor::PRETO, { 5, 0 });
+  _tabuleiro[6][0] = new Cavalo(Cor::PRETO, { 6, 0 });
   _tabuleiro[7][0] = new Torre(Cor::PRETO, { 7, 0 });
   // pretas, peões
   for (int x = 0; x < 8; ++x)
@@ -131,13 +131,13 @@ Tabuleiro::inicializarJogo() // TODO: trocar o nome para algo que faça mais sen
 
   // brancas, fileira de trás
   _tabuleiro[0][7] = new Torre(Cor::BRANCO, { 0, 7 });
-  //_tabuleiro[1][7] = new Cavalo(Cor::BRANCO, { 1, 7 });
-  //_tabuleiro[2][7] = new Bispo(Cor::BRANCO, { 2, 7 });
-  //_tabuleiro[3][7] = new Rainha(Cor::BRANCO, { 3, 7 });
+  _tabuleiro[1][7] = new Cavalo(Cor::BRANCO, { 1, 7 });
+  _tabuleiro[2][7] = new Bispo(Cor::BRANCO, { 2, 7 });
+  _tabuleiro[3][7] = new Rainha(Cor::BRANCO, { 3, 7 });
   _tabuleiro[4][7] = new Rei(Cor::BRANCO, { 4, 7 });
   _reiBranco = _tabuleiro[4][7];
-  //_tabuleiro[5][7] = new Bispo(Cor::BRANCO, { 5, 7 });
-  //_tabuleiro[6][7] = new Cavalo(Cor::BRANCO, { 6, 7 });
+  _tabuleiro[5][7] = new Bispo(Cor::BRANCO, { 5, 7 });
+  _tabuleiro[6][7] = new Cavalo(Cor::BRANCO, { 6, 7 });
   _tabuleiro[7][7] = new Torre(Cor::BRANCO, { 7, 7 });
   // brancas, peões
   for (int x = 0; x < 8; ++x)
@@ -422,7 +422,7 @@ Tabuleiro::isCheck(Peca* rei) const
 
 // Funções para simulação
 // code review
-
+/*
 void
 Tabuleiro::_simularMoverPeca(Peca* origem, Peca* destino)
 {
@@ -430,7 +430,9 @@ Tabuleiro::_simularMoverPeca(Peca* origem, Peca* destino)
   _tabuleiro[origem->getPos().get_x()][origem->getPos().get_y()] = nullptr;
   origem->setPos(destino->getPos());
 }
+*/
 
+/*
 void
 Tabuleiro::_simularMovimentos()
 {
@@ -442,8 +444,9 @@ Tabuleiro::_simularMovimentos()
     }
   }
 }
+*/
 
-void
+/*void
 Tabuleiro::_simularMovimento(const Movimento& m)
 {
   // TODO: checkar o roque
@@ -454,12 +457,13 @@ Tabuleiro::_simularMovimento(const Movimento& m)
 
   pecaOrigem->decrementarMovimentos();
 }
+*/
 
-
-void _simularMoverPeca(const Movimento& m)
+/*void _simularMoverPeca(const Movimento& m)
 {
   
 }
+*/
 
 // Imprime o tipo, cor e posição da peça no console.
 void
