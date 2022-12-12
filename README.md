@@ -41,6 +41,9 @@
 -   Markdown:  **[Markdown Emoji](https://gist.github.com/rxaviers/7360908)**
 -   Imgui Allegro:  **[Allegro 5](https://liballeg.org/)**
 -   Fontes:  **[Inter-Regular](https://fonts.google.com/specimen/Inter)**
+
+## orconut/Imgui
+O ImGui é uma biblioteca de interface gráfica do usuário livre de inchaço para C++. É projetado para ser simples, compacto, portátil e fácil de integrar em seu código existente.
 ## Allegro 5 no C++
 
 #### Configurar no ubuntu :penguin:
