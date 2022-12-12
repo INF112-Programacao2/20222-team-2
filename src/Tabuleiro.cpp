@@ -164,7 +164,7 @@ Tabuleiro::inicializarJogo() // TODO: trocar o nome para algo que faça mais sen
   }
 }
 
-// Gerencia o que ocorre quando o jogador clicka na tela
+// Gerencia o que ocorre quando o jogador clicka no tabuleiro
 void
 Tabuleiro::onClick(const ALLEGRO_EVENT& e, unsigned int& turno)
 {
@@ -197,12 +197,13 @@ Tabuleiro::onClick(const ALLEGRO_EVENT& e, unsigned int& turno)
       _movimentos.clear();
       _movimentos = _gerarMovimentos();
 
+      _simularMovimentos();
       // TODO: passar essa verificação para a peça?
       // Após gerar os movimentos, verificar se o rei está em xeque com a função isCheck
-      bool check_Branco = isCheck(_reiBranco);
-      std::cout << "Rei branco em xeque: " << check_Branco << std::endl;
-      bool check_Preto = isCheck(_reiPreto);
-      std::cout << "Rei preto em xeque: " << check_Preto << std::endl;
+      // bool check_Branco = isCheck(_reiBranco);
+      // std::cout << "Rei branco em xeque: " << check_Branco << std::endl;
+      // bool check_Preto = isCheck(_reiPreto);
+      // std::cout << "Rei preto em xeque: " << check_Preto << std::endl;
 
       // DEBUG: imprimir todos os movimentos
       for (int i = 0; i < _movimentos.size(); ++i)
@@ -359,7 +360,7 @@ Tabuleiro::pawnPromotion(Peca* p)
 }
 
 bool
-Tabuleiro::isCheck(Peca* rei) const
+Tabuleiro::isCheck(Peca* rei, std::vector<std::vector<Movimento>> movimentos) const
 {
   Position posRei = rei->getPos();
   for (int y = 0; y < 8; ++y)
@@ -368,9 +369,9 @@ Tabuleiro::isCheck(Peca* rei) const
     {
       if (_tabuleiro[x][y] && _tabuleiro[x][y]->getCor() != rei->getCor())
       {
-        for (int i = 0; i < _movimentos.size(); ++i)
+        for (int i = 0; i < movimentos.size(); ++i)
         {
-          for (const Movimento& movimento : _movimentos[i])
+          for (const Movimento& movimento : movimentos[i])
           {
             if (movimento.get_atacaRei())
             {
@@ -384,35 +385,32 @@ Tabuleiro::isCheck(Peca* rei) const
   return false;
 }
 
-
 // Funções para simulação
 // code review
-/*
-void
-Tabuleiro::_simularMoverPeca(Peca* origem, Peca* destino)
-{
-  _tabuleiro[destino->getPos().get_x()][destino->getPos().get_y()] = origem;
-  _tabuleiro[origem->getPos().get_x()][origem->getPos().get_y()] = nullptr;
-  origem->setPos(destino->getPos());
-}
-*/
-
-/*
 void
 Tabuleiro::_simularMovimentos()
 {
-  for (const std::vector<Movimento>& movimentos : _movimentos)
+  for (std::vector<Movimento>& movimentos : _movimentos)
   {
-    for (const Movimento& m : movimentos)
+    for (Movimento& m : movimentos)
     {
       _simularMovimento(m);
     }
   }
 }
-*/
 
-/*void
-Tabuleiro::_simularMovimento(const Movimento& m)
+void
+Tabuleiro::_simularMoverPeca(Position origem, Position destino)
+{
+  Peca* pecaOrigem = _tabuleiro[origem.get_x()][origem.get_y()];
+  _tabuleiro[destino.get_x()][destino.get_y()] = pecaOrigem;
+  _tabuleiro[origem.get_x()][origem.get_y()] = nullptr;
+  pecaOrigem->setPos(destino);
+  pecaOrigem->incrementarMovimentos();
+}
+
+void
+Tabuleiro::_simularMovimento(Movimento& m)
 {
   // TODO: checkar o roque
   Position posOrigem = m.get_origem();
@@ -420,15 +418,20 @@ Tabuleiro::_simularMovimento(const Movimento& m)
   Peca* pecaOrigem = _tabuleiro[posOrigem.get_x()][posOrigem.get_y()];
   Peca* pecaDestino = _tabuleiro[posDestino.get_x()][posDestino.get_y()];
 
+  _simularMoverPeca(posOrigem, posDestino);
+  _movimentosSimulados = _gerarMovimentos();
+
+  if (isCheck(_reiBranco, _movimentosSimulados) || isCheck(_reiPreto, _movimentosSimulados))
+  {
+    m.invdalidar();
+  }
+
+  // desfazer o movimento
+  _tabuleiro[posOrigem.get_x()][posOrigem.get_y()] = pecaOrigem;
+  _tabuleiro[posDestino.get_x()][posDestino.get_y()] = pecaDestino;
+  pecaOrigem->setPos(posOrigem);
   pecaOrigem->decrementarMovimentos();
 }
-*/
-
-/*void _simularMoverPeca(const Movimento& m)
-{
-  
-}
-*/
 
 // Imprime o tipo, cor e posição da peça no console.
 void

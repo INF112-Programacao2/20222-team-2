@@ -17,11 +17,11 @@ private:
   std::vector<std::vector<Movimento>> _movimentos;
   std::vector<std::vector<Movimento>> _movimentosSimulados;
   
-  void _simularMovimentos();
-  void _simularMovimento(const Movimento& m);
-  void _simularMoverPeca(Peca* origem, Peca* destino);
   void _moverPeca(int destX, int destY);
   std::vector<std::vector<Movimento>> _gerarMovimentos();
+  void _simularMovimentos();
+  void _simularMovimento(Movimento& m);
+  void _simularMoverPeca(Position origem, Position destino);
   void _debugarPeca(Peca* p);
 
 public:
@@ -36,5 +36,5 @@ public:
   void onClick(const ALLEGRO_EVENT& e, unsigned int& turno);
   
   void pawnPromotion(Peca* p);
-  bool isCheck(Peca* rei) const;
+  bool isCheck(Peca* rei, std::vector<std::vector<Movimento>> movimentos) const;
 };

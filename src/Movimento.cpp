@@ -103,6 +103,7 @@ std::ostream&
 operator<<(std::ostream& os, const Movimento& m)
 {
   os << m.get_origem() << ' ' << m.get_destino() << " captura: " << m.get_captura()
-     << " ataca rei: " << m.get_atacaRei();
+     << " ataca rei: " << m.get_atacaRei() << " é roque? " << m.get_roque() << " é Valido? "
+     << m.get_eValido();
   return os;
 }
