@@ -387,7 +387,7 @@ Tabuleiro::isCheck(Peca* rei) const
 
 // Funções para simulação
 // code review
-
+/*
 void
 Tabuleiro::_simularMoverPeca(Peca* origem, Peca* destino)
 {
@@ -395,7 +395,9 @@ Tabuleiro::_simularMoverPeca(Peca* origem, Peca* destino)
   _tabuleiro[origem->getPos().get_x()][origem->getPos().get_y()] = nullptr;
   origem->setPos(destino->getPos());
 }
+*/
 
+/*
 void
 Tabuleiro::_simularMovimentos()
 {
@@ -407,8 +409,9 @@ Tabuleiro::_simularMovimentos()
     }
   }
 }
+*/
 
-void
+/*void
 Tabuleiro::_simularMovimento(const Movimento& m)
 {
   // TODO: checkar o roque
@@ -419,12 +422,13 @@ Tabuleiro::_simularMovimento(const Movimento& m)
 
   pecaOrigem->decrementarMovimentos();
 }
+*/
 
-
-void _simularMoverPeca(const Movimento& m)
+/*void _simularMoverPeca(const Movimento& m)
 {
   
 }
+*/
 
 // Imprime o tipo, cor e posição da peça no console.
 void
