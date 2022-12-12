@@ -30,6 +30,7 @@ public:
   Position getPos() const;
   unsigned int getMovimentos() const;
   void incrementarMovimentos();
+  void decrementarMovimentos();
   // TODO: tentar retornar esse vetor como referencia para evitar cópias
   virtual std::vector<Movimento> gerarMovimentos(Peca* tabuleiro[8][8]) const = 0;
 };

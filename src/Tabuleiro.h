@@ -15,6 +15,11 @@ private:
   Peca* _reiBranco;
   Peca* _reiPreto;
   std::vector<std::vector<Movimento>> _movimentos;
+  std::vector<std::vector<Movimento>> _movimentosSimulados;
+  
+  void _simularMovimentos();
+  void _simularMovimento(const Movimento& m);
+  void _simularMoverPeca(Peca* origem, Peca* destino);
   void _moverPeca(int destX, int destY);
   void _gerarMovimentos();
   void _debugarPeca(Peca* p);

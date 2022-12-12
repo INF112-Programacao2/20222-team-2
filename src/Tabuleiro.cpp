@@ -60,7 +60,7 @@ Tabuleiro::onRender() const
     if (movPecaSelecionada.size() > 0)
     {
       c = al_map_rgba(0, 0, 0, 65);
-      for (const Movimento m : movPecaSelecionada)
+      for (const Movimento& m : movPecaSelecionada)
       {
         float x = m.get_destino().get_x() * BOARD_STEP + OFFSET_X;
         float y = m.get_destino().get_y() * BOARD_STEP + OFFSET_Y;
@@ -326,6 +326,7 @@ Tabuleiro::moverPeca(int destX, int destY)
         _pecaSelecionada = _tabuleiro[origTorre.get_x()][origTorre.get_y()];
         // mover a torre
         _moverPeca(destTorre.get_x(), destTorre.get_y());
+        _pecaSelecionada = nullptr;
         return 1;
       }
       _moverPeca(destX, destY);
@@ -340,7 +341,8 @@ Tabuleiro::moverPeca(int destX, int destY)
   return 0;
 }
 
-// Gera todos os movimentos possíveis para todas as peças do tabuleiro
+// Gera os movimentos possíveis para todas as peças do tabuleiro, validando-os parcialmente. O resto
+// da validação (xeque, mate) será feito na simulação
 void
 Tabuleiro::_gerarMovimentos()
 {
@@ -417,6 +419,49 @@ Tabuleiro::isCheck(Peca* rei) const
   return false;
 }
 
+
+// Funções para simulação
+// code review
+
+void
+Tabuleiro::_simularMoverPeca(Peca* origem, Peca* destino)
+{
+  _tabuleiro[destino->getPos().get_x()][destino->getPos().get_y()] = origem;
+  _tabuleiro[origem->getPos().get_x()][origem->getPos().get_y()] = nullptr;
+  origem->setPos(destino->getPos());
+}
+
+void
+Tabuleiro::_simularMovimentos()
+{
+  for (const std::vector<Movimento>& movimentos : _movimentos)
+  {
+    for (const Movimento& m : movimentos)
+    {
+      _simularMovimento(m);
+    }
+  }
+}
+
+void
+Tabuleiro::_simularMovimento(const Movimento& m)
+{
+  // TODO: checkar o roque
+  Position posOrigem = m.get_origem();
+  Position posDestino = m.get_destino();
+  Peca* pecaOrigem = _tabuleiro[posOrigem.get_x()][posOrigem.get_y()];
+  Peca* pecaDestino = _tabuleiro[posDestino.get_x()][posDestino.get_y()];
+
+  pecaOrigem->decrementarMovimentos();
+}
+
+
+void _simularMoverPeca(const Movimento& m)
+{
+  
+}
+
+// Imprime o tipo, cor e posição da peça no console.
 void
 Tabuleiro::_debugarPeca(Peca* p)
 {

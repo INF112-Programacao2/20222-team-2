@@ -2,12 +2,31 @@
 
 #include "./Pecas/Rei.h"
 
-Movimento::Movimento(Position origem, Position destino, bool eCaptura, bool atacaRei, bool eRoque)
+Movimento::Movimento(Position origem,
+                     Position destino,
+                     bool eCaptura,
+                     bool atacaRei,
+                     bool eRoque,
+                     bool eValido)
   : _origem(origem)
   , _destino(destino)
-  , _eCaptura(eCaptura)
-  , _atacaRei(atacaRei)
 {
+  _eCaptura = eCaptura;
+  _atacaRei = atacaRei;
+  _eRoque = eRoque;
+  _eValido = eValido;
+}
+
+bool
+Movimento::get_eValido() const
+{
+  return _eValido;
+}
+
+void
+Movimento::invdalidar()
+{
+  _eValido = false;
 }
 
 Position
