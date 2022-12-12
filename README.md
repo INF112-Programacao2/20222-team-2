@@ -23,15 +23,16 @@
 </p>
 
 <p align="center">
-  <a href="#computer-technologies">Tecnologias</a>
+  <a href="#Tecnologias">Tecnologias</a>
   &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#memo-license">Grupo</a>
+  <a href="#Grupo">Grupo</a>
 </p>
 
 <p align="center">
   <img alt="App Screenshot" src="./assets/readme_1.gif" width="400" height="400">
 </p>
 
+<p id="Tecnologias"></p>
 # :computer: Tecnologias
 
 #### **Utilitários**
@@ -64,6 +65,7 @@ $ make run
 ```
 
 -----------
+<p id="Grupo"></p>
 ## 👨‍💻 Grupo
 
 <table>
