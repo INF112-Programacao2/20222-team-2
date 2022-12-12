@@ -22,7 +22,9 @@ private:
   void _simularMovimentos();
   void _simularMovimento(Movimento& m);
   void _simularMoverPeca(Position origem, Position destino);
+  bool _isCheck(Peca* rei, std::vector<std::vector<Movimento>> movimentos) const;
   void _debugarPeca(Peca* p);
+  void pawnPromotion(Peca* p);
 
 public:
   Tabuleiro();
@@ -34,7 +36,6 @@ public:
   void inicializarJogo();
   virtual void onRender() const override;
   void onClick(const ALLEGRO_EVENT& e, unsigned int& turno);
-  
-  void pawnPromotion(Peca* p);
-  bool isCheck(Peca* rei, std::vector<std::vector<Movimento>> movimentos) const;
+  bool isCheck() const;
+  bool isMate() const;
 };

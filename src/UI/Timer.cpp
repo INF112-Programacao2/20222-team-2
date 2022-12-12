@@ -6,12 +6,19 @@
 
 Timer::Timer()
   : _startTime(std::chrono::system_clock::now())
+  , _stopped(false)
+  , _endTime(std::chrono::system_clock::now())
 {
+
 }
 
 long long int
 Timer::get_hours() const
 {
+  if (_stopped)
+  {
+    return std::chrono::duration_cast<std::chrono::hours>(_endTime - _startTime).count();
+  }
   return std::chrono::duration_cast<std::chrono::hours>(std::chrono::system_clock::now() -
                                                         _startTime)
     .count();
@@ -20,6 +27,10 @@ Timer::get_hours() const
 long long int
 Timer::get_minutes() const
 {
+  if (_stopped)
+  {
+    return std::chrono::duration_cast<std::chrono::minutes>(_endTime - _startTime).count();
+  }
   return std::chrono::duration_cast<std::chrono::minutes>(std::chrono::system_clock::now() -
                                                           _startTime)
     .count();
@@ -28,6 +39,10 @@ Timer::get_minutes() const
 long long int
 Timer::get_seconds() const
 {
+  if (_stopped)
+  {
+    return std::chrono::duration_cast<std::chrono::seconds>(_endTime - _startTime).count();
+  }
   return std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now() -
                                                           _startTime)
 .count();
@@ -60,4 +75,11 @@ Timer::onRender() const
 void Timer::reset()
 {
   _startTime = std::chrono::system_clock::now();
+}
+
+void
+Timer::stop()
+{
+  _stopped = true;
+  _endTime = std::chrono::system_clock::now();
 }

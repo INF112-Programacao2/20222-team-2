@@ -10,6 +10,7 @@
 #include "Pecas/Torre.h"
 #include "constants.h"
 #include "globals.h"
+#include "errorHandling.h"
 
 Tabuleiro::Tabuleiro()
   : _pecaSelecionada(nullptr)
@@ -64,6 +65,10 @@ Tabuleiro::onRender() const
       c = al_map_rgba(0, 0, 0, 65);
       for (const Movimento& m : movPecaSelecionada)
       {
+        if (!m.get_eValido())
+        {
+          continue;
+        }
         float x = m.get_destino().get_x() * BOARD_STEP + OFFSET_X;
         float y = m.get_destino().get_y() * BOARD_STEP + OFFSET_Y;
         al_draw_filled_circle(
@@ -198,7 +203,7 @@ Tabuleiro::onClick(const ALLEGRO_EVENT& e, unsigned int& turno)
       _movimentos = _gerarMovimentos();
 
       _simularMovimentos();
-      // TODO: passar essa verificação para a peça?
+      // TODO: passar essa verificação para a partida?
       // Após gerar os movimentos, verificar se o rei está em xeque com a função isCheck
       // bool check_Branco = isCheck(_reiBranco);
       // std::cout << "Rei branco em xeque: " << check_Branco << std::endl;
@@ -277,6 +282,10 @@ Tabuleiro::moverPeca(int destX, int destY)
   // verifica se há um movimento com o destino selecionado
   for (const Movimento& movimento : movPecaSelecionada)
   {
+    if (!movimento.get_eValido())
+    {
+      continue;
+    }
     Position posDestino = movimento.get_destino();
     if (destX == posDestino.get_x() && destY == posDestino.get_y())
     {
@@ -360,29 +369,63 @@ Tabuleiro::pawnPromotion(Peca* p)
 }
 
 bool
-Tabuleiro::isCheck(Peca* rei, std::vector<std::vector<Movimento>> movimentos) const
+Tabuleiro::_isCheck(Peca* rei, std::vector<std::vector<Movimento>> movimentos) const
 {
   Position posRei = rei->getPos();
-  for (int y = 0; y < 8; ++y)
+
+  // procura os movimentos da peça selecionada na lista de movimentos
+  for (int i = 0; i < movimentos.size(); ++i)
   {
-    for (int x = 0; x < 8; ++x)
+    if (movimentos[i].size() > 0 &&
+        _tabuleiro[movimentos[i][0].get_origem().get_x()][movimentos[i][0].get_origem().get_y()]
+            ->getCor() != rei->getCor())
     {
-      if (_tabuleiro[x][y] && _tabuleiro[x][y]->getCor() != rei->getCor())
+      for (const Movimento& movimento : movimentos[i])
       {
-        for (int i = 0; i < movimentos.size(); ++i)
+        if (movimento.get_atacaRei())
         {
-          for (const Movimento& movimento : movimentos[i])
-          {
-            if (movimento.get_atacaRei())
-            {
-              return true;
-            }
-          }
+          return true;
         }
       }
     }
   }
   return false;
+}
+
+bool
+Tabuleiro::isCheck() const
+{
+  if (_isCheck(_reiBranco, _movimentos) || _isCheck(_reiPreto, _movimentos))
+  {
+    return true;
+  }
+  else
+  {
+    return false;
+  }
+}
+
+bool
+Tabuleiro::isMate() const
+{
+  Peca* rei = (_isCheck(_reiBranco, _movimentos) ? _reiBranco : _reiPreto);
+
+  for (int i = 0; i < _movimentos.size(); ++i)
+  {
+    if (_movimentos[i].size() > 0 &&
+        _tabuleiro[_movimentos[i][0].get_origem().get_x()][_movimentos[i][0].get_origem().get_y()]
+            ->getCor() == rei->getCor())
+    {
+      for (const Movimento& movimento : _movimentos[i])
+      {
+        if (movimento.get_eValido())
+        {
+          return false;
+        }
+      }
+    }
+  }
+  return true;
 }
 
 // Funções para simulação
@@ -421,7 +464,11 @@ Tabuleiro::_simularMovimento(Movimento& m)
   _simularMoverPeca(posOrigem, posDestino);
   _movimentosSimulados = _gerarMovimentos();
 
-  if (isCheck(_reiBranco, _movimentosSimulados) || isCheck(_reiPreto, _movimentosSimulados))
+  if (pecaOrigem->getCor() == Cor::BRANCO && _isCheck(_reiBranco, _movimentosSimulados))
+  {
+    m.invdalidar();
+  }
+  else if (pecaOrigem->getCor() == Cor::PRETO && _isCheck(_reiPreto, _movimentosSimulados))
   {
     m.invdalidar();
   }

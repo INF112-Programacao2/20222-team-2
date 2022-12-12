@@ -33,6 +33,7 @@
 </p>
 
 <p id="Tecnologias"></p>
+
 # :computer: Tecnologias
 
 #### **Utilitários**
