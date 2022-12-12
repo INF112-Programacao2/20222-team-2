@@ -9,6 +9,7 @@ class Partida : public GameObject
 {
 private:
   unsigned int _turnoAtual;
+  bool _isMate;
   Tabuleiro _tabuleiro;
   Timer _timer;
 
