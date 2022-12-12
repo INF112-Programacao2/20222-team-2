@@ -75,10 +75,10 @@ $ make run
 
 <table>
   <tr>
-    <td align="center"><a href=""><img style="border-radius: 50%;" src="https://avatars.githubusercontent.com/u/36053545?v=4" width="100px;" alt=""/><br /><sub><b>Gabriel Kakizaki</b></sub></a><br /><a href="" title="Gabriel Kakizaki"></a></td>
-    <td align="center"><a href=""><img style="border-radius: 50%;" src="https://avatars.githubusercontent.com/u/113126873?v=4" width="100px;" alt=""/><br /><sub><b>Igor Acácio</b></sub></a><br /><a href="" title="Igor Acácio"></a></td>
-    <td align="center"><a href=""><img style="border-radius: 50%;" src="https://avatars.githubusercontent.com/u/113953437?v=4" width="100px;" alt=""/><br /><sub><b>
-Jonathan Campos</b></sub></a><br /><a href="" title="Jonathan Campos"></a></td>
-    <td align="center"><a href=""><img style="border-radius: 50%;" src="https://avatars.githubusercontent.com/u/46237033?v=4" width="100px;" alt=""/><br /><sub><b>Lucas de Oliveira Mota</b></sub></a><br /><a href="" title="Lucas de Oliveira Mota"></a></td>    
+    <td align="center"><a href="https://github.com/kakig"><img style="border-radius: 50%;" src="https://avatars.githubusercontent.com/u/36053545?v=4" width="100px;" alt=""/><br /><sub><b>Gabriel Kakizaki</b></sub></a><br /><a href="https://github.com/kakig" title="Gabriel Kakizaki"></a></td>
+    <td align="center"><a href="https://github.com/igornorante"><img style="border-radius: 50%;" src="https://avatars.githubusercontent.com/u/113126873?v=4" width="100px;" alt=""/><br /><sub><b>Igor Acácio</b></sub></a><br /><a href="https://github.com/igornorante" title="Igor Acácio"></a></td>
+    <td align="center"><a href="https://github.com/JonathanSCampos"><img style="border-radius: 50%;" src="https://avatars.githubusercontent.com/u/113953437?v=4" width="100px;" alt=""/><br /><sub><b>
+Jonathan Campos</b></sub></a><br /><a href="https://github.com/JonathanSCampos" title="Jonathan Campos"></a></td>
+    <td align="center"><a href="https://github.com/LucasMGcode"><img style="border-radius: 50%;" src="https://avatars.githubusercontent.com/u/46237033?v=4" width="100px;" alt=""/><br /><sub><b>Lucas de Oliveira Mota</b></sub></a><br /><a href="https://github.com/LucasMGcode" title="Lucas de Oliveira Mota"></a></td>    
   </tr>
 </table>
